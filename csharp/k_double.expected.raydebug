@@ -1,0 +1,18 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/678hzkk9.aspx)
+
+predefined_type(double) ident(x) operator(=) float(3D)operator(;)
+
+comment(// Mixing types in expressions )
+keyword(class) class(MixedTypes)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(int) ident(x) operator(=) integer(3)operator(;)
+        predefined_type(float) ident(y) operator(=) float(4.5f)operator(;)
+        predefined_type(short) ident(z) operator(=) integer(5)operator(;)
+        predefined_type(double) ident(w) operator(=) float(1.7E+3)operator(;)
+        comment(// Result of the 2nd argument is a double:)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The sum is {0})delimiter(")>operator(,) ident(x) operator(+) ident(y) operator(+) ident(z) operator(+) ident(w)operator(\);)
+    operator(})
+operator(})
+comment(// Output: The sum is 1712.5)

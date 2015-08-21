@@ -1,0 +1,42 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ch45axte.aspx)
+
+keyword(class) class(ForLoopTest) 
+operator({)
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(1)operator(;) ident(i) operator(<=) integer(5)operator(;) ident(i)operator(++\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(i)operator(\);)
+        operator(})
+    operator(})
+operator(})
+comment(/*
+Output:
+1
+2
+3
+4
+5
+*/)
+
+directive(static) directive(void) ident(Main)operator((\))
+operator({)
+    predefined_type(int) ident(i)operator(;)
+    predefined_type(int) ident(j) operator(=) integer(10)operator(;)
+    keyword(for) operator(()ident(i) operator(=) integer(0)operator(,) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Start: {0})delimiter(")>operator(,)ident(i)operator(\);) ident(i) operator(<) ident(j)operator(;) ident(i)operator(++,) ident(j)operator(--,) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(i={0}, j={1})delimiter(")>operator(,) ident(i)operator(,) ident(j)operator(\)\))
+    operator({)
+        comment(// Body of the loop.)
+    operator(})
+operator(})
+comment(// Output: )
+comment(// Start: 0 )
+comment(// i=1, j=9 )
+comment(// i=2, j=8 )
+comment(// i=3, j=7 )
+comment(// i=4, j=6 )
+comment(// i=5, j=5)
+
+keyword(for) operator((;) operator(;) operator(\))
+operator({)
+    comment(// ...)
+operator(})

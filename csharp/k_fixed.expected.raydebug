@@ -1,0 +1,100 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/f58wzh21.aspx)
+
+directive(unsafe) directive(static) directive(void) ident(TestMethod)operator((\))
+operator({)
+
+    comment(// Assume that the following class exists. )
+    comment(//class Point  )
+    comment(//{  )
+    comment(//    public int x; )
+    comment(//    public int y;  )
+    comment(//} )
+
+    comment(// Variable pt is a managed variable, subject to garbage collection.)
+    ident(Point) ident(pt) operator(=) keyword(new) ident(Point)operator((\);)
+
+    comment(// Using fixed allows the address of pt members to be taken, )
+    comment(// and "pins" pt so that it is not relocated.)
+
+    directive(fixed) operator(()predefined_type(int)operator(*) ident(p) operator(=) operator(&)ident(pt)operator(.)ident(x)operator(\))
+    operator({)
+        operator(*)ident(p) operator(=) integer(1)operator(;)
+    operator(})        
+
+operator(})
+
+directive(static) directive(unsafe) directive(void) ident(Test2)operator((\))
+operator({)
+    ident(Point) ident(point) operator(=) keyword(new) ident(Point)operator((\);)
+    predefined_type(double)operator([]) ident(arr) operator(=) operator({) integer(0)operator(,) float(1.5)operator(,) float(2.3)operator(,) float(3.4)operator(,) float(4.0)operator(,) float(5.9) operator(};)
+    predefined_type(string) ident(str) operator(=) string<delimiter(")content(Hello World)delimiter(")>operator(;)
+
+    comment(// The following two assignments are equivalent. Each assigns the address )
+    comment(// of the first element in array arr to pointer p. )
+
+    comment(// You can initialize a pointer by using an array. )
+    directive(fixed) operator(()predefined_type(double)operator(*) ident(p) operator(=) ident(arr)operator(\)) operator({) comment(/*...*/) operator(})
+
+    comment(// You can initialize a pointer by using the address of a variable.  )
+    directive(fixed) operator(()predefined_type(double)operator(*) ident(p) operator(=) operator(&)ident(arr)operator([)integer(0)operator(]\)) operator({) comment(/*...*/) operator(})
+
+    comment(// The following assignment initializes p by using a string. )
+    directive(fixed) operator(()predefined_type(char)operator(*) ident(p) operator(=) ident(str)operator(\)) operator({) comment(/*...*/) operator(})
+
+    comment(// The following assignment is not valid, because str[0] is a char,  )
+    comment(// which is a value, not a variable. )
+    comment(//fixed (char* p = &str[0]\) { /*...*/ } )
+
+
+    comment(// You can initialize a pointer by using the address of a variable, such )
+    comment(// as point.x or arr[5]. )
+    directive(fixed) operator(()predefined_type(int)operator(*) ident(p1) operator(=) operator(&)ident(point)operator(.)ident(x)operator(\))
+    operator({)
+        directive(fixed) operator(()predefined_type(double)operator(*) ident(p2) operator(=) operator(&)ident(arr)operator([)integer(5)operator(]\))
+        operator({)
+            comment(// Do something with p1 and p2.)
+        operator(})
+    operator(})
+operator(})
+
+directive(fixed) operator(()predefined_type(byte)operator(*) ident(ps) operator(=) ident(srcarray)operator(,) ident(pd) operator(=) ident(dstarray)operator(\)) operator({)operator(.)operator(.)operator(.)operator(})
+
+directive(fixed) operator(()predefined_type(int)operator(*) ident(p1) operator(=) operator(&)ident(point)operator(.)ident(x)operator(\))
+operator({)
+    directive(fixed) operator(()predefined_type(double)operator(*) ident(p2) operator(=) operator(&)ident(arr)operator([)integer(5)operator(]\))
+    operator({)
+        comment(// Do something with p1 and p2.)
+    operator(})
+operator(})
+
+keyword(class) class(Point)
+operator({) 
+    directive(public) predefined_type(int) ident(x)operator(,) ident(y)operator(;) 
+operator(})
+
+keyword(class) class(FixedTest2) 
+operator({)
+    comment(// Unsafe method: takes a pointer to an int. )
+    directive(unsafe) directive(static) directive(void) ident(SquarePtrParam) operator(()predefined_type(int)operator(*) ident(p)operator(\)) 
+    operator({)
+        operator(*)ident(p) operator(*=) operator(*)ident(p)operator(;)
+    operator(})
+
+    directive(unsafe) directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        ident(Point) ident(pt) operator(=) keyword(new) ident(Point)operator((\);)
+        ident(pt)operator(.)ident(x) operator(=) integer(5)operator(;)
+        ident(pt)operator(.)ident(y) operator(=) integer(6)operator(;)
+        comment(// Pin pt in place: )
+        directive(fixed) operator(()predefined_type(int)operator(*) ident(p) operator(=) operator(&)ident(pt)operator(.)ident(x)operator(\)) 
+        operator({)
+            ident(SquarePtrParam) operator(()ident(p)operator(\);)
+        operator(})
+        comment(// pt now unpinned.)
+        ident(Console)operator(.)ident(WriteLine) operator(()string<delimiter(")content({0} {1})delimiter(")>operator(,) ident(pt)operator(.)ident(x)operator(,) ident(pt)operator(.)ident(y)operator(\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+25 6
+ */)

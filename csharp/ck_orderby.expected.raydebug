@@ -1,0 +1,138 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb383982.aspx)
+
+keyword(class) class(OrderbySample1)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)            
+        comment(// Create a delicious data source. )
+        predefined_type(string)operator([]) ident(fruits) operator(=) operator({) string<delimiter(")content(cherry)delimiter(")>operator(,) string<delimiter(")content(apple)delimiter(")>operator(,) string<delimiter(")content(blueberry)delimiter(")> operator(};)
+
+        comment(// Query for ascending sort.)
+        ident(IEnumerable)operator(<)predefined_type(string)operator(>) ident(sortAscendingQuery) operator(=)
+            keyword(from) ident(fruit) keyword(in) ident(fruits)
+            keyword(orderby) ident(fruit) comment(//"ascending" is default )
+            keyword(select) ident(fruit)operator(;)
+
+        comment(// Query for descending sort.)
+        ident(IEnumerable)operator(<)predefined_type(string)operator(>) ident(sortDescendingQuery) operator(=)
+            keyword(from) ident(w) keyword(in) ident(fruits)
+            keyword(orderby) ident(w) keyword(descending) 
+            keyword(select) ident(w)operator(;)            
+
+        comment(// Execute the query.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Ascending:)delimiter(")>operator(\);)
+        keyword(foreach) operator(()predefined_type(string) ident(s) keyword(in) ident(sortAscendingQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(s)operator(\);)
+        operator(})
+
+        comment(// Execute the query.)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(Environment)operator(.)ident(NewLine) operator(+) string<delimiter(")content(Descending:)delimiter(")>operator(\);)
+        keyword(foreach) operator(()predefined_type(string) ident(s) keyword(in) ident(sortDescendingQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(s)operator(\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+Ascending:
+apple
+blueberry
+cherry
+
+Descending:
+cherry
+blueberry
+apple
+*/)
+
+keyword(class) class(OrderbySample2)
+operator({)
+    comment(// The element type of the data source. )
+    directive(public) keyword(class) class(Student)
+    operator({)
+        directive(public) predefined_type(string) ident(First) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(string) ident(Last) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+    operator(})
+
+    directive(public) directive(static) ident(List)operator(<)ident(Student)operator(>) ident(GetStudents)operator((\))
+    operator({)
+        comment(// Use a collection initializer to create the data source. Note that each element )
+        comment(//  in the list contains an inner sequence of scores.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) keyword(new) ident(List)operator(<)ident(Student)operator(>)
+        operator({)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Svetlana)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Omelchenko)delimiter(")>operator(,) ident(ID)operator(=)integer(111)operator(},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Claire)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(O'Donnell)delimiter(")>operator(,) ident(ID)operator(=)integer(112)operator(},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Sven)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Mortensen)delimiter(")>operator(,) ident(ID)operator(=)integer(113)operator(},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Cesar)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(114)operator(},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Debra)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(115)operator(}) 
+        operator(};)
+
+        keyword(return) ident(students)operator(;)
+
+    operator(})
+    directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+    operator({)
+        comment(// Create the data source.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) ident(GetStudents)operator((\);)
+
+        comment(// Create the query.)
+        ident(IEnumerable)operator(<)ident(Student)operator(>) ident(sortedStudents) operator(=)
+            keyword(from) ident(student) keyword(in) ident(students)
+            keyword(orderby) ident(student)operator(.)ident(Last) keyword(ascending)operator(,) ident(student)operator(.)ident(First) keyword(ascending) 
+            keyword(select) ident(student)operator(;)
+
+        comment(// Execute the query.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(sortedStudents:)delimiter(")>operator(\);)
+        keyword(foreach) operator(()ident(Student) ident(student) keyword(in) ident(sortedStudents)operator(\))
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(student)operator(.)ident(Last) operator(+) string<delimiter(")content( )delimiter(")> operator(+) ident(student)operator(.)ident(First)operator(\);)           
+
+        comment(// Now create groups and sort the groups. The query first sorts the names )
+        comment(// of all students so that they will be in alphabetical order after they are )
+        comment(// grouped. The second orderby sorts the group keys in alpha order.             )
+        keyword(var) ident(sortedGroups) operator(=)
+            keyword(from) ident(student) keyword(in) ident(students)
+            keyword(orderby) ident(student)operator(.)ident(Last)operator(,) ident(student)operator(.)ident(First)
+            keyword(group) ident(student) ident(by) ident(student)operator(.)ident(Last)operator([)integer(0)operator(]) keyword(into) ident(newGroup)
+            keyword(orderby) ident(newGroup)operator(.)ident(Key)
+            keyword(select) ident(newGroup)operator(;)
+
+        comment(// Execute the query.)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(Environment)operator(.)ident(NewLine) operator(+) string<delimiter(")content(sortedGroups:)delimiter(")>operator(\);)
+        keyword(foreach) operator(()keyword(var) ident(studentGroup) keyword(in) ident(sortedGroups)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(studentGroup)operator(.)ident(Key)operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(student) keyword(in) ident(studentGroup)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   {0}, {1})delimiter(")>operator(,) ident(student)operator(.)ident(Last)operator(,) ident(student)operator(.)ident(First)operator(\);)
+            operator(})
+        operator(})
+
+        comment(// Keep the console window open in debug mode)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:  
+sortedStudents:
+Garcia Cesar
+Garcia Debra
+Mortensen Sven
+O'Donnell Claire
+Omelchenko Svetlana
+
+sortedGroups:
+G
+   Garcia, Cesar
+   Garcia, Debra
+M
+   Mortensen, Sven
+O
+   O'Donnell, Claire
+   Omelchenko, Svetlana
+*/)

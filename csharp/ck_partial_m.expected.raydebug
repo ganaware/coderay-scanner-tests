@@ -1,0 +1,20 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/6b0scde8.aspx)
+
+keyword(namespace) ident(PM)
+operator({)
+    keyword(partial) keyword(class) class(A)
+    operator({)
+        keyword(partial) directive(void) ident(OnSomethingHappened)operator(()predefined_type(string) ident(s)operator(\);)
+    operator(})
+
+    comment(// This part can be in a separate file. )
+    keyword(partial) keyword(class) class(A)
+    operator({)
+        comment(// Comment out this method and the program )
+        comment(// will still compile. )
+        keyword(partial) directive(void) ident(OnSomethingHappened)operator(()ident(String) ident(s)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Something happened: {0})delimiter(")>operator(,) ident(s)operator(\);)
+        operator(})
+    operator(})
+operator(})

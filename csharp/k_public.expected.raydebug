@@ -1,0 +1,25 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/yzh058ae.aspx)
+
+keyword(class) class(SampleClass)
+operator({)
+    directive(public) predefined_type(int) ident(x)operator(;) comment(// No access restrictions.)
+operator(})
+
+keyword(class) class(PointTest)
+operator({)
+    directive(public) predefined_type(int) ident(x)operator(;) 
+    directive(public) predefined_type(int) ident(y)operator(;)
+operator(})
+
+keyword(class) class(MainClass4)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        ident(PointTest) ident(p) operator(=) keyword(new) ident(PointTest)operator((\);)
+        comment(// Direct access to public members:)
+        ident(p)operator(.)ident(x) operator(=) integer(10)operator(;)
+        ident(p)operator(.)ident(y) operator(=) integer(15)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(x = {0}, y = {1})delimiter(")>operator(,) ident(p)operator(.)ident(x)operator(,) ident(p)operator(.)ident(y)operator(\);) 
+    operator(})
+operator(})
+comment(// Output: x = 10, y = 15)

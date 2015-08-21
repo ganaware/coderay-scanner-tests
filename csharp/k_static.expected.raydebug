@@ -1,0 +1,97 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/98f28cdx.aspx)
+
+directive(static) keyword(class) class(CompanyEmployee)
+operator({)
+    directive(public) directive(static) directive(void) ident(DoSomething)operator((\)) operator({) comment(/*...*/) operator(})
+    directive(public) directive(static) directive(void) ident(DoSomethingElse)operator((\)) operator({) comment(/*...*/)  operator(})
+operator(})
+
+directive(public) keyword(class) class(MyBaseC)
+operator({)
+    directive(public) keyword(struct) class(MyStruct)
+    operator({)
+        directive(public) directive(static) predefined_type(int) ident(x) operator(=) integer(100)operator(;)
+    operator(})
+operator(})
+
+directive(public) keyword(class) class(Employee4)
+operator({)
+    directive(public) predefined_type(string) ident(id)operator(;)
+    directive(public) predefined_type(string) ident(name)operator(;)
+
+    directive(public) ident(Employee4)operator((\))
+    operator({)
+    operator(})
+
+    directive(public) ident(Employee4)operator(()predefined_type(string) ident(name)operator(,) predefined_type(string) ident(id)operator(\))
+    operator({)
+        local_variable(this)operator(.)ident(name) operator(=) ident(name)operator(;)
+        local_variable(this)operator(.)ident(id) operator(=) ident(id)operator(;)
+    operator(})
+
+    directive(public) directive(static) predefined_type(int) ident(employeeCounter)operator(;)
+
+    directive(public) directive(static) predefined_type(int) ident(AddEmployee)operator((\))
+    operator({)
+        keyword(return) operator(++)ident(employeeCounter)operator(;)
+    operator(})
+operator(})
+
+keyword(class) class(MainClass) operator(:) ident(Employee4)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Enter the employee's name: )delimiter(")>operator(\);)
+        predefined_type(string) ident(name) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Enter the employee's ID: )delimiter(")>operator(\);)
+        predefined_type(string) ident(id) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+
+        comment(// Create and configure the employee object:)
+        ident(Employee4) ident(e) operator(=) keyword(new) ident(Employee4)operator(()ident(name)operator(,) ident(id)operator(\);)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Enter the current number of employees: )delimiter(")>operator(\);)
+        predefined_type(string) ident(n) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+        ident(Employee4)operator(.)ident(employeeCounter) operator(=) ident(Int32)operator(.)ident(Parse)operator(()ident(n)operator(\);)
+        ident(Employee4)operator(.)ident(AddEmployee)operator((\);)
+
+        comment(// Display the new information:)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Name: {0})delimiter(")>operator(,) ident(e)operator(.)ident(name)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(ID:   {0})delimiter(")>operator(,) ident(e)operator(.)ident(id)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(New Number of Employees: {0})delimiter(")>operator(,)
+                      ident(Employee4)operator(.)ident(employeeCounter)operator(\);)
+    operator(})
+operator(})
+    comment(/*
+    Input:
+    Matthias Berndt
+    AF643G
+    15
+     * 
+    Sample Output:
+    Enter the employee's name: Matthias Berndt
+    Enter the employee's ID: AF643G
+    Enter the current number of employees: 15
+    Name: Matthias Berndt
+    ID:   AF643G
+    New Number of Employees: 16
+    */)
+
+keyword(class) class(Test)
+operator({)
+   directive(static) predefined_type(int) ident(x) operator(=) ident(y)operator(;)
+   directive(static) predefined_type(int) ident(y) operator(=) integer(5)operator(;)
+
+   directive(static) directive(void) ident(Main)operator((\))
+   operator({)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(Test)operator(.)ident(x)operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(Test)operator(.)ident(y)operator(\);)
+
+      ident(Test)operator(.)ident(x) operator(=) integer(99)operator(;)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(Test)operator(.)ident(x)operator(\);)
+   operator(})
+operator(})
+comment(/*
+Output:
+    0
+    5
+    99
+*/)

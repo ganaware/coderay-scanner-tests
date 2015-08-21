@@ -1,0 +1,42 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/362314fe.aspx)
+
+predefined_type(string) ident(a) operator(=) string<delimiter(")content(hello)delimiter(")>operator(;)
+predefined_type(string) ident(b) operator(=) string<delimiter(")content(h)delimiter(")>operator(;)
+comment(// Append to contents of 'b')
+ident(b) operator(+=) string<delimiter(")content(ello)delimiter(")>operator(;)
+ident(Console)operator(.)ident(WriteLine)operator(()ident(a) operator(==) ident(b)operator(\);)
+ident(Console)operator(.)ident(WriteLine)operator((()predefined_type(object)operator(\))ident(a) operator(==) operator(()predefined_type(object)operator(\))ident(b)operator(\);)
+
+predefined_type(string) ident(a) operator(=) string<delimiter(")content(good )delimiter(")> operator(+) string<delimiter(")content(morning)delimiter(")>operator(;)
+
+predefined_type(string) ident(b) operator(=) string<delimiter(")content(h)delimiter(")>operator(;)
+ident(b) operator(+=) string<delimiter(")content(ello)delimiter(")>operator(;)
+
+predefined_type(string) ident(str) operator(=) string<delimiter(")content(test)delimiter(")>operator(;)
+predefined_type(char) ident(x) operator(=) ident(str)operator([)integer(2)operator(];)  comment(// x = 's';)
+
+string<delimiter(")content(good morning)delimiter(")>  comment(// a string literal)
+
+predefined_type(string) ident(a) operator(=) string<delimiter(")char(\\\\)char(\\u0066)char(\\n)delimiter(")>operator(;)
+ident(Console)operator(.)ident(WriteLine)operator(()ident(a)operator(\);)
+
+string<delimiter(@")content(good morning)delimiter(")>  comment(// a string literal)
+
+string<delimiter(@")content(c:\\Docs\\Source\\a.txt)delimiter(")>  comment(// rather than "c:\\\\Docs\\\\Source\\\\a.txt")
+
+string<delimiter(@")char("")content(Ahoy!)char("")content( cried the captain.)delimiter(")> comment(// "Ahoy!" cried the captain.)
+
+keyword(class) class(SimpleStringTest) 
+operator({)
+   directive(static) directive(void) ident(Main)operator((\))
+   operator({)
+      predefined_type(string) ident(a) operator(=) string<delimiter(")char(\\u0068)content(ello )delimiter(")>operator(;)
+      predefined_type(string) ident(b) operator(=) string<delimiter(")content(world)delimiter(")>operator(;)
+      ident(Console)operator(.)ident(WriteLine)operator(() ident(a) operator(+) ident(b) operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(() ident(a) operator(+) ident(b) operator(==) string<delimiter(")content(Hello World)delimiter(")> operator(\);) comment(// == performs a case-sensitive comparison)
+   operator(})
+operator(})
+comment(/* Output:
+    hello world
+    False
+ */)

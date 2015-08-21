@@ -1,0 +1,330 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb311040.aspx)
+
+keyword(var) ident(innerJoinQuery) operator(=)
+    keyword(from) ident(category) keyword(in) ident(categories)
+    keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID)
+    keyword(select) keyword(new) operator({) ident(ProductName) operator(=) ident(prod)operator(.)ident(Name)operator(,) ident(Category) operator(=) ident(category)operator(.)ident(Name) operator(};) comment(//produces flat sequence)
+
+keyword(var) ident(innerGroupJoinQuery) operator(=)
+    keyword(from) ident(category) keyword(in) ident(categories)
+    keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+    keyword(select) keyword(new) operator({) ident(CategoryName) operator(=) ident(category)operator(.)ident(Name)operator(,) ident(Products) operator(=) ident(prodGroup) operator(};)
+
+keyword(var) ident(innerGroupJoinQuery2) operator(=)
+    keyword(from) ident(category) keyword(in) ident(categories)
+    keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+    keyword(from) ident(prod2) keyword(in) ident(prodGroup)
+    keyword(where) ident(prod2)operator(.)ident(UnitPrice) operator(>) float(2.50M)
+    keyword(select) ident(prod2)operator(;)
+
+keyword(var) ident(leftOuterJoinQuery) operator(=)
+    keyword(from) ident(category) keyword(in) ident(categories)
+    keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+    keyword(from) ident(item) keyword(in) ident(prodGroup)operator(.)ident(DefaultIfEmpty)operator(()keyword(new) ident(Product) operator({) ident(Name) operator(=) ident(String)operator(.)ident(Empty)operator(,) ident(CategoryID) operator(=) integer(0) operator(}\))
+    keyword(select) keyword(new) operator({) ident(CatName) operator(=) ident(category)operator(.)ident(Name)operator(,) ident(ProdName) operator(=) ident(item)operator(.)ident(Name) operator(};)
+
+keyword(class) class(JoinDemonstration)
+operator({)
+    preprocessor(#region) ident(Data)
+
+    keyword(class) class(Product)
+    operator({)
+        directive(public) predefined_type(string) ident(Name) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(CategoryID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+    operator(})
+
+    keyword(class) class(Category)
+    operator({)
+        directive(public) predefined_type(string) ident(Name) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+    operator(})
+
+    comment(// Specify the first data source.)
+    ident(List)operator(<)ident(Category)operator(>) ident(categories) operator(=) keyword(new) ident(List)operator(<)ident(Category)operator(>(\))
+    operator({) 
+        keyword(new) ident(Category)operator((\){)ident(Name)operator(=)string<delimiter(")content(Beverages)delimiter(")>operator(,) ident(ID)operator(=)integer(001)operator(},)
+        keyword(new) ident(Category)operator((\){) ident(Name)operator(=)string<delimiter(")content(Condiments)delimiter(")>operator(,) ident(ID)operator(=)integer(002)operator(},)
+        keyword(new) ident(Category)operator((\){) ident(Name)operator(=)string<delimiter(")content(Vegetables)delimiter(")>operator(,) ident(ID)operator(=)integer(003)operator(},)
+        keyword(new) ident(Category)operator((\)) operator({)  ident(Name)operator(=)string<delimiter(")content(Grains)delimiter(")>operator(,) ident(ID)operator(=)integer(004)operator(},)
+        keyword(new) ident(Category)operator((\)) operator({)  ident(Name)operator(=)string<delimiter(")content(Fruit)delimiter(")>operator(,) ident(ID)operator(=)integer(005)operator(})            
+    operator(};)
+
+    comment(// Specify the second data source.)
+    ident(List)operator(<)ident(Product)operator(>) ident(products) operator(=) keyword(new) ident(List)operator(<)ident(Product)operator(>(\))
+   operator({)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Cola)delimiter(")>operator(,)  ident(CategoryID)operator(=)integer(001)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Tea)delimiter(")>operator(,)  ident(CategoryID)operator(=)integer(001)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Mustard)delimiter(")>operator(,) ident(CategoryID)operator(=)integer(002)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Pickles)delimiter(")>operator(,) ident(CategoryID)operator(=)integer(002)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Carrots)delimiter(")>operator(,) ident(CategoryID)operator(=)integer(003)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Bok Choy)delimiter(")>operator(,) ident(CategoryID)operator(=)integer(003)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Peaches)delimiter(")>operator(,) ident(CategoryID)operator(=)integer(005)operator(},)
+      keyword(new) ident(Product)operator({)ident(Name)operator(=)string<delimiter(")content(Melons)delimiter(")>operator(,) ident(CategoryID)operator(=)integer(005)operator(},)
+    operator(};)
+    preprocessor(#endregion)
+
+
+    directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+    operator({)
+        ident(JoinDemonstration) ident(app) operator(=) keyword(new) ident(JoinDemonstration)operator((\);)
+
+        ident(app)operator(.)ident(InnerJoin)operator((\);)
+        ident(app)operator(.)ident(GroupJoin)operator((\);)
+        ident(app)operator(.)ident(GroupInnerJoin)operator((\);)
+        ident(app)operator(.)ident(GroupJoin3)operator((\);)
+        ident(app)operator(.)ident(LeftOuterJoin)operator((\);)
+        ident(app)operator(.)ident(LeftOuterJoin2)operator((\);)
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+
+    directive(void) ident(InnerJoin)operator((\))
+    operator({)
+        comment(// Create the query that selects  )
+        comment(// a property from each element. )
+        keyword(var) ident(innerJoinQuery) operator(=)
+           keyword(from) ident(category) keyword(in) ident(categories)
+           keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID)
+           keyword(select) keyword(new) operator({) ident(Category) operator(=) ident(category)operator(.)ident(ID)operator(,) ident(Product) operator(=) ident(prod)operator(.)ident(Name) operator(};)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(InnerJoin:)delimiter(")>operator(\);)
+        comment(// Execute the query. Access results  )
+        comment(// with a simple foreach statement. )
+        keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(innerJoinQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0,-10}{1})delimiter(")>operator(,) ident(item)operator(.)ident(Product)operator(,) ident(item)operator(.)ident(Category)operator(\);)
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(InnerJoin: {0} items in 1 group.)delimiter(")>operator(,) ident(innerJoinQuery)operator(.)ident(Count)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(System)operator(.)ident(Environment)operator(.)ident(NewLine)operator(\);)
+
+    operator(})
+
+    directive(void) ident(GroupJoin)operator((\))
+    operator({)
+        comment(// This is a demonstration query to show the output )
+        comment(// of a "raw" group join. A more typical group join )
+        comment(// is shown in the GroupInnerJoin method. )
+        keyword(var) ident(groupJoinQuery) operator(=)
+           keyword(from) ident(category) keyword(in) ident(categories)
+           keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+           keyword(select) ident(prodGroup)operator(;)
+
+        comment(// Store the count of total items (for demonstration only\). )
+        predefined_type(int) ident(totalItems) operator(=) integer(0)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Simple GroupJoin:)delimiter(")>operator(\);)
+
+        comment(// A nested foreach statement is required to access group items. )
+        keyword(foreach) operator(()keyword(var) ident(prodGrouping) keyword(in) ident(groupJoinQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Group:)delimiter(")>operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(prodGrouping)operator(\))
+            operator({)
+                ident(totalItems)operator(++;)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   {0,-10}{1})delimiter(")>operator(,) ident(item)operator(.)ident(Name)operator(,) ident(item)operator(.)ident(CategoryID)operator(\);)
+            operator(})
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Unshaped GroupJoin: {0} items in {1} unnamed groups)delimiter(")>operator(,) ident(totalItems)operator(,) ident(groupJoinQuery)operator(.)ident(Count)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(System)operator(.)ident(Environment)operator(.)ident(NewLine)operator(\);)
+    operator(})
+
+    directive(void) ident(GroupInnerJoin)operator((\))
+    operator({)
+        keyword(var) ident(groupJoinQuery2) operator(=)
+            keyword(from) ident(category) keyword(in) ident(categories)
+            keyword(orderby) ident(category)operator(.)ident(ID)
+            keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+            keyword(select) keyword(new)
+            operator({)
+                ident(Category) operator(=) ident(category)operator(.)ident(Name)operator(,)
+                ident(Products) operator(=) keyword(from) ident(prod2) keyword(in) ident(prodGroup)
+                           keyword(orderby) ident(prod2)operator(.)ident(Name)
+                           keyword(select) ident(prod2)
+            operator(};)
+
+        comment(//Console.WriteLine("GroupInnerJoin:"\);)
+        predefined_type(int) ident(totalItems) operator(=) integer(0)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(GroupInnerJoin:)delimiter(")>operator(\);)
+        keyword(foreach) operator(()keyword(var) ident(productGroup) keyword(in) ident(groupJoinQuery2)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(productGroup)operator(.)ident(Category)operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(prodItem) keyword(in) ident(productGroup)operator(.)ident(Products)operator(\))
+            operator({)
+                ident(totalItems)operator(++;)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(  {0,-10} {1})delimiter(")>operator(,) ident(prodItem)operator(.)ident(Name)operator(,) ident(prodItem)operator(.)ident(CategoryID)operator(\);)
+            operator(})
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(GroupInnerJoin: {0} items in {1} named groups)delimiter(")>operator(,) ident(totalItems)operator(,) ident(groupJoinQuery2)operator(.)ident(Count)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(System)operator(.)ident(Environment)operator(.)ident(NewLine)operator(\);)
+    operator(})
+
+    directive(void) ident(GroupJoin3)operator((\))
+    operator({)
+
+        keyword(var) ident(groupJoinQuery3) operator(=)
+            keyword(from) ident(category) keyword(in) ident(categories)
+            keyword(join) ident(product) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(product)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+            keyword(from) ident(prod) keyword(in) ident(prodGroup)
+            keyword(orderby) ident(prod)operator(.)ident(CategoryID)
+            keyword(select) keyword(new) operator({) ident(Category) operator(=) ident(prod)operator(.)ident(CategoryID)operator(,) ident(ProductName) operator(=) ident(prod)operator(.)ident(Name) operator(};)
+
+        comment(//Console.WriteLine("GroupInnerJoin:"\);)
+        predefined_type(int) ident(totalItems) operator(=) integer(0)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(GroupJoin3:)delimiter(")>operator(\);)
+        keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(groupJoinQuery3)operator(\))
+        operator({)
+            ident(totalItems)operator(++;)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   {0}:{1})delimiter(")>operator(,) ident(item)operator(.)ident(ProductName)operator(,) ident(item)operator(.)ident(Category)operator(\);)
+        operator(})
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(GroupJoin3: {0} items in 1 group)delimiter(")>operator(,) ident(totalItems)operator(,) ident(groupJoinQuery3)operator(.)ident(Count)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(System)operator(.)ident(Environment)operator(.)ident(NewLine)operator(\);)
+    operator(})
+
+    directive(void) ident(LeftOuterJoin)operator((\))
+    operator({)
+        comment(// Create the query. )
+        keyword(var) ident(leftOuterQuery) operator(=)
+           keyword(from) ident(category) keyword(in) ident(categories)
+           keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+           keyword(select) ident(prodGroup)operator(.)ident(DefaultIfEmpty)operator(()keyword(new) ident(Product)operator((\)) operator({) ident(Name) operator(=) string<delimiter(")content(Nothing!)delimiter(")>operator(,) ident(CategoryID) operator(=) ident(category)operator(.)ident(ID) operator(}\);)
+
+        comment(// Store the count of total items (for demonstration only\). )
+        predefined_type(int) ident(totalItems) operator(=) integer(0)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Left Outer Join:)delimiter(")>operator(\);)
+
+        comment(// A nested foreach statement  is required to access group items )
+        keyword(foreach) operator(()keyword(var) ident(prodGrouping) keyword(in) ident(leftOuterQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Group:)delimiter(")>operator(,) ident(prodGrouping)operator(.)ident(Count)operator((\)\);)
+            keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(prodGrouping)operator(\))
+            operator({)
+                ident(totalItems)operator(++;)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(  {0,-10}{1})delimiter(")>operator(,) ident(item)operator(.)ident(Name)operator(,) ident(item)operator(.)ident(CategoryID)operator(\);)
+            operator(})
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(LeftOuterJoin: {0} items in {1} groups)delimiter(")>operator(,) ident(totalItems)operator(,) ident(leftOuterQuery)operator(.)ident(Count)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(System)operator(.)ident(Environment)operator(.)ident(NewLine)operator(\);)
+    operator(})
+
+    directive(void) ident(LeftOuterJoin2)operator((\))
+    operator({)
+        comment(// Create the query. )
+        keyword(var) ident(leftOuterQuery2) operator(=)
+           keyword(from) ident(category) keyword(in) ident(categories)
+           keyword(join) ident(prod) keyword(in) ident(products) ident(on) ident(category)operator(.)ident(ID) ident(equals) ident(prod)operator(.)ident(CategoryID) keyword(into) ident(prodGroup)
+           keyword(from) ident(item) keyword(in) ident(prodGroup)operator(.)ident(DefaultIfEmpty)operator((\))
+           keyword(select) keyword(new) operator({) ident(Name) operator(=) ident(item) operator(==) predefined_constant(null) operator(?) string<delimiter(")content(Nothing!)delimiter(")> operator(:) ident(item)operator(.)ident(Name)operator(,) ident(CategoryID) operator(=) ident(category)operator(.)ident(ID) operator(};)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(LeftOuterJoin2: {0} items in 1 group)delimiter(")>operator(,) ident(leftOuterQuery2)operator(.)ident(Count)operator((\)\);)
+        comment(// Store the count of total items )
+        predefined_type(int) ident(totalItems) operator(=) integer(0)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Left Outer Join 2:)delimiter(")>operator(\);)
+
+        comment(// Groups have been flattened. )
+        keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(leftOuterQuery2)operator(\))
+        operator({)
+            ident(totalItems)operator(++;)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0,-10}{1})delimiter(")>operator(,) ident(item)operator(.)ident(Name)operator(,) ident(item)operator(.)ident(CategoryID)operator(\);)
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(LeftOuterJoin2: {0} items in 1 group)delimiter(")>operator(,) ident(totalItems)operator(\);)
+    operator(})
+operator(})
+comment(/*Output:
+
+InnerJoin:
+Cola      1
+Tea       1
+Mustard   2
+Pickles   2
+Carrots   3
+Bok Choy  3
+Peaches   5
+Melons    5
+InnerJoin: 8 items in 1 group.
+
+
+Unshaped GroupJoin:
+Group:
+    Cola      1
+    Tea       1
+Group:
+    Mustard   2
+    Pickles   2
+Group:
+    Carrots   3
+    Bok Choy  3
+Group:
+Group:
+    Peaches   5
+    Melons    5
+Unshaped GroupJoin: 8 items in 5 unnamed groups
+
+
+GroupInnerJoin:
+Beverages
+    Cola       1
+    Tea        1
+Condiments
+    Mustard    2
+    Pickles    2
+Vegetables
+    Bok Choy   3
+    Carrots    3
+Grains
+Fruit
+    Melons     5
+    Peaches    5
+GroupInnerJoin: 8 items in 5 named groups
+
+
+GroupJoin3:
+    Cola:1
+    Tea:1
+    Mustard:2
+    Pickles:2
+    Carrots:3
+    Bok Choy:3
+    Peaches:5
+    Melons:5
+GroupJoin3: 8 items in 1 group
+
+
+Left Outer Join:
+Group:
+    Cola      1
+    Tea       1
+Group:
+    Mustard   2
+    Pickles   2
+Group:
+    Carrots   3
+    Bok Choy  3
+Group:
+    Nothing!  4
+Group:
+    Peaches   5
+    Melons    5
+LeftOuterJoin: 9 items in 5 groups
+
+
+LeftOuterJoin2: 9 items in 1 group
+Left Outer Join 2:
+Cola      1
+Tea       1
+Mustard   2
+Pickles   2
+Carrots   3
+Bok Choy  3
+Nothing!  4
+Peaches   5
+Melons    5
+LeftOuterJoin2: 9 items in 1 group
+Press any key to exit.
+*/)

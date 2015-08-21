@@ -1,0 +1,47 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/dd469484.aspx)
+
+comment(// Contravariant interface. )
+keyword(interface) class(IContravariant)operator(<)keyword(in) ident(A)operator(>) operator({) operator(})
+
+comment(// Extending contravariant interface. )
+keyword(interface) class(IExtContravariant)operator(<)keyword(in) ident(A)operator(>) operator(:) ident(IContravariant)operator(<)ident(A)operator(>) operator({) operator(})
+
+comment(// Implementing contravariant interface. )
+keyword(class) class(Sample)operator(<)ident(A)operator(>) operator(:) ident(IContravariant)operator(<)ident(A)operator(>) operator({) operator(})
+
+keyword(class) class(Program)
+operator({)
+    directive(static) directive(void) ident(Test)operator((\))
+    operator({)
+        ident(IContravariant)operator(<)ident(Object)operator(>) ident(iobj) operator(=) keyword(new) ident(Sample)operator(<)ident(Object)operator(>(\);)
+        ident(IContravariant)operator(<)ident(String)operator(>) ident(istr) operator(=) keyword(new) ident(Sample)operator(<)ident(String)operator(>(\);)
+
+        comment(// You can assign iobj to istr because )
+        comment(// the IContravariant interface is contravariant.)
+        ident(istr) operator(=) ident(iobj)operator(;)
+    operator(})
+operator(})
+
+comment(// Contravariant delegate. )
+directive(public) keyword(delegate) directive(void) ident(DContravariant)operator(<)keyword(in) ident(A)operator(>()ident(A) ident(argument)operator(\);)
+
+comment(// Methods that match the delegate signature. )
+directive(public) directive(static) directive(void) ident(SampleControl)operator(()ident(Control) ident(control)operator(\))
+operator({) operator(})
+directive(public) directive(static) directive(void) ident(SampleButton)operator(()ident(Button) ident(button)operator(\))
+operator({) operator(})
+
+directive(public) directive(void) ident(Test)operator((\))
+operator({)
+
+    comment(// Instantiating the delegates with the methods.)
+    ident(DContravariant)operator(<)ident(Control)operator(>) ident(dControl) operator(=) ident(SampleControl)operator(;)
+    ident(DContravariant)operator(<)ident(Button)operator(>) ident(dButton) operator(=) ident(SampleButton)operator(;)
+
+    comment(// You can assign dControl to dButton )
+    comment(// because the DContravariant delegate is contravariant.)
+    ident(dButton) operator(=) ident(dControl)operator(;)
+
+    comment(// Invoke the delegate.)
+    ident(dButton)operator(()keyword(new) ident(Button)operator((\)\);) 
+operator(})

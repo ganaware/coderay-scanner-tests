@@ -1,0 +1,249 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/0yd65esw.aspx)
+
+predefined_type(object) ident(o2) operator(=) predefined_constant(null)operator(;)
+keyword(try)
+operator({)
+    predefined_type(int) ident(i2) operator(=) operator(()predefined_type(int)operator(\))ident(o2)operator(;)   comment(// Error)
+operator(})
+
+keyword(catch) operator(()ident(InvalidCastException) ident(e)operator(\)) 
+operator({)
+operator(})
+
+keyword(catch) operator(()ident(ArgumentException) ident(e)operator(\)) keyword(if) operator(()ident(e)operator(.)ident(ParamName) operator(==) string<delimiter(")content(...)delimiter(")>operator(\))
+operator({)
+operator(})
+
+keyword(catch) operator(()ident(FileNotFoundException) ident(e)operator(\))
+operator({)
+    comment(// FileNotFoundExceptions are handled here.)
+operator(})
+keyword(catch) operator(()ident(IOException) ident(e)operator(\))
+operator({)
+    comment(// Extract some information from this exception, and then )
+    comment(// throw it to the parent method.)
+    keyword(if) operator(()ident(e)operator(.)ident(Source) operator(!=) predefined_constant(null)operator(\))
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(IOException source: {0})delimiter(")>operator(,) ident(e)operator(.)ident(Source)operator(\);)
+    keyword(throw)operator(;)
+operator(})
+
+keyword(catch) operator(()ident(InvalidCastException) ident(e)operator(\)) 
+operator({)
+    comment(// Perform some action here, and then throw a new exception.)
+    keyword(throw) keyword(new) ident(YourCustomException)operator(()string<delimiter(")content(Put your error message here.)delimiter(")>operator(,) ident(e)operator(\);)
+operator(})
+
+keyword(catch) operator(()ident(InvalidCastException) ident(e)operator(\))
+operator({)
+    keyword(if) operator(()ident(e)operator(.)ident(Data) operator(==) predefined_constant(null)operator(\))
+    operator({)
+        keyword(throw)operator(;)
+    operator(})
+    keyword(else)
+    operator({)
+        comment(// Take some action.)
+    operator(})
+operator(})
+
+directive(static) directive(void) ident(Main)operator((\)) 
+operator({)
+    predefined_type(int) ident(n)operator(;)
+    keyword(try) 
+    operator({)
+        comment(// Do not initialize this variable here.)
+        ident(n) operator(=) integer(123)operator(;)
+    operator(})
+    keyword(catch)
+    operator({)
+    operator(})
+    comment(// Error: Use of unassigned local variable 'n'.)
+    ident(Console)operator(.)ident(Write)operator(()ident(n)operator(\);)
+operator(})
+
+keyword(class) class(TryFinallyTest)
+operator({)
+    directive(static) directive(void) ident(ProcessString)operator(()predefined_type(string) ident(s)operator(\))
+    operator({)
+        keyword(if) operator(()ident(s) operator(==) predefined_constant(null)operator(\))
+        operator({)
+            keyword(throw) keyword(new) ident(ArgumentNullException)operator((\);)
+        operator(})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(string) ident(s) operator(=) predefined_constant(null)operator(;) comment(// For demonstration purposes. )
+
+        keyword(try)
+        operator({)            
+            ident(ProcessString)operator(()ident(s)operator(\);)
+        operator(})
+
+        keyword(catch) operator(()ident(Exception) ident(e)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0} Exception caught.)delimiter(")>operator(,) ident(e)operator(\);)
+        operator(})
+    operator(})
+operator(})
+    comment(/*
+    Output:
+    System.ArgumentNullException: Value cannot be null.
+       at TryFinallyTest.Main(\) Exception caught.
+     * */)
+
+keyword(class) class(ThrowTest3)
+operator({)
+    directive(static) directive(void) ident(ProcessString)operator(()predefined_type(string) ident(s)operator(\))
+    operator({)
+        keyword(if) operator(()ident(s) operator(==) predefined_constant(null)operator(\))
+        operator({)
+            keyword(throw) keyword(new) ident(ArgumentNullException)operator((\);)
+        operator(})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        keyword(try)
+        operator({)
+            predefined_type(string) ident(s) operator(=) predefined_constant(null)operator(;)
+            ident(ProcessString)operator(()ident(s)operator(\);)
+        operator(})
+        comment(// Most specific: )
+        keyword(catch) operator(()ident(ArgumentNullException) ident(e)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0} First exception caught.)delimiter(")>operator(,) ident(e)operator(\);)
+        operator(})
+        comment(// Least specific: )
+        keyword(catch) operator(()ident(Exception) ident(e)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0} Second exception caught.)delimiter(")>operator(,) ident(e)operator(\);)
+        operator(})
+    operator(})
+operator(})
+comment(/*
+ Output:
+ System.ArgumentNullException: Value cannot be null.
+ at Test.ThrowTest3.ProcessString(String s\) ... First exception caught.
+*/)
+
+        directive(public) keyword(async) ident(Task) ident(DoSomethingAsync)operator((\))
+        operator({)
+            ident(Task)operator(<)predefined_type(string)operator(>) ident(theTask) operator(=) ident(DelayAsync)operator((\);)
+
+            keyword(try)
+            operator({)
+                predefined_type(string) ident(result) operator(=) keyword(await) ident(theTask)operator(;)
+                ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Result: )delimiter(")> operator(+) ident(result)operator(\);)
+            operator(})
+            keyword(catch) operator(()ident(Exception) ident(ex)operator(\))
+            operator({)
+                ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Exception Message: )delimiter(")> operator(+) ident(ex)operator(.)ident(Message)operator(\);)
+            operator(})
+            ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Task IsCanceled: )delimiter(")> operator(+) ident(theTask)operator(.)ident(IsCanceled)operator(\);)
+            ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Task IsFaulted:  )delimiter(")> operator(+) ident(theTask)operator(.)ident(IsFaulted)operator(\);)
+            keyword(if) operator(()ident(theTask)operator(.)ident(Exception) operator(!=) predefined_constant(null)operator(\))
+            operator({)
+                ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Task Exception Message: )delimiter(")>
+                    operator(+) ident(theTask)operator(.)ident(Exception)operator(.)ident(Message)operator(\);)
+                ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Task Inner Exception Message: )delimiter(")>
+                    operator(+) ident(theTask)operator(.)ident(Exception)operator(.)ident(InnerException)operator(.)ident(Message)operator(\);)
+            operator(})
+        operator(})
+
+        directive(private) keyword(async) ident(Task)operator(<)predefined_type(string)operator(>) ident(DelayAsync)operator((\))
+        operator({)
+            keyword(await) ident(Task)operator(.)ident(Delay)operator(()integer(100)operator(\);)
+
+            comment(// Uncomment each of the following lines to )
+            comment(// demonstrate exception handling. )
+
+            comment(//throw new OperationCanceledException("canceled"\);)
+            comment(//throw new Exception("Something happened."\);)
+            keyword(return) string<delimiter(")content(Done)delimiter(")>operator(;)
+        operator(})
+
+        comment(// Output when no exception is thrown in the awaited method: )
+        comment(//   Result: Done )
+        comment(//   Task IsCanceled: False )
+        comment(//   Task IsFaulted:  False )
+
+        comment(// Output when an Exception is thrown in the awaited method: )
+        comment(//   Exception Message: Something happened. )
+        comment(//   Task IsCanceled: False )
+        comment(//   Task IsFaulted:  True )
+        comment(//   Task Exception Message: One or more errors occurred. )
+        comment(//   Task Inner Exception Message: Something happened. )
+
+        comment(// Output when a OperationCanceledException or TaskCanceledException )
+        comment(// is thrown in the awaited method: )
+        comment(//   Exception Message: canceled )
+        comment(//   Task IsCanceled: True )
+        comment(//   Task IsFaulted:  False)
+
+directive(public) keyword(async) ident(Task) ident(DoMultipleAsync)operator((\))
+operator({)
+    ident(Task) ident(theTask1) operator(=) ident(ExcAsync)operator(()ident(info)operator(:) string<delimiter(")content(First Task)delimiter(")>operator(\);)
+    ident(Task) ident(theTask2) operator(=) ident(ExcAsync)operator(()ident(info)operator(:) string<delimiter(")content(Second Task)delimiter(")>operator(\);)
+    ident(Task) ident(theTask3) operator(=) ident(ExcAsync)operator(()ident(info)operator(:) string<delimiter(")content(Third Task)delimiter(")>operator(\);)
+
+    ident(Task) ident(allTasks) operator(=) ident(Task)operator(.)ident(WhenAll)operator(()ident(theTask1)operator(,) ident(theTask2)operator(,) ident(theTask3)operator(\);)
+
+    keyword(try)
+    operator({)
+        keyword(await) ident(allTasks)operator(;)
+    operator(})
+    keyword(catch) operator(()ident(Exception) ident(ex)operator(\))
+    operator({)
+        ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Exception: )delimiter(")> operator(+) ident(ex)operator(.)ident(Message)operator(\);)
+        ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Task IsFaulted: )delimiter(")> operator(+) ident(allTasks)operator(.)ident(IsFaulted)operator(\);)
+        keyword(foreach) operator(()keyword(var) ident(inEx) keyword(in) ident(allTasks)operator(.)ident(Exception)operator(.)ident(InnerExceptions)operator(\))
+        operator({)
+            ident(Debug)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Task Inner Exception: )delimiter(")> operator(+) ident(inEx)operator(.)ident(Message)operator(\);)
+        operator(})
+    operator(})
+operator(})
+
+directive(private) keyword(async) ident(Task) ident(ExcAsync)operator(()predefined_type(string) ident(info)operator(\))
+operator({)
+    keyword(await) ident(Task)operator(.)ident(Delay)operator(()integer(100)operator(\);)
+
+    keyword(throw) keyword(new) ident(Exception)operator(()string<delimiter(")content(Error-)delimiter(")> operator(+) ident(info)operator(\);)
+operator(})
+
+comment(// Output: )
+comment(//   Exception: Error-First Task )
+comment(//   Task IsFaulted: True )
+comment(//   Task Inner Exception: Error-First Task )
+comment(//   Task Inner Exception: Error-Second Task )
+comment(//   Task Inner Exception: Error-Third Task)
+
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/dszsf989.aspx)
+
+directive(public) keyword(class) class(EHClass)
+operator({)
+    directive(void) ident(ReadFile)operator(()predefined_type(int) ident(index)operator(\))
+    operator({)
+        comment(// To run this code, substitute a valid path from your local machine )
+        predefined_type(string) ident(path) operator(=) string<delimiter(@")content(c:\\users\\public\\test.txt)delimiter(")>operator(;)
+        ident(System)operator(.)ident(IO)operator(.)ident(StreamReader) ident(file) operator(=) keyword(new) ident(System)operator(.)ident(IO)operator(.)ident(StreamReader)operator(()ident(path)operator(\);)
+        predefined_type(char)operator([]) ident(buffer) operator(=) keyword(new) predefined_type(char)operator([)integer(10)operator(];)
+        keyword(try)
+        operator({)
+            ident(file)operator(.)ident(ReadBlock)operator(()ident(buffer)operator(,) ident(index)operator(,) ident(buffer)operator(.)ident(Length)operator(\);)
+        operator(})
+        keyword(catch) operator(()ident(System)operator(.)ident(IO)operator(.)ident(IOException) ident(e)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Error reading from {0}. Message = {1})delimiter(")>operator(,) ident(path)operator(,) ident(e)operator(.)ident(Message)operator(\);)
+        operator(})
+
+        keyword(finally)
+        operator({)
+            keyword(if) operator(()ident(file) operator(!=) predefined_constant(null)operator(\))
+            operator({)
+                ident(file)operator(.)ident(Close)operator((\);)
+            operator(})
+        operator(})
+        comment(// Do something with buffer...)
+    operator(})
+
+operator(})

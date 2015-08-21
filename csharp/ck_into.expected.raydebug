@@ -1,0 +1,33 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb311045.aspx)
+
+keyword(class) class(IntoSample1)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+
+        comment(// Create a data source. )
+        predefined_type(string)operator([]) ident(words) operator(=) operator({) string<delimiter(")content(apples)delimiter(")>operator(,) string<delimiter(")content(blueberries)delimiter(")>operator(,) string<delimiter(")content(oranges)delimiter(")>operator(,) string<delimiter(")content(bananas)delimiter(")>operator(,) string<delimiter(")content(apricots)delimiter(")>operator(};)
+
+        comment(// Create the query. )
+        keyword(var) ident(wordGroups1) operator(=)
+            keyword(from) ident(w) keyword(in) ident(words)
+            keyword(group) ident(w) ident(by) ident(w)operator([)integer(0)operator(]) keyword(into) ident(fruitGroup)
+            keyword(where) ident(fruitGroup)operator(.)ident(Count)operator((\)) operator(>=) integer(2)
+            keyword(select) keyword(new) operator({) ident(FirstLetter) operator(=) ident(fruitGroup)operator(.)ident(Key)operator(,) ident(Words) operator(=) ident(fruitGroup)operator(.)ident(Count)operator((\)) operator(};)
+
+        comment(// Execute the query. Note that we only iterate over the groups,  )
+        comment(// not the items in each group )
+        keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(wordGroups1)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content( {0} has {1} elements.)delimiter(")>operator(,) ident(item)operator(.)ident(FirstLetter)operator(,) ident(item)operator(.)ident(Words)operator(\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+   a has 2 elements.
+   b has 2 elements.
+*/)

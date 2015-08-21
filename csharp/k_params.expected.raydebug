@@ -1,0 +1,59 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/w5zay9db.aspx)
+
+directive(public) keyword(class) class(MyClass)
+operator({)
+    directive(public) directive(static) directive(void) ident(UseParams)operator(()keyword(params) predefined_type(int)operator([]) ident(list)operator(\))
+    operator({)
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(list)operator(.)ident(Length)operator(;) ident(i)operator(++\))
+        operator({)
+            ident(Console)operator(.)ident(Write)operator(()ident(list)operator([)ident(i)operator(]) operator(+) string<delimiter(")content( )delimiter(")>operator(\);)
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator((\);)
+    operator(})
+
+    directive(public) directive(static) directive(void) ident(UseParams2)operator(()keyword(params) predefined_type(object)operator([]) ident(list)operator(\))
+    operator({)
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(list)operator(.)ident(Length)operator(;) ident(i)operator(++\))
+        operator({)
+            ident(Console)operator(.)ident(Write)operator(()ident(list)operator([)ident(i)operator(]) operator(+) string<delimiter(")content( )delimiter(")>operator(\);)
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator((\);)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// You can send a comma-separated list of arguments of the  )
+        comment(// specified type.)
+        ident(UseParams)operator(()integer(1)operator(,) integer(2)operator(,) integer(3)operator(,) integer(4)operator(\);)
+        ident(UseParams2)operator(()integer(1)operator(,) char('a')operator(,) string<delimiter(")content(test)delimiter(")>operator(\);)
+
+        comment(// A params parameter accepts zero or more arguments. )
+        comment(// The following calling statement displays only a blank line.)
+        ident(UseParams2)operator((\);)
+
+        comment(// An array argument can be passed, as long as the array )
+        comment(// type matches the parameter type of the method being called. )
+        predefined_type(int)operator([]) ident(myIntArray) operator(=) operator({) integer(5)operator(,) integer(6)operator(,) integer(7)operator(,) integer(8)operator(,) integer(9) operator(};)
+        ident(UseParams)operator(()ident(myIntArray)operator(\);)
+
+        predefined_type(object)operator([]) ident(myObjArray) operator(=) operator({) integer(2)operator(,) char('b')operator(,) string<delimiter(")content(test)delimiter(")>operator(,) string<delimiter(")content(again)delimiter(")> operator(};)
+        ident(UseParams2)operator(()ident(myObjArray)operator(\);)
+
+        comment(// The following call causes a compiler error because the object )
+        comment(// array cannot be converted into an integer array. )
+        comment(//UseParams(myObjArray\); )
+
+        comment(// The following call does not cause an error, but the entire  )
+        comment(// integer array becomes the first element of the params array.)
+        ident(UseParams2)operator(()ident(myIntArray)operator(\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+    1 2 3 4
+    1 a test
+
+    5 6 7 8 9
+    2 b test again
+    System.Int32[]
+*/)

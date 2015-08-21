@@ -1,0 +1,31 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb384067.aspx)
+
+directive(public) keyword(class) class(MyGenericClass)operator(<)ident(T)operator(>) keyword(where) ident(T)operator(:)ident(IComparable) operator({) operator(})
+
+keyword(class) class(MyClass)operator(<)ident(T)operator(,) ident(U)operator(>)
+    keyword(where) ident(T) operator(:) keyword(class) 
+    class(where) ident(U) operator(:) keyword(struct)
+error({) operator(})
+
+directive(public) keyword(class) class(MyGenericClass)operator(<)ident(T)operator(>) keyword(where) ident(T) operator(:) ident(IComparable)operator(,) keyword(new)operator((\))
+operator({)
+    comment(// The following line is not possible without new(\) constraint:)
+    ident(T) ident(item) operator(=) keyword(new) ident(T)operator((\);)
+operator(})
+
+keyword(interface) class(IMyInterface)
+operator({)
+operator(})
+
+keyword(class) class(Dictionary)operator(<)ident(TKey)operator(,) ident(TVal)operator(>)
+    keyword(where) ident(TKey) operator(:) ident(IComparable)operator(,) ident(IEnumerable)
+    keyword(where) ident(TVal) operator(:) ident(IMyInterface)
+operator({)
+    directive(public) directive(void) ident(Add)operator(()ident(TKey) ident(key)operator(,) ident(TVal) ident(val)operator(\))
+    operator({)
+    operator(})
+operator(})
+
+directive(public) predefined_type(bool) ident(MyMethod)operator(<)ident(T)operator(>()ident(T) ident(t)operator(\)) keyword(where) ident(T) operator(:) ident(IMyInterface) operator({) operator(})
+
+keyword(delegate) ident(T) ident(MyDelegate)operator(<)ident(T)operator(>(\)) keyword(where) ident(T) operator(:) keyword(new)operator((\))

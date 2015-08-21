@@ -1,0 +1,52 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/58918ffs.aspx)
+
+ident(System)operator(.)ident(Type) ident(type) operator(=) keyword(typeof)operator(()predefined_type(int)operator(\);)
+
+predefined_type(int) ident(i) operator(=) integer(0)operator(;)
+ident(System)operator(.)ident(Type) ident(type) operator(=) ident(i)operator(.)ident(GetType)operator((\);)
+
+predefined_type(string) ident(s) operator(=) ident(method)operator(.)ident(ReturnType)operator(.)ident(GetInterface)
+    operator(()keyword(typeof)operator(()ident(System)operator(.)ident(Collections)operator(.)ident(Generic)operator(.)ident(IEnumerable)operator(<>\))operator(.)ident(FullName)operator(\);)
+
+directive(public) keyword(class) class(ExampleClass)
+operator({)
+   directive(public) predefined_type(int) ident(sampleMember)operator(;)
+   directive(public) directive(void) ident(SampleMethod)operator((\)) operator({})
+
+   directive(static) directive(void) ident(Main)operator((\))
+   operator({)
+      ident(Type) ident(t) operator(=) keyword(typeof)operator(()ident(ExampleClass)operator(\);)
+      comment(// Alternatively, you could use )
+      comment(// ExampleClass obj = new ExampleClass(\); )
+      comment(// Type t = obj.GetType(\);)
+
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Methods:)delimiter(")>operator(\);)
+      ident(System)operator(.)ident(Reflection)operator(.)ident(MethodInfo)operator([]) ident(methodInfo) operator(=) ident(t)operator(.)ident(GetMethods)operator((\);)
+
+      keyword(foreach) operator(()ident(System)operator(.)ident(Reflection)operator(.)ident(MethodInfo) ident(mInfo) keyword(in) ident(methodInfo)operator(\))
+         ident(Console)operator(.)ident(WriteLine)operator(()ident(mInfo)operator(.)ident(ToString)operator((\)\);)
+
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Members:)delimiter(")>operator(\);)
+      ident(System)operator(.)ident(Reflection)operator(.)ident(MemberInfo)operator([]) ident(memberInfo) operator(=) ident(t)operator(.)ident(GetMembers)operator((\);)
+
+      keyword(foreach) operator(()ident(System)operator(.)ident(Reflection)operator(.)ident(MemberInfo) ident(mInfo) keyword(in) ident(memberInfo)operator(\))
+         ident(Console)operator(.)ident(WriteLine)operator(()ident(mInfo)operator(.)ident(ToString)operator((\)\);)
+   operator(})
+operator(})
+comment(/*
+ Output:
+    Methods:
+    Void SampleMethod(\)
+    System.String ToString(\)
+    Boolean Equals(System.Object\)
+    Int32 GetHashCode(\)
+    System.Type GetType(\)
+    Members:
+    Void SampleMethod(\)
+    System.String ToString(\)
+    Boolean Equals(System.Object\)
+    Int32 GetHashCode(\)
+    System.Type GetType(\)
+    Void .ctor(\)
+    Int32 sampleMember
+*/)

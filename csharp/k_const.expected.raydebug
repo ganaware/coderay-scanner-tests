@@ -1,0 +1,49 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/e6w8fe1b.aspx)
+
+keyword(const) predefined_type(int) ident(x) operator(=) integer(0)operator(;)
+directive(public) keyword(const) predefined_type(double) ident(gravitationalConstant) operator(=) float(6.673e-11)operator(;)
+directive(private) keyword(const) predefined_type(string) ident(productName) operator(=) string<delimiter(")content(Visual C#)delimiter(")>operator(;)
+
+directive(public) keyword(const) predefined_type(double) ident(x) operator(=) float(1.0)operator(,) ident(y) operator(=) float(2.0)operator(,) ident(z) operator(=) float(3.0)operator(;)
+
+directive(public) keyword(const) predefined_type(int) ident(c1) operator(=) integer(5)operator(;)
+directive(public) keyword(const) predefined_type(int) ident(c2) operator(=) ident(c1) operator(+) integer(100)operator(;)
+
+directive(public) keyword(class) class(ConstTest) 
+operator({)
+    keyword(class) class(SampleClass) 
+    operator({)
+        directive(public) predefined_type(int) ident(x)operator(;)
+        directive(public) predefined_type(int) ident(y)operator(;)
+        directive(public) keyword(const) predefined_type(int) ident(c1) operator(=) integer(5)operator(;)
+        directive(public) keyword(const) predefined_type(int) ident(c2) operator(=) ident(c1) operator(+) integer(5)operator(;)
+
+        directive(public) ident(SampleClass)operator(()predefined_type(int) ident(p1)operator(,) predefined_type(int) ident(p2)operator(\)) 
+        operator({)
+            ident(x) operator(=) ident(p1)operator(;) 
+            ident(y) operator(=) ident(p2)operator(;)
+        operator(})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        ident(SampleClass) ident(mC) operator(=) keyword(new) ident(SampleClass)operator(()integer(11)operator(,) integer(22)operator(\);)   
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(x = {0}, y = {1})delimiter(")>operator(,) ident(mC)operator(.)ident(x)operator(,) ident(mC)operator(.)ident(y)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(c1 = {0}, c2 = {1})delimiter(")>operator(,) 
+                          ident(SampleClass)operator(.)ident(c1)operator(,) ident(SampleClass)operator(.)ident(c2) operator(\);)
+    operator(})
+operator(})
+comment(/* Output
+    x = 11, y = 22
+    c1 = 5, c2 = 10
+ */)
+
+directive(public) keyword(class) class(SealedTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        keyword(const) predefined_type(int) ident(c) operator(=) integer(707)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(My local constant = {0})delimiter(")>operator(,) ident(c)operator(\);)
+    operator(})
+operator(})
+comment(// Output: My local constant = 707)

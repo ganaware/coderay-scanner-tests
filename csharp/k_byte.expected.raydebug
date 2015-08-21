@@ -1,0 +1,24 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/5bdb6693.aspx)
+
+predefined_type(byte) ident(myByte) operator(=) integer(255)operator(;)
+
+predefined_type(byte) ident(x) operator(=) integer(10)operator(,) ident(y) operator(=) integer(20)operator(;)
+
+comment(// Error: conversion from int to byte:)
+predefined_type(byte) ident(z) operator(=) ident(x) operator(+) ident(y)operator(;)
+
+comment(// OK: explicit conversion:)
+predefined_type(byte) ident(z) operator(=) operator(()predefined_type(byte)operator(\)()ident(x) operator(+) ident(y)operator(\);)
+
+comment(// Error: no implicit conversion from double:)
+predefined_type(byte) ident(x) operator(=) float(3.0)operator(;) 
+comment(// OK: explicit conversion:)
+predefined_type(byte) ident(y) operator(=) operator(()predefined_type(byte)operator(\))float(3.0)operator(;)
+
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({})
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(byte) ident(b)operator(\)) operator({})
+
+comment(// Calling the method with the int parameter:)
+ident(SampleMethod)operator(()integer(5)operator(\);)
+comment(// Calling the method with the byte parameter:)
+ident(SampleMethod)operator((()predefined_type(byte)operator(\))integer(5)operator(\);)

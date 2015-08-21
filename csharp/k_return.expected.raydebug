@@ -1,0 +1,22 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/1h3swy84.aspx)
+
+keyword(class) class(ReturnTest)
+operator({)
+    directive(static) predefined_type(double) ident(CalculateArea)operator(()predefined_type(int) ident(r)operator(\))
+    operator({)
+        predefined_type(double) ident(area) operator(=) ident(r) operator(*) ident(r) operator(*) ident(Math)operator(.)ident(PI)operator(;)
+        keyword(return) ident(area)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(int) ident(radius) operator(=) integer(5)operator(;)
+        predefined_type(double) ident(result) operator(=) ident(CalculateArea)operator(()ident(radius)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The area is {0:0.00})delimiter(")>operator(,) ident(result)operator(\);)
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(// Output: The area is 78.54)

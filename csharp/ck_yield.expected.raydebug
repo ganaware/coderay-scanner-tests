@@ -1,0 +1,63 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/9k7k7cf0.aspx)
+
+keyword(yield) keyword(return) operator(<)ident(expression)operator(>;)
+keyword(yield) keyword(break)operator(;)
+
+directive(public) keyword(class) class(PowersOf2)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Display powers of 2 up to the exponent of 8: )
+        keyword(foreach) operator(()predefined_type(int) ident(i) keyword(in) ident(Power)operator(()integer(2)operator(,) integer(8)operator(\)\))
+        operator({)
+            ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content({0} )delimiter(")>operator(,) ident(i)operator(\);)
+        operator(})
+    operator(})
+
+    directive(public) directive(static) ident(System)operator(.)ident(Collections)operator(.)ident(Generic)operator(.)ident(IEnumerable)operator(<)predefined_type(int)operator(>) ident(Power)operator(()predefined_type(int) ident(number)operator(,) predefined_type(int) ident(exponent)operator(\))
+    operator({)
+        predefined_type(int) ident(result) operator(=) integer(1)operator(;)
+
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(exponent)operator(;) ident(i)operator(++\))
+        operator({)
+            ident(result) operator(=) ident(result) operator(*) ident(number)operator(;)
+            keyword(yield) keyword(return) ident(result)operator(;)
+        operator(})
+    operator(})
+
+    comment(// Output: 2 4 8 16 32 64 128 256)
+operator(})
+
+directive(public) directive(static) keyword(class) class(GalaxyClass)
+operator({)
+    directive(public) directive(static) directive(void) ident(ShowGalaxies)operator((\))
+    operator({)
+        keyword(var) ident(theGalaxies) operator(=) keyword(new) ident(Galaxies)operator((\);)
+        keyword(foreach) operator(()ident(Galaxy) ident(theGalaxy) keyword(in) ident(theGalaxies)operator(.)ident(NextGalaxy)operator(\))
+        operator({)
+            ident(Debug)operator(.)ident(WriteLine)operator(()ident(theGalaxy)operator(.)ident(Name) operator(+) string<delimiter(")content( )delimiter(")> operator(+) ident(theGalaxy)operator(.)ident(MegaLightYears)operator(.)ident(ToString)operator((\)\);)
+        operator(})
+    operator(})
+
+    directive(public) keyword(class) class(Galaxies)
+    operator({)
+
+        directive(public) ident(System)operator(.)ident(Collections)operator(.)ident(Generic)operator(.)ident(IEnumerable)operator(<)ident(Galaxy)operator(>) ident(NextGalaxy)
+        operator({)
+            keyword(get)
+            operator({)
+                keyword(yield) keyword(return) keyword(new) ident(Galaxy) operator({) ident(Name) operator(=) string<delimiter(")content(Tadpole)delimiter(")>operator(,) ident(MegaLightYears) operator(=) integer(400) operator(};)
+                keyword(yield) keyword(return) keyword(new) ident(Galaxy) operator({) ident(Name) operator(=) string<delimiter(")content(Pinwheel)delimiter(")>operator(,) ident(MegaLightYears) operator(=) integer(25) operator(};)
+                keyword(yield) keyword(return) keyword(new) ident(Galaxy) operator({) ident(Name) operator(=) string<delimiter(")content(Milky Way)delimiter(")>operator(,) ident(MegaLightYears) operator(=) integer(0) operator(};)
+                keyword(yield) keyword(return) keyword(new) ident(Galaxy) operator({) ident(Name) operator(=) string<delimiter(")content(Andromeda)delimiter(")>operator(,) ident(MegaLightYears) operator(=) integer(3) operator(};)
+            operator(})
+        operator(})
+
+    operator(})
+
+    directive(public) keyword(class) class(Galaxy)
+    operator({)
+        directive(public) ident(String) ident(Name) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(MegaLightYears) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+    operator(})
+operator(})

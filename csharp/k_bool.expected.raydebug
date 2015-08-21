@@ -1,0 +1,32 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/c8f5xwh7.aspx)
+
+directive(public) keyword(class) class(BoolTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(bool) ident(b) operator(=) predefined_constant(true)operator(;)
+
+        comment(// WriteLine automatically converts the value of b to text.)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(b)operator(\);)
+
+        predefined_type(int) ident(days) operator(=) ident(DateTime)operator(.)ident(Now)operator(.)ident(DayOfYear)operator(;)
+
+
+        comment(// Assign the result of a boolean expression to b.)
+        ident(b) operator(=) operator(()ident(days) operator(%) integer(2) operator(==) integer(0)operator(\);)
+
+        comment(// Branch depending on whether b is true or false. )
+        keyword(if) operator(()ident(b)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(days is an even number)delimiter(")>operator(\);)
+        operator(})
+        keyword(else)
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(days is an odd number)delimiter(")>operator(\);)
+        operator(})   
+    operator(})
+operator(})
+comment(/* Output:
+  True
+  days is an <even/odd> number
+*/)

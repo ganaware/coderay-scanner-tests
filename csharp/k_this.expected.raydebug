@@ -1,0 +1,69 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/dk1507sz.aspx)
+
+directive(public) ident(Employee)operator(()predefined_type(string) ident(name)operator(,) predefined_type(string) keyword(alias)operator(\))
+operator({)
+    comment(// Use this to qualify the fields, name and alias: )
+    local_variable(this)operator(.)ident(name) operator(=) ident(name)operator(;)
+    local_variable(this)operator(.)keyword(alias) operator(=) keyword(alias)operator(;)
+operator(})
+
+ident(CalcTax)operator(()local_variable(this)operator(\);)
+
+directive(public) predefined_type(int) local_variable(this)operator([)predefined_type(int) ident(param)operator(])
+operator({)
+    keyword(get) operator({) keyword(return) ident(array)operator([)ident(param)operator(];) operator(})
+    keyword(set) operator({) ident(array)operator([)ident(param)operator(]) operator(=) keyword(value)operator(;) operator(})
+operator(})
+
+keyword(class) class(Employee)
+operator({)
+    directive(private) predefined_type(string) ident(name)operator(;)
+    directive(private) predefined_type(string) keyword(alias)operator(;)
+    directive(private) predefined_type(decimal) ident(salary) operator(=) float(3000.00m)operator(;)
+
+    comment(// Constructor: )
+    directive(public) ident(Employee)operator(()predefined_type(string) ident(name)operator(,) predefined_type(string) keyword(alias)operator(\))
+    operator({)
+        comment(// Use this to qualify the fields, name and alias: )
+        local_variable(this)operator(.)ident(name) operator(=) ident(name)operator(;)
+        local_variable(this)operator(.)keyword(alias) operator(=) keyword(alias)operator(;)
+    operator(})
+    comment(// Printing method: )
+    directive(public) directive(void) ident(printEmployee)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Name: {0})char(\\n)content(Alias: {1})delimiter(")>operator(,) ident(name)operator(,) keyword(alias)operator(\);)
+        comment(// Passing the object to the CalcTax method by using this:)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Taxes: {0:C})delimiter(")>operator(,) ident(Tax)operator(.)ident(CalcTax)operator(()local_variable(this)operator(\)\);)
+    operator(})
+
+    directive(public) predefined_type(decimal) ident(Salary)
+    operator({)
+        keyword(get) operator({) keyword(return) ident(salary)operator(;) operator(})
+    operator(})
+operator(})
+
+keyword(class) class(Tax)
+operator({)
+    directive(public) directive(static) predefined_type(decimal) ident(CalcTax)operator(()ident(Employee) ident(E)operator(\))
+    operator({)
+        keyword(return) float(0.08m) operator(*) ident(E)operator(.)ident(Salary)operator(;)
+    operator(})
+operator(})
+
+keyword(class) class(MainClass)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Create objects:)
+        ident(Employee) ident(E1) operator(=) keyword(new) ident(Employee)operator(()string<delimiter(")content(Mingda Pan)delimiter(")>operator(,) string<delimiter(")content(mpan)delimiter(")>operator(\);)
+
+        comment(// Display results:)
+        ident(E1)operator(.)ident(printEmployee)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+    Name: Mingda Pan
+    Alias: mpan
+    Taxes: $240.00
+ */)

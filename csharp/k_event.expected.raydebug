@@ -1,0 +1,24 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/8627sbea.aspx)
+
+directive(public) keyword(class) class(SampleEventArgs)
+operator({)
+    directive(public) ident(SampleEventArgs)operator(()predefined_type(string) ident(s)operator(\)) operator({) ident(Text) operator(=) ident(s)operator(;) operator(})
+    directive(public) ident(String) ident(Text) operator({)keyword(get)operator(;) directive(private) keyword(set)operator(;}) comment(// readonly)
+operator(})
+directive(public) keyword(class) class(Publisher)
+operator({)
+    comment(// Declare the delegate (if using non-generic pattern\). )
+    directive(public) keyword(delegate) directive(void) ident(SampleEventHandler)operator(()predefined_type(object) ident(sender)operator(,) ident(SampleEventArgs) ident(e)operator(\);)
+
+    comment(// Declare the event. )
+    directive(public) keyword(event) ident(SampleEventHandler) ident(SampleEvent)operator(;)
+
+    comment(// Wrap the event in a protected virtual method )
+    comment(// to enable derived classes to raise the event. )
+    directive(protected) directive(virtual) directive(void) ident(RaiseSampleEvent)operator((\))
+    operator({)
+        comment(// Raise the event by using the (\) operator. )
+        keyword(if) operator(()ident(SampleEvent) operator(!=) predefined_constant(null)operator(\))
+            ident(SampleEvent)operator(()local_variable(this)operator(,) keyword(new) ident(SampleEventArgs)operator(()string<delimiter(")content(Hello)delimiter(")>operator(\)\);)
+    operator(})
+operator(})

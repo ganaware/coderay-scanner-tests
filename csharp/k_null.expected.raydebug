@@ -1,0 +1,63 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/edakx9da.aspx)
+
+keyword(class) class(Program)
+operator({)
+    keyword(class) class(MyClass)
+    operator({)
+        directive(public) directive(void) ident(MyMethod)operator((\)) operator({) operator(})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+    operator({)
+        comment(// Set a breakpoint here to see that mc = null. )
+        comment(// However, the compiler considers it "unassigned." )
+        comment(// and generates a compiler error if you try to )
+        comment(// use the variable.)
+        ident(MyClass) ident(mc)operator(;)
+
+        comment(// Now the variable can be used, but...)
+        ident(mc) operator(=) predefined_constant(null)operator(;)
+
+        comment(// ... a method call on a null object raises  )
+        comment(// a run-time NullReferenceException. )
+        comment(// Uncomment the following line to see for yourself. )
+        comment(// mc.MyMethod(\); )
+
+        comment(// Now mc has a value.)
+        ident(mc) operator(=) keyword(new) ident(MyClass)operator((\);)
+
+        comment(// You can call its method.)
+        ident(mc)operator(.)ident(MyMethod)operator((\);)
+
+        comment(// Set mc to null again. The object it referenced )
+        comment(// is no longer accessible and can now be garbage-collected.)
+        ident(mc) operator(=) predefined_constant(null)operator(;)
+
+        comment(// A null string is not the same as an empty string. )
+        predefined_type(string) ident(s) operator(=) predefined_constant(null)operator(;)
+        predefined_type(string) ident(t) operator(=) ident(String)operator(.)ident(Empty)operator(;) comment(// Logically the same as "" )
+
+        comment(// Equals applied to any null object returns false. )
+        predefined_type(bool) ident(b) operator(=) operator(()ident(t)operator(.)ident(Equals)operator(()ident(s)operator(\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(b)operator(\);)
+
+        comment(// Equality operator also returns false when one )
+        comment(// operand is null.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Empty string {0} null string)delimiter(")>operator(,) ident(s) operator(==) ident(t) operator(?) string<delimiter(")content(equals)delimiter(")>operator(:) string<delimiter(")content(does not equal)delimiter(")>operator(\);)
+
+        comment(// Returns true.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(null == null is {0})delimiter(")>operator(,) predefined_constant(null) operator(==) predefined_constant(null)operator(\);)
+
+
+        comment(// A value type cannot be null )
+        comment(// int i = null; // Compiler error! )
+
+        comment(// Use a nullable value type instead: )
+        predefined_type(int)operator(?) ident(i) operator(=) predefined_constant(null)operator(;)
+
+        comment(// Keep the console window open in debug mode.)
+        ident(System)operator(.)ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(System)operator(.)ident(Console)operator(.)ident(ReadKey)operator((\);)
+
+    operator(})
+operator(})

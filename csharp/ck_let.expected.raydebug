@@ -1,0 +1,44 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb383976.aspx)
+
+keyword(class) class(LetSample1)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(string)operator([]) ident(strings) operator(=) 
+        operator({)
+            string<delimiter(")content(A penny saved is a penny earned.)delimiter(")>operator(,)
+            string<delimiter(")content(The early bird catches the worm.)delimiter(")>operator(,)
+            string<delimiter(")content(The pen is mightier than the sword.)delimiter(")> 
+        operator(};)
+
+        comment(// Split the sentence into an array of words )
+        comment(// and select those whose first letter is a vowel. )
+        keyword(var) ident(earlyBirdQuery) operator(=)
+            keyword(from) ident(sentence) keyword(in) ident(strings)
+            keyword(let) ident(words) operator(=) ident(sentence)operator(.)ident(Split)operator(()char(' ')operator(\))
+            keyword(from) ident(word) keyword(in) ident(words)
+            keyword(let) ident(w) operator(=) ident(word)operator(.)ident(ToLower)operator((\))
+            keyword(where) ident(w)operator([)integer(0)operator(]) operator(==) char('a') operator(||) ident(w)operator([)integer(0)operator(]) operator(==) char('e')
+                operator(||) ident(w)operator([)integer(0)operator(]) operator(==) char('i') operator(||) ident(w)operator([)integer(0)operator(]) operator(==) char('o')
+                operator(||) ident(w)operator([)integer(0)operator(]) operator(==) char('u')
+            keyword(select) ident(word)operator(;)
+
+        comment(// Execute the query. )
+        keyword(foreach) operator(()keyword(var) ident(v) keyword(in) ident(earlyBirdQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\")content({0})char(\\")content( starts with a vowel)delimiter(")>operator(,) ident(v)operator(\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+    "A" starts with a vowel
+    "is" starts with a vowel
+    "a" starts with a vowel
+    "earned." starts with a vowel
+    "early" starts with a vowel
+    "is" starts with a vowel
+*/)

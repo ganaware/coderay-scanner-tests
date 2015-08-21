@@ -1,0 +1,70 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/cscsdfbt.aspx)
+
+keyword(class) class(csrefKeywordsOperators)
+operator({)
+    keyword(class) class(Base)
+    operator({)
+        directive(public) directive(override) predefined_type(string)  ident(ToString)operator((\))
+        operator({)
+	             keyword(return) string<delimiter(")content(Base)delimiter(")>operator(;)
+        operator(})
+    operator(})
+    keyword(class) class(Derived) operator(:) ident(Base) 
+    operator({) operator(})
+
+    keyword(class) class(Program)
+    operator({)
+        directive(static) directive(void) ident(Main)operator((\))
+        operator({)
+
+            ident(Derived) ident(d) operator(=) keyword(new) ident(Derived)operator((\);)
+
+            ident(Base) ident(b) operator(=) ident(d) keyword(as) ident(Base)operator(;)
+            keyword(if) operator(()ident(b) operator(!=) predefined_constant(null)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()ident(b)operator(.)ident(ToString)operator((\)\);)
+            operator(})
+
+        operator(})
+    operator(})
+operator(})
+
+keyword(class) class(ClassA) operator({) operator(})
+keyword(class) class(ClassB) operator({) operator(})
+
+keyword(class) class(MainClass)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(object)operator([]) ident(objArray) operator(=) keyword(new) predefined_type(object)operator([)integer(6)operator(];)
+        ident(objArray)operator([)integer(0)operator(]) operator(=) keyword(new) ident(ClassA)operator((\);)
+        ident(objArray)operator([)integer(1)operator(]) operator(=) keyword(new) ident(ClassB)operator((\);)
+        ident(objArray)operator([)integer(2)operator(]) operator(=) string<delimiter(")content(hello)delimiter(")>operator(;)
+        ident(objArray)operator([)integer(3)operator(]) operator(=) integer(123)operator(;)
+        ident(objArray)operator([)integer(4)operator(]) operator(=) float(123.4)operator(;)
+        ident(objArray)operator([)integer(5)operator(]) operator(=) predefined_constant(null)operator(;)
+
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(objArray)operator(.)ident(Length)operator(;) operator(++)ident(i)operator(\))
+        operator({)
+            predefined_type(string) ident(s) operator(=) ident(objArray)operator([)ident(i)operator(]) keyword(as) predefined_type(string)operator(;)
+            ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content({0}:)delimiter(")>operator(,) ident(i)operator(\);)
+            keyword(if) operator(()ident(s) operator(!=) predefined_constant(null)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(')delimiter(")> operator(+) ident(s) operator(+) string<delimiter(")content(')delimiter(")>operator(\);)
+            operator(})
+            keyword(else)
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(not a string)delimiter(")>operator(\);)
+            operator(})
+        operator(})
+    operator(})
+operator(})
+comment(/*
+Output:
+0:not a string
+1:not a string
+2:'hello'
+3:not a string
+4:not a string
+5:not a string
+*/)

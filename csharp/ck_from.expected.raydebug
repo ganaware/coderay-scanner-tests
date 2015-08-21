@@ -1,0 +1,144 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb383978.aspx)
+
+keyword(class) class(LowNums)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)   
+        comment(// A simple data source. )
+        predefined_type(int)operator([]) ident(numbers) operator(=) operator({) integer(5)operator(,) integer(4)operator(,) integer(1)operator(,) integer(3)operator(,) integer(9)operator(,) integer(8)operator(,) integer(6)operator(,) integer(7)operator(,) integer(2)operator(,) integer(0) operator(};)
+
+        comment(// Create the query. )
+        comment(// lowNums is an IEnumerable<int> )
+        keyword(var) ident(lowNums) operator(=) keyword(from) ident(num) keyword(in) ident(numbers)
+            keyword(where) ident(num) operator(<) integer(5)
+            keyword(select) ident(num)operator(;)
+
+        comment(// Execute the query. )
+        keyword(foreach) operator(()predefined_type(int) ident(i) keyword(in) ident(lowNums)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(Write)operator(()ident(i) operator(+) string<delimiter(")content( )delimiter(")>operator(\);)
+        operator(})
+    operator(})        
+operator(})
+comment(// Output: 4 1 3 2 0)
+
+keyword(class) class(CompoundFrom)
+operator({)
+    comment(// The element type of the data source. )
+    directive(public) keyword(class) class(Student)
+    operator({)
+        directive(public) predefined_type(string) ident(LastName) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) ident(List)operator(<)predefined_type(int)operator(>) ident(Scores) operator({)keyword(get)operator(;) keyword(set)operator(;})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+
+        comment(// Use a collection initializer to create the data source. Note that  )
+        comment(// each element in the list contains an inner sequence of scores.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) keyword(new) ident(List)operator(<)ident(Student)operator(>)
+        operator({)
+           keyword(new) ident(Student) operator({)ident(LastName)operator(=)string<delimiter(")content(Omelchenko)delimiter(")>operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(97)operator(,) integer(72)operator(,) integer(81)operator(,) integer(60)operator(}},)
+           keyword(new) ident(Student) operator({)ident(LastName)operator(=)string<delimiter(")content(O'Donnell)delimiter(")>operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(75)operator(,) integer(84)operator(,) integer(91)operator(,) integer(39)operator(}},)
+           keyword(new) ident(Student) operator({)ident(LastName)operator(=)string<delimiter(")content(Mortensen)delimiter(")>operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(88)operator(,) integer(94)operator(,) integer(65)operator(,) integer(85)operator(}},)
+           keyword(new) ident(Student) operator({)ident(LastName)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(97)operator(,) integer(89)operator(,) integer(85)operator(,) integer(82)operator(}},)
+           keyword(new) ident(Student) operator({)ident(LastName)operator(=)string<delimiter(")content(Beebe)delimiter(")>operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(35)operator(,) integer(72)operator(,) integer(91)operator(,) integer(70)operator(}}) 
+        operator(};)        
+
+        comment(// Use a compound from to access the inner sequence within each element. )
+        comment(// Note the similarity to a nested foreach statement. )
+        keyword(var) ident(scoreQuery) operator(=) keyword(from) ident(student) keyword(in) ident(students)
+                         keyword(from) ident(score) keyword(in) ident(student)operator(.)ident(Scores)
+                            keyword(where) ident(score) operator(>) integer(90)
+                            keyword(select) keyword(new) operator({) ident(Last) operator(=) ident(student)operator(.)ident(LastName)operator(,) ident(score) operator(};)
+
+        comment(// Execute the queries.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(scoreQuery:)delimiter(")>operator(\);)
+        comment(// Rest the mouse pointer on scoreQuery in the following line to  )
+        comment(// see its type. The type is IEnumerable<'a>, where 'a is an  )
+        comment(// anonymous type defined as new {string Last, int score}. That is, )
+        comment(// each instance of this anonymous type has two members, a string  )
+        comment(// (Last\) and an int (score\). )
+        keyword(foreach) operator(()keyword(var) ident(student) keyword(in) ident(scoreQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0} Score: {1})delimiter(")>operator(,) ident(student)operator(.)ident(Last)operator(,) ident(student)operator(.)ident(score)operator(\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})       
+operator(})
+comment(/*
+scoreQuery:
+Omelchenko Score: 97
+O'Donnell Score: 91
+Mortensen Score: 94
+Garcia Score: 97
+Beebe Score: 91
+*/)
+
+keyword(class) class(CompoundFrom2)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(char)operator([]) ident(upperCase) operator(=) operator({) char('A')operator(,) char('B')operator(,) char('C') operator(};)
+        predefined_type(char)operator([]) ident(lowerCase) operator(=) operator({) char('x')operator(,) char('y')operator(,) char('z') operator(};)
+
+        comment(// The type of joinQuery1 is IEnumerable<'a>, where 'a )
+        comment(// indicates an anonymous type. This anonymous type has two )
+        comment(// members, upper and lower, both of type char. )
+        keyword(var) ident(joinQuery1) operator(=)
+            keyword(from) ident(upper) keyword(in) ident(upperCase)
+            keyword(from) ident(lower) keyword(in) ident(lowerCase)
+            keyword(select) keyword(new) operator({) ident(upper)operator(,) ident(lower) operator(};)
+
+        comment(// The type of joinQuery2 is IEnumerable<'a>, where 'a )
+        comment(// indicates an anonymous type. This anonymous type has two )
+        comment(// members, upper and lower, both of type char. )
+        keyword(var) ident(joinQuery2) operator(=)
+            keyword(from) ident(lower) keyword(in) ident(lowerCase)
+            keyword(where) ident(lower) operator(!=) char('x')
+            keyword(from) ident(upper) keyword(in) ident(upperCase)
+            keyword(select) keyword(new) operator({) ident(lower)operator(,) ident(upper) operator(};)
+
+
+        comment(// Execute the queries.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Cross join:)delimiter(")>operator(\);)
+        comment(// Rest the mouse pointer on joinQuery1 to verify its type. )
+        keyword(foreach) operator(()keyword(var) ident(pair) keyword(in) ident(joinQuery1)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0} is matched to {1})delimiter(")>operator(,) ident(pair)operator(.)ident(upper)operator(,) ident(pair)operator(.)ident(lower)operator(\);)
+        operator(})
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Filtered non-equijoin:)delimiter(")>operator(\);)
+        comment(// Rest the mouse pointer over joinQuery2 to verify its type. )
+        keyword(foreach) operator(()keyword(var) ident(pair) keyword(in) ident(joinQuery2)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0} is matched to {1})delimiter(")>operator(,) ident(pair)operator(.)ident(lower)operator(,) ident(pair)operator(.)ident(upper)operator(\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+        Cross join:
+        A is matched to x
+        A is matched to y
+        A is matched to z
+        B is matched to x
+        B is matched to y
+        B is matched to z
+        C is matched to x
+        C is matched to y
+        C is matched to z
+        Filtered non-equijoin:
+        y is matched to A
+        y is matched to B
+        y is matched to C
+        z is matched to A
+        z is matched to B
+        z is matched to C
+        */)

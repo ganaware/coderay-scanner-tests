@@ -1,0 +1,130 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/dd264741.aspx)
+
+keyword(class) class(Program)
+operator({)
+    directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+    operator({)
+        keyword(dynamic) ident(dyn) operator(=) integer(1)operator(;)
+        predefined_type(object) ident(obj) operator(=) integer(1)operator(;)
+
+        comment(// Rest the mouse pointer over dyn and obj to see their )
+        comment(// types at compile time.)
+        ident(System)operator(.)ident(Console)operator(.)ident(WriteLine)operator(()ident(dyn)operator(.)ident(GetType)operator((\)\);)
+        ident(System)operator(.)ident(Console)operator(.)ident(WriteLine)operator(()ident(obj)operator(.)ident(GetType)operator((\)\);)
+    operator(})
+operator(})
+
+keyword(class) class(ExampleClass)
+operator({)
+    comment(// A dynamic field. )
+    directive(static) keyword(dynamic) ident(field)operator(;)
+
+    comment(// A dynamic property.)
+    keyword(dynamic) ident(prop) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+
+    comment(// A dynamic return type and a dynamic parameter type. )
+    directive(public) keyword(dynamic) ident(exampleMethod)operator(()keyword(dynamic) ident(d)operator(\))
+    operator({)
+        comment(// A dynamic local variable.)
+        keyword(dynamic) ident(local) operator(=) string<delimiter(")content(Local variable)delimiter(")>operator(;)
+        predefined_type(int) ident(two) operator(=) integer(2)operator(;)
+
+        keyword(if) operator(()ident(d) keyword(is) predefined_type(int)operator(\))
+        operator({)
+            keyword(return) ident(local)operator(;)
+        operator(})
+        keyword(else)
+        operator({)
+            keyword(return) ident(two)operator(;)
+        operator(})
+    operator(})
+operator(})
+
+directive(static) directive(void) ident(convertToDynamic)operator((\))
+operator({)
+    keyword(dynamic) ident(d)operator(;)
+    predefined_type(int) ident(i) operator(=) integer(20)operator(;)
+    ident(d) operator(=) operator(()keyword(dynamic)operator(\))ident(i)operator(;)
+    ident(Console)operator(.)ident(WriteLine)operator(()ident(d)operator(\);)
+
+    predefined_type(string) ident(s) operator(=) string<delimiter(")content(Example string.)delimiter(")>operator(;)
+    ident(d) operator(=) operator(()keyword(dynamic)operator(\))ident(s)operator(;)
+    ident(Console)operator(.)ident(WriteLine)operator(()ident(d)operator(\);)
+
+    ident(DateTime) ident(dt) operator(=) ident(DateTime)operator(.)ident(Today)operator(;)
+    ident(d) operator(=) operator(()keyword(dynamic)operator(\))ident(dt)operator(;)
+    ident(Console)operator(.)ident(WriteLine)operator(()ident(d)operator(\);)
+
+operator(})
+comment(// Results: )
+comment(// 20 )
+comment(// Example string. )
+comment(// 2/17/2009 9:12:00 AM)
+
+predefined_type(int) ident(i) operator(=) integer(8)operator(;)
+keyword(dynamic) ident(d)operator(;)
+comment(// With the is operator. )
+comment(// The dynamic type behaves like object. The following )
+comment(// expression returns true unless someVar has the value null. )
+keyword(if) operator(()ident(someVar) keyword(is) keyword(dynamic)operator(\)) operator({) operator(})
+
+comment(// With the as operator.)
+ident(d) operator(=) ident(i) keyword(as) keyword(dynamic)operator(;)
+
+comment(// With typeof, as part of a constructed type.)
+ident(Console)operator(.)ident(WriteLine)operator(()keyword(typeof)operator(()ident(List)operator(<)keyword(dynamic)operator(>\)\);)
+
+comment(// The following statement causes a compiler error. )
+comment(//Console.WriteLine(typeof(dynamic\)\);)
+
+keyword(using) ident(System)operator(;)
+
+keyword(namespace) ident(DynamicExamples)
+operator({)
+    keyword(class) class(Program)
+    operator({)
+        directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+        operator({)
+            ident(ExampleClass) ident(ec) operator(=) keyword(new) ident(ExampleClass)operator((\);)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(ec)operator(.)ident(exampleMethod)operator(()integer(10)operator(\)\);)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(ec)operator(.)ident(exampleMethod)operator(()string<delimiter(")content(value)delimiter(")>operator(\)\);)
+
+            comment(// The following line causes a compiler error because exampleMethod )
+            comment(// takes only one argument. )
+            comment(//Console.WriteLine(ec.exampleMethod(10, 4\)\);)
+
+            keyword(dynamic) ident(dynamic_ec) operator(=) keyword(new) ident(ExampleClass)operator((\);)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(dynamic_ec)operator(.)ident(exampleMethod)operator(()integer(10)operator(\)\);)
+
+            comment(// Because dynamic_ec is dynamic, the following call to exampleMethod )
+            comment(// with two arguments does not produce an error at compile time. )
+            comment(// However, itdoes cause a run-time error.  )
+            comment(//Console.WriteLine(dynamic_ec.exampleMethod(10, 4\)\);)
+        operator(})
+    operator(})
+
+    keyword(class) class(ExampleClass)
+    operator({)
+        directive(static) keyword(dynamic) ident(field)operator(;)
+        keyword(dynamic) ident(prop) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+
+        directive(public) keyword(dynamic) ident(exampleMethod)operator(()keyword(dynamic) ident(d)operator(\))
+        operator({)
+            keyword(dynamic) ident(local) operator(=) string<delimiter(")content(Local variable)delimiter(")>operator(;)
+            predefined_type(int) ident(two) operator(=) integer(2)operator(;)
+
+            keyword(if) operator(()ident(d) keyword(is) predefined_type(int)operator(\))
+            operator({)
+                keyword(return) ident(local)operator(;)
+            operator(})
+            keyword(else)
+            operator({)
+                keyword(return) ident(two)operator(;)
+            operator(})
+        operator(})
+    operator(})
+operator(})
+comment(// Results: )
+comment(// Local variable )
+comment(// 2 )
+comment(// Local variable)

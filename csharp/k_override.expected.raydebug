@@ -1,0 +1,103 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ebca9ah3.aspx)
+
+directive(abstract) keyword(class) class(ShapesClass)
+operator({)
+    directive(abstract) directive(public) predefined_type(int) ident(Area)operator((\);)
+operator(})
+keyword(class) class(Square) operator(:) ident(ShapesClass)
+operator({)
+    predefined_type(int) ident(side) operator(=) integer(0)operator(;)
+
+    directive(public) ident(Square)operator(()predefined_type(int) ident(n)operator(\))
+    operator({)
+        ident(side) operator(=) ident(n)operator(;)
+    operator(})
+    comment(// Area method is required to avoid )
+    comment(// a compile-time error. )
+    directive(public) directive(override) predefined_type(int) ident(Area)operator((\))
+    operator({)
+        keyword(return) ident(side) operator(*) ident(side)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        ident(Square) ident(sq) operator(=) keyword(new) ident(Square)operator(()integer(12)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Area of the square = {0})delimiter(")>operator(,) ident(sq)operator(.)ident(Area)operator((\)\);)
+    operator(})
+
+    keyword(interface) class(I)
+    operator({)
+        directive(void) ident(M)operator((\);)
+    operator(})
+    directive(abstract) keyword(class) class(C) operator(:) ident(I)
+    operator({)
+        directive(public) directive(abstract) directive(void) ident(M)operator((\);)
+    operator(})
+
+operator(})
+comment(// Output: Area of the square = 144)
+
+keyword(class) class(TestOverride)
+operator({)
+    directive(public) keyword(class) class(Employee)
+    operator({)
+        directive(public) predefined_type(string) ident(name)operator(;)
+
+        comment(// Basepay is defined as protected, so that it may be  )
+        comment(// accessed only by this class and derrived classes. )
+        directive(protected) predefined_type(decimal) ident(basepay)operator(;)
+
+        comment(// Constructor to set the name and basepay values. )
+        directive(public) ident(Employee)operator(()predefined_type(string) ident(name)operator(,) predefined_type(decimal) ident(basepay)operator(\))
+        operator({)
+            local_variable(this)operator(.)ident(name) operator(=) ident(name)operator(;)
+            local_variable(this)operator(.)ident(basepay) operator(=) ident(basepay)operator(;)
+        operator(})
+
+        comment(// Declared virtual so it can be overridden. )
+        directive(public) directive(virtual) predefined_type(decimal) ident(CalculatePay)operator((\))
+        operator({)
+            keyword(return) ident(basepay)operator(;)
+        operator(})
+    operator(})
+
+    comment(// Derive a new class from Employee. )
+    directive(public) keyword(class) class(SalesEmployee) operator(:) ident(Employee)
+    operator({)
+        comment(// New field that will affect the base pay. )
+        directive(private) predefined_type(decimal) ident(salesbonus)operator(;)
+
+        comment(// The constructor calls the base-class version, and )
+        comment(// initializes the salesbonus field. )
+        directive(public) ident(SalesEmployee)operator(()predefined_type(string) ident(name)operator(,) predefined_type(decimal) ident(basepay)operator(,) 
+                  predefined_type(decimal) ident(salesbonus)operator(\)) operator(:) local_variable(base)operator(()ident(name)operator(,) ident(basepay)operator(\))
+        operator({)
+            local_variable(this)operator(.)ident(salesbonus) operator(=) ident(salesbonus)operator(;)
+        operator(})
+
+        comment(// Override the CalculatePay method  )
+        comment(// to take bonus into account. )
+        directive(public) directive(override) predefined_type(decimal) ident(CalculatePay)operator((\))
+        operator({)
+            keyword(return) ident(basepay) operator(+) ident(salesbonus)operator(;)
+        operator(})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Create some new employees.)
+        ident(SalesEmployee) ident(employee1) operator(=) keyword(new) ident(SalesEmployee)operator(()string<delimiter(")content(Alice)delimiter(")>operator(,) 
+                      integer(1000)operator(,) integer(500)operator(\);)
+        ident(Employee) ident(employee2) operator(=) keyword(new) ident(Employee)operator(()string<delimiter(")content(Bob)delimiter(")>operator(,) integer(1200)operator(\);)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Employee4 )delimiter(")> operator(+) ident(employee1)operator(.)ident(name) operator(+) 
+                  string<delimiter(")content( earned: )delimiter(")> operator(+) ident(employee1)operator(.)ident(CalculatePay)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Employee4 )delimiter(")> operator(+) ident(employee2)operator(.)ident(name) operator(+) 
+                  string<delimiter(")content( earned: )delimiter(")> operator(+) ident(employee2)operator(.)ident(CalculatePay)operator((\)\);)
+    operator(})
+operator(})
+comment(/*
+    Output:
+    Employee4 Alice earned: 1500
+    Employee4 Bob earned: 1200
+*/)

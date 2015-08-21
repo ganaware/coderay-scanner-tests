@@ -1,0 +1,6 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/cc713606.aspx)
+
+ident(IEnumerable)operator(<)predefined_type(string)operator(>) ident(sortAscendingQuery) operator(=)
+    keyword(from) ident(vegetable) keyword(in) ident(vegetables)
+    keyword(orderby) ident(vegetable) keyword(ascending) 
+    keyword(select) ident(vegetable)operator(;)

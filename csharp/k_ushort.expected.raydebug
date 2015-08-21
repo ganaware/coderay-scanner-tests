@@ -1,0 +1,22 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/cbf1574z.aspx)
+
+predefined_type(ushort) ident(myShort) operator(=) integer(65535)operator(;)
+
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({})
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(ushort) ident(s)operator(\)) operator({})
+
+comment(// Calls the method with the int parameter:)
+ident(SampleMethod)operator(()integer(5)operator(\);)
+comment(// Calls the method with the ushort parameter:)
+ident(SampleMethod)operator((()predefined_type(ushort)operator(\))integer(5)operator(\);)
+
+predefined_type(ushort) ident(x) operator(=) integer(5)operator(,) ident(y) operator(=) integer(12)operator(;)
+
+predefined_type(ushort) ident(z) operator(=) ident(x) operator(+) ident(y)operator(;)   comment(// Error: conversion from int to ushort)
+
+predefined_type(ushort) ident(z) operator(=) operator(()predefined_type(ushort)operator(\)()ident(x) operator(+) ident(y)operator(\);)   comment(// OK: explicit conversion)
+
+comment(// Error -- no implicit conversion from double:)
+predefined_type(ushort) ident(x) operator(=) float(3.0)operator(;) 
+comment(// OK -- explicit conversion:)
+predefined_type(ushort) ident(y) operator(=) operator(()predefined_type(ushort)operator(\))float(3.0)operator(;)

@@ -1,0 +1,29 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/9kkx3h3c.aspx)
+
+keyword(class) class(ObjectTest)
+operator({)
+   directive(public) predefined_type(int) ident(i) operator(=) integer(10)operator(;)
+operator(})
+
+keyword(class) class(MainClass2)
+operator({)
+   directive(static) directive(void) ident(Main)operator((\))
+   operator({)
+      predefined_type(object) ident(a)operator(;)
+      ident(a) operator(=) integer(1)operator(;)   comment(// an example of boxing)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(a)operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(a)operator(.)ident(GetType)operator((\)\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(a)operator(.)ident(ToString)operator((\)\);)
+
+      ident(a) operator(=) keyword(new) ident(ObjectTest)operator((\);)
+      ident(ObjectTest) ident(classRef)operator(;)
+      ident(classRef) operator(=) operator(()ident(ObjectTest)operator(\))ident(a)operator(;)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(classRef)operator(.)ident(i)operator(\);)
+   operator(})
+operator(})
+comment(/* Output
+    1
+    System.Int32
+    1
+ * 10
+*/)

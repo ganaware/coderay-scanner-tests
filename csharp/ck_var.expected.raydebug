@@ -1,0 +1,31 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb383973.aspx)
+
+keyword(var) ident(i) operator(=) integer(10)operator(;) comment(// implicitly typed)
+predefined_type(int) ident(i) operator(=) integer(10)operator(;) comment(//explicitly typed)
+
+comment(// Example #1: var is optional because )
+comment(// the select clause specifies a string )
+predefined_type(string)operator([]) ident(words) operator(=) operator({) string<delimiter(")content(apple)delimiter(")>operator(,) string<delimiter(")content(strawberry)delimiter(")>operator(,) string<delimiter(")content(grape)delimiter(")>operator(,) string<delimiter(")content(peach)delimiter(")>operator(,) string<delimiter(")content(banana)delimiter(")> operator(};)
+keyword(var) ident(wordQuery) operator(=) keyword(from) ident(word) keyword(in) ident(words)
+                keyword(where) ident(word)operator([)integer(0)operator(]) operator(==) char('g')
+                keyword(select) ident(word)operator(;)
+
+comment(// Because each element in the sequence is a string,  )
+comment(// not an anonymous type, var is optional here also. )
+keyword(foreach) operator(()predefined_type(string) ident(s) keyword(in) ident(wordQuery)operator(\))
+operator({)
+    ident(Console)operator(.)ident(WriteLine)operator(()ident(s)operator(\);)
+operator(})
+
+comment(// Example #2: var is required because )
+comment(// the select clause specifies an anonymous type )
+keyword(var) ident(custQuery) operator(=) keyword(from) ident(cust) keyword(in) ident(customers)
+                keyword(where) ident(cust)operator(.)ident(City) operator(==) string<delimiter(")content(Phoenix)delimiter(")> 
+                keyword(select) keyword(new) operator({) ident(cust)operator(.)ident(Name)operator(,) ident(cust)operator(.)ident(Phone) operator(};)
+
+comment(// var must be used because each item  )
+comment(// in the sequence is an anonymous type )
+keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(custQuery)operator(\))
+operator({)
+    ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Name={0}, Phone={1})delimiter(")>operator(,) ident(item)operator(.)ident(Name)operator(,) ident(item)operator(.)ident(Phone)operator(\);)
+operator(})

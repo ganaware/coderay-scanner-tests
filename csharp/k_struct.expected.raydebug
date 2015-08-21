@@ -1,0 +1,8 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ah19swz4.aspx)
+
+directive(public) keyword(struct) class(Book)
+operator({)
+    directive(public) predefined_type(decimal) ident(price)operator(;)
+    directive(public) predefined_type(string) ident(title)operator(;)
+    directive(public) predefined_type(string) ident(author)operator(;)
+operator(})

@@ -1,0 +1,72 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/14akc2c7.aspx)
+
+keyword(class) class(RefExample)
+operator({)
+    directive(static) directive(void) ident(Method)operator(()keyword(ref) predefined_type(int) ident(i)operator(\))
+    operator({)
+        comment(// Rest the mouse pointer over i to verify that it is an int. )
+        comment(// The following statement would cause a compiler error if i )
+        comment(// were boxed as an object.)
+        ident(i) operator(=) ident(i) operator(+) integer(44)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(int) ident(val) operator(=) integer(1)operator(;)
+        ident(Method)operator(()keyword(ref) ident(val)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(val)operator(\);)
+
+        comment(// Output: 45)
+    operator(})
+operator(})
+
+keyword(class) class(RefOverloadExample)
+operator({)
+    directive(public) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({) operator(})
+    directive(public) directive(void) ident(SampleMethod)operator(()keyword(ref) predefined_type(int) ident(i)operator(\)) operator({) operator(})
+operator(})
+
+keyword(class) class(RefExample2)
+operator({)
+    directive(static) directive(void) ident(ChangeByReference)operator(()keyword(ref) ident(Product) ident(itemRef)operator(\))
+    operator({)
+        comment(// The following line changes the address that is stored in   )
+        comment(// parameter itemRef. Because itemRef is a ref parameter, the )
+        comment(// address that is stored in variable item in Main also is changed.)
+        ident(itemRef) operator(=) keyword(new) ident(Product)operator(()string<delimiter(")content(Stapler)delimiter(")>operator(,) integer(99999)operator(\);)
+
+        comment(// You can change the value of one of the properties of )
+        comment(// itemRef. The change happens to item in Main as well.)
+        ident(itemRef)operator(.)ident(ItemID) operator(=) integer(12345)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Declare an instance of Product and display its initial values.)
+        ident(Product) ident(item) operator(=) keyword(new) ident(Product)operator(()string<delimiter(")content(Fasteners)delimiter(")>operator(,) integer(54321)operator(\);)
+        ident(System)operator(.)ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Original values in Main.  Name: {0}, ID: {1})char(\\n)delimiter(")>operator(,)
+            ident(item)operator(.)ident(ItemName)operator(,) ident(item)operator(.)ident(ItemID)operator(\);)
+
+        comment(// Send item to ChangeByReference as a ref argument.)
+        ident(ChangeByReference)operator(()keyword(ref) ident(item)operator(\);)
+        ident(System)operator(.)ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Back in Main.  Name: {0}, ID: {1})char(\\n)delimiter(")>operator(,)
+            ident(item)operator(.)ident(ItemName)operator(,) ident(item)operator(.)ident(ItemID)operator(\);)
+    operator(})
+operator(})
+
+keyword(class) class(Product)
+operator({)
+    directive(public) ident(Product)operator(()predefined_type(string) ident(name)operator(,) predefined_type(int) ident(newID)operator(\))
+    operator({)
+        ident(ItemName) operator(=) ident(name)operator(;)
+        ident(ItemID) operator(=) ident(newID)operator(;)
+    operator(})
+
+    directive(public) predefined_type(string) ident(ItemName) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+    directive(public) predefined_type(int) ident(ItemID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+operator(})
+
+comment(// Output:  )
+comment(//Original values in Main.  Name: Fasteners, ID: 54321 )
+
+comment(//Back in Main.  Name: Stapler, ID: 12345)

@@ -1,0 +1,58 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/0b0thckt.aspx)
+
+keyword(class) class(TestClass)
+operator({)
+    comment(// Methods, properties, fields, events, delegates )
+    comment(// and nested classes go here.)
+operator(})
+
+keyword(class) class(Child)
+operator({)
+    directive(private) predefined_type(int) ident(age)operator(;)
+    directive(private) predefined_type(string) ident(name)operator(;)
+
+    comment(// Default constructor: )
+    directive(public) ident(Child)operator((\))
+    operator({)
+        ident(name) operator(=) string<delimiter(")content(N/A)delimiter(")>operator(;)
+    operator(})
+
+    comment(// Constructor: )
+    directive(public) ident(Child)operator(()predefined_type(string) ident(name)operator(,) predefined_type(int) ident(age)operator(\))
+    operator({)
+        local_variable(this)operator(.)ident(name) operator(=) ident(name)operator(;)
+        local_variable(this)operator(.)ident(age) operator(=) ident(age)operator(;)
+    operator(})
+
+    comment(// Printing method: )
+    directive(public) directive(void) ident(PrintChild)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0}, {1} years old.)delimiter(")>operator(,) ident(name)operator(,) ident(age)operator(\);)
+    operator(})
+operator(})
+
+keyword(class) class(StringTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Create objects by using the new operator:)
+        ident(Child) ident(child1) operator(=) keyword(new) ident(Child)operator(()string<delimiter(")content(Craig)delimiter(")>operator(,) integer(11)operator(\);)
+        ident(Child) ident(child2) operator(=) keyword(new) ident(Child)operator(()string<delimiter(")content(Sally)delimiter(")>operator(,) integer(10)operator(\);)
+
+        comment(// Create an object using the default constructor:)
+        ident(Child) ident(child3) operator(=) keyword(new) ident(Child)operator((\);)
+
+        comment(// Display results:)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Child #1: )delimiter(")>operator(\);)
+        ident(child1)operator(.)ident(PrintChild)operator((\);)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Child #2: )delimiter(")>operator(\);)
+        ident(child2)operator(.)ident(PrintChild)operator((\);)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Child #3: )delimiter(")>operator(\);)
+        ident(child3)operator(.)ident(PrintChild)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+    Child #1: Craig, 11 years old.
+    Child #2: Sally, 10 years old.
+    Child #3: N/A, 0 years old.
+*/)

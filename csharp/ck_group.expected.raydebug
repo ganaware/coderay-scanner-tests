@@ -1,0 +1,234 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb384063.aspx)
+
+comment(// Query variable is an IEnumerable<IGrouping<char, Student>> )
+keyword(var) ident(studentQuery1) operator(=)
+    keyword(from) ident(student) keyword(in) ident(students)
+    keyword(group) ident(student) ident(by) ident(student)operator(.)ident(Last)operator([)integer(0)operator(];)
+
+comment(// Group students by the first letter of their last name )
+comment(// Query variable is an IEnumerable<IGrouping<char, Student>> )
+keyword(var) ident(studentQuery2) operator(=)
+    keyword(from) ident(student) keyword(in) ident(students)
+    keyword(group) ident(student) ident(by) ident(student)operator(.)ident(Last)operator([)integer(0)operator(]) keyword(into) ident(g)
+    keyword(orderby) ident(g)operator(.)ident(Key)
+    keyword(select) ident(g)operator(;)
+
+comment(// Same as previous example except we use the entire last name as a key. )
+comment(// Query variable is an IEnumerable<IGrouping<string, Student>> )
+keyword(var) ident(studentQuery3) operator(=)
+    keyword(from) ident(student) keyword(in) ident(students)
+    keyword(group) ident(student) ident(by) ident(student)operator(.)ident(Last)operator(;)
+
+keyword(class) class(GroupSample1)
+operator({)
+    comment(// The element type of the data source. )
+    directive(public) keyword(class) class(Student)
+    operator({)
+        directive(public) predefined_type(string) ident(First) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(string) ident(Last) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) ident(List)operator(<)predefined_type(int)operator(>) ident(Scores)operator(;)
+    operator(})
+
+    directive(public) directive(static) ident(List)operator(<)ident(Student)operator(>) ident(GetStudents)operator((\))
+    operator({)
+        comment(// Use a collection initializer to create the data source. Note that each element )
+        comment(//  in the list contains an inner sequence of scores.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) keyword(new) ident(List)operator(<)ident(Student)operator(>)
+        operator({)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Svetlana)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Omelchenko)delimiter(")>operator(,) ident(ID)operator(=)integer(111)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(97)operator(,) integer(72)operator(,) integer(81)operator(,) integer(60)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Claire)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(O'Donnell)delimiter(")>operator(,) ident(ID)operator(=)integer(112)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(75)operator(,) integer(84)operator(,) integer(91)operator(,) integer(39)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Sven)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Mortensen)delimiter(")>operator(,) ident(ID)operator(=)integer(113)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(99)operator(,) integer(89)operator(,) integer(91)operator(,) integer(95)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Cesar)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(114)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(72)operator(,) integer(81)operator(,) integer(65)operator(,) integer(84)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Debra)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(115)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(97)operator(,) integer(89)operator(,) integer(85)operator(,) integer(82)operator(}}) 
+        operator(};)
+
+        keyword(return) ident(students)operator(;)
+
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Obtain the data source.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) ident(GetStudents)operator((\);)
+
+        comment(// Group by true or false. )
+        comment(// Query variable is an IEnumerable<IGrouping<bool, Student>> )
+        keyword(var) ident(booleanGroupQuery) operator(=)
+            keyword(from) ident(student) keyword(in) ident(students)
+            keyword(group) ident(student) ident(by) ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\)) operator(>=) integer(80)operator(;) comment(//pass or fail! )
+
+        comment(// Execute the query and access items in each group )
+        keyword(foreach) operator(()keyword(var) ident(studentGroup) keyword(in) ident(booleanGroupQuery)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(studentGroup)operator(.)ident(Key) operator(==) predefined_constant(true) operator(?) string<delimiter(")content(High averages)delimiter(")> operator(:) string<delimiter(")content(Low averages)delimiter(")>operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(student) keyword(in) ident(studentGroup)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   {0}, {1}:{2})delimiter(")>operator(,) ident(student)operator(.)ident(Last)operator(,) ident(student)operator(.)ident(First)operator(,) ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\)\);)
+            operator(})
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+  Low averages
+   Omelchenko, Svetlana:77.5
+   O'Donnell, Claire:72.25
+   Garcia, Cesar:75.5
+  High averages
+   Mortensen, Sven:93.5
+   Garcia, Debra:88.25
+*/)
+keyword(class) class(GroupSample2)
+operator({)
+    comment(// The element type of the data source. )
+    directive(public) keyword(class) class(Student)
+    operator({)
+        directive(public) predefined_type(string) ident(First) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(string) ident(Last) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) ident(List)operator(<)predefined_type(int)operator(>) ident(Scores)operator(;)
+    operator(})
+
+    directive(public) directive(static) ident(List)operator(<)ident(Student)operator(>) ident(GetStudents)operator((\))
+    operator({)
+        comment(// Use a collection initializer to create the data source. Note that each element )
+        comment(//  in the list contains an inner sequence of scores.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) keyword(new) ident(List)operator(<)ident(Student)operator(>)
+        operator({)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Svetlana)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Omelchenko)delimiter(")>operator(,) ident(ID)operator(=)integer(111)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(97)operator(,) integer(72)operator(,) integer(81)operator(,) integer(60)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Claire)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(O'Donnell)delimiter(")>operator(,) ident(ID)operator(=)integer(112)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(75)operator(,) integer(84)operator(,) integer(91)operator(,) integer(39)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Sven)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Mortensen)delimiter(")>operator(,) ident(ID)operator(=)integer(113)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(99)operator(,) integer(89)operator(,) integer(91)operator(,) integer(95)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Cesar)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(114)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(72)operator(,) integer(81)operator(,) integer(65)operator(,) integer(84)operator(}},)
+           keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Debra)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(115)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>) operator({)integer(97)operator(,) integer(89)operator(,) integer(85)operator(,) integer(82)operator(}}) 
+        operator(};)
+
+        keyword(return) ident(students)operator(;)
+
+    operator(})
+
+    comment(// This method groups students into percentile ranges based on their )
+    comment(// grade average. The Average method returns a double, so to produce a whole )
+    comment(// number it is necessary to cast to int before dividing by 10.  )
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Obtain the data source.)
+        ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) ident(GetStudents)operator((\);)
+
+        comment(// Write the query. )
+        keyword(var) ident(studentQuery) operator(=)
+            keyword(from) ident(student) keyword(in) ident(students)
+            keyword(let) ident(avg) operator(=) operator(()predefined_type(int)operator(\))ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\))
+            keyword(group) ident(student) ident(by) operator(()ident(avg) operator(==) integer(0) operator(?) integer(0) operator(:) ident(avg) operator(/) integer(10)operator(\)) keyword(into) ident(g)
+            keyword(orderby) ident(g)operator(.)ident(Key)
+            keyword(select) ident(g)operator(;)            
+
+        comment(// Execute the query. )
+        keyword(foreach) operator(()keyword(var) ident(studentGroup) keyword(in) ident(studentQuery)operator(\))
+        operator({)
+            predefined_type(int) ident(temp) operator(=) ident(studentGroup)operator(.)ident(Key) operator(*) integer(10)operator(;)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Students with an average between {0} and {1})delimiter(")>operator(,) ident(temp)operator(,) ident(temp) operator(+) integer(10)operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(student) keyword(in) ident(studentGroup)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   {0}, {1}:{2})delimiter(")>operator(,) ident(student)operator(.)ident(Last)operator(,) ident(student)operator(.)ident(First)operator(,) ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\)\);)
+            operator(})
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+     Students with an average between 70 and 80
+       Omelchenko, Svetlana:77.5
+       O'Donnell, Claire:72.25
+       Garcia, Cesar:75.5
+     Students with an average between 80 and 90
+       Garcia, Debra:88.25
+     Students with an average between 90 and 100
+       Mortensen, Sven:93.5
+ */)
+
+keyword(class) class(GroupExample1)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Create a data source. )
+        predefined_type(string)operator([]) ident(words) operator(=) operator({) string<delimiter(")content(blueberry)delimiter(")>operator(,) string<delimiter(")content(chimpanzee)delimiter(")>operator(,) string<delimiter(")content(abacus)delimiter(")>operator(,) string<delimiter(")content(banana)delimiter(")>operator(,) string<delimiter(")content(apple)delimiter(")>operator(,) string<delimiter(")content(cheese)delimiter(")> operator(};)
+
+        comment(// Create the query. )
+        keyword(var) ident(wordGroups) operator(=)
+            keyword(from) ident(w) keyword(in) ident(words)
+            keyword(group) ident(w) ident(by) ident(w)operator([)integer(0)operator(];)
+
+        comment(// Execute the query. )
+        keyword(foreach) operator(()keyword(var) ident(wordGroup) keyword(in) ident(wordGroups)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Words that start with the letter '{0}':)delimiter(")>operator(,) ident(wordGroup)operator(.)ident(Key)operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(word) keyword(in) ident(wordGroup)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()ident(word)operator(\);)
+            operator(})
+        operator(})
+
+        comment(// Keep the console window open in debug mode)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})        
+operator(})
+comment(/* Output:
+      Words that start with the letter 'b':
+        blueberry
+        banana
+      Words that start with the letter 'c':
+        chimpanzee
+        cheese
+      Words that start with the letter 'a':
+        abacus
+        apple
+     */)
+
+keyword(class) class(GroupClauseExample2)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Create the data source. )
+        predefined_type(string)operator([]) ident(words2) operator(=) operator({) string<delimiter(")content(blueberry)delimiter(")>operator(,) string<delimiter(")content(chimpanzee)delimiter(")>operator(,) string<delimiter(")content(abacus)delimiter(")>operator(,) string<delimiter(")content(banana)delimiter(")>operator(,) string<delimiter(")content(apple)delimiter(")>operator(,) string<delimiter(")content(cheese)delimiter(")>operator(,) string<delimiter(")content(elephant)delimiter(")>operator(,) string<delimiter(")content(umbrella)delimiter(")>operator(,) string<delimiter(")content(anteater)delimiter(")> operator(};)
+
+        comment(// Create the query. )
+        keyword(var) ident(wordGroups2) operator(=)
+            keyword(from) ident(w) keyword(in) ident(words2)
+            keyword(group) ident(w) ident(by) ident(w)operator([)integer(0)operator(]) keyword(into) ident(grps)
+            keyword(where) operator(()ident(grps)operator(.)ident(Key) operator(==) char('a') operator(||) ident(grps)operator(.)ident(Key) operator(==) char('e') operator(||) ident(grps)operator(.)ident(Key) operator(==) char('i')
+                   operator(||) ident(grps)operator(.)ident(Key) operator(==) char('o') operator(||) ident(grps)operator(.)ident(Key) operator(==) char('u')operator(\))
+            keyword(select) ident(grps)operator(;)
+
+        comment(// Execute the query. )
+        keyword(foreach) operator(()keyword(var) ident(wordGroup) keyword(in) ident(wordGroups2)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Groups that start with a vowel: {0})delimiter(")>operator(,) ident(wordGroup)operator(.)ident(Key)operator(\);)
+            keyword(foreach) operator(()keyword(var) ident(word) keyword(in) ident(wordGroup)operator(\))
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   {0})delimiter(")>operator(,) ident(word)operator(\);)
+            operator(})
+        operator(})
+
+        comment(// Keep the console window open in debug mode)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output:
+    Groups that start with a vowel: a
+        abacus
+        apple
+        anteater
+    Groups that start with a vowel: e
+        elephant
+    Groups that start with a vowel: u
+        umbrella
+*/)    

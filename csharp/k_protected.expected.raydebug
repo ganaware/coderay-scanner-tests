@@ -1,0 +1,43 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bcd5672a.aspx)
+
+keyword(class) class(A)
+operator({)
+    directive(protected) predefined_type(int) ident(x) operator(=) integer(123)operator(;)
+operator(})
+
+keyword(class) class(B) operator(:) ident(A)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(A) ident(a) operator(=) keyword(new) ident(A)operator((\);)
+        ident(B) ident(b) operator(=) keyword(new) ident(B)operator((\);)
+
+        comment(// Error CS1540, because x can only be accessed by )
+        comment(// classes derived from A. )
+        comment(// a.x = 10;  )
+
+        comment(// OK, because this class derives from A.)
+        ident(b)operator(.)ident(x) operator(=) integer(10)operator(;)
+    operator(})
+operator(})
+
+keyword(class) class(Point) 
+operator({)
+    directive(protected) predefined_type(int) ident(x)operator(;) 
+    directive(protected) predefined_type(int) ident(y)operator(;)
+operator(})
+
+keyword(class) class(DerivedPoint)operator(:) ident(Point) 
+operator({)
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        ident(DerivedPoint) ident(dpoint) operator(=) keyword(new) ident(DerivedPoint)operator((\);)
+
+        comment(// Direct access to protected members:)
+        ident(dpoint)operator(.)ident(x) operator(=) integer(10)operator(;)
+        ident(dpoint)operator(.)ident(y) operator(=) integer(15)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(x = {0}, y = {1})delimiter(")>operator(,) ident(dpoint)operator(.)ident(x)operator(,) ident(dpoint)operator(.)ident(y)operator(\);) 
+    operator(})
+operator(})
+comment(// Output: x = 10, y = 15)
+

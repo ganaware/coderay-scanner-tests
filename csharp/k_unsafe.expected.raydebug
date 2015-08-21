@@ -1,0 +1,33 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/chfa2zb8.aspx)
+
+directive(unsafe) directive(static) directive(void) ident(FastCopy)operator(()predefined_type(byte)operator([]) ident(src)operator(,) predefined_type(byte)operator([]) ident(dst)operator(,) predefined_type(int) ident(count)operator(\))
+operator({)
+    comment(// Unsafe context: can use pointers here.)
+operator(})
+
+directive(unsafe) directive(static) directive(void) ident(FastCopy) operator(() predefined_type(byte)operator(*) ident(ps)operator(,) predefined_type(byte)operator(*) ident(pd)operator(,) predefined_type(int) ident(count) operator(\)) operator({)operator(.)operator(.)operator(.)operator(})
+
+directive(unsafe)
+operator({)
+    comment(// Unsafe context: can use pointers here.)
+operator(})
+
+comment(// compile with: /unsafe )
+
+keyword(class) class(UnsafeTest)
+operator({)
+   comment(// Unsafe method: takes pointer to int: )
+   directive(unsafe) directive(static) directive(void) ident(SquarePtrParam)operator(()predefined_type(int)operator(*) ident(p)operator(\))
+   operator({)
+      operator(*)ident(p) operator(*=) operator(*)ident(p)operator(;)
+   operator(})
+
+   directive(unsafe) directive(static) directive(void) ident(Main)operator((\))
+   operator({)
+      predefined_type(int) ident(i) operator(=) integer(5)operator(;)
+      comment(// Unsafe method: uses address-of operator (&\):)
+      ident(SquarePtrParam)operator((&)ident(i)operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()ident(i)operator(\);)
+   operator(})
+operator(})
+comment(// Output: 25)

@@ -1,0 +1,25 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/cc713648.aspx)
+
+keyword(class) class(Events) operator(:) ident(IDrawingObject)
+operator({)
+    keyword(event) ident(EventHandler) ident(PreDrawEvent)operator(;)
+
+    keyword(event) ident(EventHandler) ident(IDrawingObject)operator(.)ident(OnDraw)
+    operator({)
+        keyword(add)
+        operator({)
+            keyword(lock) operator(()ident(PreDrawEvent)operator(\))
+            operator({)
+                ident(PreDrawEvent) operator(+=) keyword(value)operator(;)
+            operator(})
+        operator(})
+        keyword(remove)
+        operator({)
+            keyword(lock) operator(()ident(PreDrawEvent)operator(\))
+            operator({)
+                ident(PreDrawEvent) operator(-=) keyword(value)operator(;)
+            operator(})
+        operator(})
+    operator(})
+
+operator(})

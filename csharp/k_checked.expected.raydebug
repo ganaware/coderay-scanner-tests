@@ -1,0 +1,75 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/74b4xzyw.aspx)
+
+comment(// If the previous sum is attempted in a checked environment, an  )
+comment(// OverflowException error is raised. )
+
+comment(// Checked expression.)
+ident(Console)operator(.)ident(WriteLine)operator(()directive(checked)operator(()integer(2147483647) operator(+) ident(ten)operator(\)\);)
+
+comment(// Checked block. )
+directive(checked)
+operator({)
+    predefined_type(int) ident(i3) operator(=) integer(2147483647) operator(+) ident(ten)operator(;)
+    ident(Console)operator(.)ident(WriteLine)operator(()ident(i3)operator(\);)
+operator(})
+
+keyword(class) class(OverFlowTest)
+operator({)
+    comment(// Set maxIntValue to the maximum value for integers. )
+    directive(static) predefined_type(int) ident(maxIntValue) operator(=) integer(2147483647)operator(;)
+
+    comment(// Using a checked expression. )
+    directive(static) predefined_type(int) ident(CheckedMethod)operator((\))
+    operator({)
+        predefined_type(int) ident(z) operator(=) integer(0)operator(;)
+        keyword(try)
+        operator({)
+            comment(// The following line raises an exception because it is checked.)
+            ident(z) operator(=) directive(checked)operator(()ident(maxIntValue) operator(+) integer(10)operator(\);)
+        operator(})
+        keyword(catch) operator(()ident(System)operator(.)ident(OverflowException) ident(e)operator(\))
+        operator({)
+            comment(// The following line displays information about the error.)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(CHECKED and CAUGHT:  )delimiter(")> operator(+) ident(e)operator(.)ident(ToString)operator((\)\);)
+        operator(})
+        comment(// The value of z is still 0. )
+        keyword(return) ident(z)operator(;)
+    operator(})
+
+    comment(// Using an unchecked expression. )
+    directive(static) predefined_type(int) ident(UncheckedMethod)operator((\))
+    operator({)
+        predefined_type(int) ident(z) operator(=) integer(0)operator(;)
+        keyword(try)
+        operator({)
+            comment(// The following calculation is unchecked and will not  )
+            comment(// raise an exception.)
+            ident(z) operator(=) ident(maxIntValue) operator(+) integer(10)operator(;)
+        operator(})
+        keyword(catch) operator(()ident(System)operator(.)ident(OverflowException) ident(e)operator(\))
+        operator({)
+            comment(// The following line will not be executed.)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(UNCHECKED and CAUGHT:  )delimiter(")> operator(+) ident(e)operator(.)ident(ToString)operator((\)\);)
+        operator(})
+        comment(// Because of the undetected overflow, the sum of 2147483647 + 10 is  )
+        comment(// returned as -2147483639. )
+        keyword(return) ident(z)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\n)content(CHECKED output value is: {0})delimiter(")>operator(,)
+                          ident(CheckedMethod)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(UNCHECKED output value is: {0})delimiter(")>operator(,)
+                          ident(UncheckedMethod)operator((\)\);)
+    operator(})
+    comment(/*
+   Output:
+   CHECKED and CAUGHT:  System.OverflowException: Arithmetic operation resulted
+   in an overflow.
+      at ConsoleApplication1.OverFlowTest.CheckedMethod(\) 
+
+   CHECKED output value is: 0
+   UNCHECKED output value is: -2147483639
+ */)
+operator(})

@@ -1,0 +1,34 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/e59b22c5.aspx)
+
+operator([)ident(DllImport)operator(()string<delimiter(")content(avifil32.dll)delimiter(")>operator(\)])
+directive(private) directive(static) directive(extern) directive(void) ident(AVIFileInit)operator((\);)
+
+comment(//using System.Runtime.InteropServices; )
+keyword(class) class(ExternTest)
+operator({)
+    operator([)ident(DllImport)operator(()string<delimiter(")content(User32.dll)delimiter(")>operator(,) ident(CharSet)operator(=)ident(CharSet)operator(.)ident(Unicode)operator(\)]) 
+    directive(public) directive(static) directive(extern) predefined_type(int) ident(MessageBox)operator(()ident(IntPtr) ident(h)operator(,) predefined_type(string) ident(m)operator(,) predefined_type(string) ident(c)operator(,) predefined_type(int) ident(type)operator(\);)
+
+    directive(static) predefined_type(int) ident(Main)operator((\))
+    operator({)
+        predefined_type(string) ident(myString)operator(;)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Enter your message: )delimiter(")>operator(\);)
+        ident(myString) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+        keyword(return) ident(MessageBox)operator((()ident(IntPtr)operator(\))integer(0)operator(,) ident(myString)operator(,) string<delimiter(")content(My Message Box)delimiter(")>operator(,) integer(0)operator(\);)
+    operator(})
+
+operator(})
+
+comment(// cm.cs)
+keyword(using) ident(System)operator(;)
+keyword(using) ident(System)operator(.)ident(Runtime)operator(.)ident(InteropServices)operator(;)
+directive(public) keyword(class) class(MainClass) 
+operator({)
+   operator([)ident(DllImport)operator(()string<delimiter(")content(Cmdll.dll)delimiter(")>operator(\)])
+   directive(public) directive(static) directive(extern) predefined_type(int) ident(SampleMethod)operator(()predefined_type(int) ident(x)operator(\);)
+
+   directive(static) directive(void) ident(Main)operator((\)) 
+   operator({)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(SampleMethod(\) returns {0}.)delimiter(")>operator(,) ident(SampleMethod)operator(()integer(5)operator(\)\);)
+   operator(})
+operator(})

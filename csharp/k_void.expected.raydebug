@@ -1,0 +1,6 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/yah0tteb.aspx)
+
+directive(public) directive(void) ident(SampleMethod)operator((\))
+operator({)
+    comment(// Body of the method.)
+operator(})

@@ -1,0 +1,102 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/13940fs2.aspx)
+
+keyword(class) class(SwitchTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Coffee sizes: 1=Small 2=Medium 3=Large)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Please enter your selection: )delimiter(")>operator(\);)
+        predefined_type(string) ident(s) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+        predefined_type(int) ident(n) operator(=) predefined_type(int)operator(.)ident(Parse)operator(()ident(s)operator(\);)
+        predefined_type(int) ident(cost) operator(=) integer(0)operator(;)
+        keyword(switch) operator(()ident(n)operator(\))
+        operator({)
+            keyword(case) integer(1)operator(:)
+                ident(cost) operator(+=) integer(25)operator(;)
+                keyword(break)operator(;)
+            keyword(case) integer(2)operator(:)
+                ident(cost) operator(+=) integer(25)operator(;)
+                keyword(goto) keyword(case) integer(1)operator(;)
+            keyword(case) integer(3)operator(:)
+                ident(cost) operator(+=) integer(50)operator(;)
+                keyword(goto) keyword(case) integer(1)operator(;)
+            keyword(default)operator(:)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Invalid selection.)delimiter(")>operator(\);)
+                keyword(break)operator(;)
+        operator(})
+        keyword(if) operator(()ident(cost) operator(!=) integer(0)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Please insert {0} cents.)delimiter(")>operator(,) ident(cost)operator(\);)
+        operator(})
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Thank you for your business.)delimiter(")>operator(\);)
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Sample Input:  2
+
+Sample Output:
+Coffee sizes: 1=Small 2=Medium 3=Large
+Please enter your selection: 2
+Please insert 50 cents.
+Thank you for your business.
+*/)
+
+directive(public) keyword(class) class(GotoTest1)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(int) ident(x) operator(=) integer(200)operator(,) ident(y) operator(=) integer(4)operator(;)
+        predefined_type(int) ident(count) operator(=) integer(0)operator(;)
+        predefined_type(string)operator([,]) ident(array) operator(=) keyword(new) predefined_type(string)operator([)ident(x)operator(,) ident(y)operator(];)
+
+        comment(// Initialize the array: )
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(x)operator(;) ident(i)operator(++\))
+
+            keyword(for) operator(()predefined_type(int) ident(j) operator(=) integer(0)operator(;) ident(j) operator(<) ident(y)operator(;) ident(j)operator(++\))
+                ident(array)operator([)ident(i)operator(,) ident(j)operator(]) operator(=) operator((++)ident(count)operator(\))operator(.)ident(ToString)operator((\);)
+
+        comment(// Read input:)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Enter the number to search for: )delimiter(")>operator(\);)
+
+        comment(// Input a string: )
+        predefined_type(string) ident(myNumber) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+
+        comment(// Search: )
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(x)operator(;) ident(i)operator(++\))
+        operator({)
+            keyword(for) operator(()predefined_type(int) ident(j) operator(=) integer(0)operator(;) ident(j) operator(<) ident(y)operator(;) ident(j)operator(++\))
+            operator({)
+                keyword(if) operator(()ident(array)operator([)ident(i)operator(,) ident(j)operator(])operator(.)ident(Equals)operator(()ident(myNumber)operator(\)\))
+                operator({)
+                    keyword(goto) ident(Found)operator(;)
+                operator(})
+            operator(})
+        operator(})
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The number {0} was not found.)delimiter(")>operator(,) ident(myNumber)operator(\);)
+        keyword(goto) ident(Finish)operator(;)
+
+    label(Found:)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The number {0} is found.)delimiter(")>operator(,) ident(myNumber)operator(\);)
+
+    label(Finish:)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(End of search.)delimiter(")>operator(\);)
+
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Sample Input: 44
+
+Sample Output
+Enter the number to search for: 44
+The number 44 is found.
+End of search.
+*/)

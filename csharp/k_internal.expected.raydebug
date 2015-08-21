@@ -1,0 +1,21 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/7c5ka91b.aspx)
+
+directive(public) keyword(class) class(BaseClass) 
+operator({)
+    comment(// Only accessible within the same assembly)
+    directive(internal) directive(static) predefined_type(int) ident(x) operator(=) integer(0)operator(;)
+operator(})
+
+comment(// Assembly1.cs)
+comment(// Compile with: /target:library)
+directive(internal) keyword(class) class(BaseClass) 
+operator({)
+   directive(public) directive(static) predefined_type(int) ident(intM) operator(=) integer(0)operator(;)
+operator(})
+
+comment(// Assembly2.cs)
+comment(// Compile with: /target:library)
+directive(public) keyword(class) class(BaseClass) 
+operator({)
+   directive(internal) directive(static) predefined_type(int) ident(intM) operator(=) integer(0)operator(;)
+operator(})

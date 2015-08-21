@@ -1,0 +1,120 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/adbctzc4.aspx)
+
+keyword(class) class(BreakTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(1)operator(;) ident(i) operator(<=) integer(100)operator(;) ident(i)operator(++\))
+        operator({)
+            keyword(if) operator(()ident(i) operator(==) integer(5)operator(\))
+            operator({)
+                keyword(break)operator(;)
+            operator(})
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(i)operator(\);)
+        operator(})
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* 
+ Output:
+    1
+    2
+    3
+    4  
+*/)
+
+keyword(class) class(BreakInNestedLoops)
+operator({)
+    directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+    operator({)
+
+        predefined_type(int)operator([]) ident(numbers) operator(=) operator({) integer(0)operator(,) integer(1)operator(,) integer(2)operator(,) integer(3)operator(,) integer(4)operator(,) integer(5)operator(,) integer(6)operator(,) integer(7)operator(,) integer(8)operator(,) integer(9) operator(};)
+        predefined_type(char)operator([]) ident(letters) operator(=) operator({) char('a')operator(,) char('b')operator(,) char('c')operator(,) char('d')operator(,) char('e')operator(,) char('f')operator(,) char('g')operator(,) char('h')operator(,) char('i')operator(,) char('j') operator(};)
+
+        comment(// Outer loop )
+        keyword(for) operator(()predefined_type(int) ident(x) operator(=) integer(0)operator(;) ident(x) operator(<) ident(numbers)operator(.)ident(Length)operator(;) ident(x)operator(++\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(num = {0})delimiter(")>operator(,) ident(numbers)operator([)ident(x)operator(]\);)
+
+            comment(// Inner loop )
+            keyword(for) operator(()predefined_type(int) ident(y) operator(=) integer(0)operator(;) ident(y) operator(<) ident(letters)operator(.)ident(Length)operator(;) ident(y)operator(++\))
+            operator({)
+                keyword(if) operator(()ident(y) operator(==) ident(x)operator(\))
+                operator({)
+                    comment(// Return control to outer loop )
+                    keyword(break)operator(;)
+                operator(})
+                ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content( {0} )delimiter(")>operator(,) ident(letters)operator([)ident(y)operator(]\);)
+            operator(})
+            ident(Console)operator(.)ident(WriteLine)operator((\);)
+        operator(})
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+
+comment(/*
+ * Output:
+    num = 0
+
+    num = 1
+     a
+    num = 2
+     a  b
+    num = 3
+     a  b  c
+    num = 4
+     a  b  c  d
+    num = 5
+     a  b  c  d  e
+    num = 6
+     a  b  c  d  e  f
+    num = 7
+     a  b  c  d  e  f  g
+    num = 8
+     a  b  c  d  e  f  g  h
+    num = 9
+     a  b  c  d  e  f  g  h  i
+ */)
+
+keyword(class) class(Switch)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(Write)operator(()string<delimiter(")content(Enter your selection (1, 2, or 3\): )delimiter(")>operator(\);)
+        predefined_type(string) ident(s) operator(=) ident(Console)operator(.)ident(ReadLine)operator((\);)
+        predefined_type(int) ident(n) operator(=) ident(Int32)operator(.)ident(Parse)operator(()ident(s)operator(\);)
+
+        keyword(switch) operator(()ident(n)operator(\))
+        operator({)
+            keyword(case) integer(1)operator(:)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Current value is {0})delimiter(")>operator(,) integer(1)operator(\);)
+                keyword(break)operator(;)
+            keyword(case) integer(2)operator(:)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Current value is {0})delimiter(")>operator(,) integer(2)operator(\);)
+                keyword(break)operator(;)
+            keyword(case) integer(3)operator(:)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Current value is {0})delimiter(")>operator(,) integer(3)operator(\);)
+                keyword(break)operator(;)
+            keyword(default)operator(:)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Sorry, invalid selection.)delimiter(")>operator(\);)
+                keyword(break)operator(;)
+        operator(})
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Sample Input: 1
+
+Sample Output:
+Enter your selection (1, 2, or 3\): 1
+Current value is 1
+*/)

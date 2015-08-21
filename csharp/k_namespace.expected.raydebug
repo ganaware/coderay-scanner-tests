@@ -1,0 +1,57 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/z2kcy19k.aspx)
+
+keyword(namespace) ident(SampleNamespace)
+operator({)
+    keyword(class) class(SampleClass) operator({) operator(})
+
+    keyword(interface) class(SampleInterface) operator({) operator(})
+
+    keyword(struct) class(SampleStruct) operator({) operator(})
+
+    keyword(enum) ident(SampleEnum) operator({) ident(a)operator(,) ident(b) operator(})
+
+    keyword(delegate) directive(void) ident(SampleDelegate)operator(()predefined_type(int) ident(i)operator(\);)
+
+    keyword(namespace) ident(SampleNamespace)operator(.)ident(Nested)
+    operator({)
+        keyword(class) class(SampleClass2) operator({) operator(})
+    operator(})
+operator(})
+
+keyword(namespace) ident(MyCompany)operator(.)ident(Proj1)
+operator({)
+    keyword(class) class(MyClass)
+    operator({)
+    operator(})
+operator(})
+
+keyword(namespace) ident(MyCompany)operator(.)ident(Proj1)
+operator({)
+    keyword(class) class(MyClass1)
+    operator({)
+    operator(})
+operator(})
+
+keyword(namespace) ident(SomeNameSpace)
+operator({)
+    directive(public) keyword(class) class(MyClass) 
+    operator({)
+        directive(static) directive(void) ident(Main)operator((\)) 
+        operator({)
+            ident(Nested)operator(.)ident(NestedNameSpaceClass)operator(.)ident(SayHello)operator((\);)
+        operator(})
+    operator(})
+
+    comment(// a nested namespace )
+    keyword(namespace) ident(Nested)   
+    operator({)
+        directive(public) keyword(class) class(NestedNameSpaceClass) 
+        operator({)
+            directive(public) directive(static) directive(void) ident(SayHello)operator((\)) 
+            operator({)
+                ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Hello)delimiter(")>operator(\);)
+            operator(})
+        operator(})
+    operator(})
+operator(})
+comment(// Output: Hello)

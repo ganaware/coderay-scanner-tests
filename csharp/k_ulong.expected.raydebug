@@ -1,0 +1,20 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/t98873t4.aspx)
+
+predefined_type(ulong) ident(uLong) operator(=) integer(9223372036854775808)operator(;)
+
+ident(Console)operator(.)ident(WriteLine)operator(()integer(9223372036854775808L)operator(.)ident(GetType)operator((\)\);)
+ident(Console)operator(.)ident(WriteLine)operator(()integer(123UL)operator(.)ident(GetType)operator((\)\);)
+ident(Console)operator(.)ident(WriteLine)operator((()integer(123UL) operator(+) integer(456)operator(\))operator(.)ident(GetType)operator((\)\);)
+
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({})
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(ulong) ident(l)operator(\)) operator({})
+
+ident(SampleMethod)operator(()integer(5)operator(\);)    comment(// Calling the method with the int parameter)
+ident(SampleMethod)operator(()integer(5UL)operator(\);)  comment(// Calling the method with the ulong parameter)
+
+predefined_type(long) ident(long1) operator(=) integer(8UL)operator(;)   comment(// Error: no implicit conversion from ulong)
+
+comment(// Error -- no implicit conversion from double:)
+predefined_type(ulong) ident(x) operator(=) float(3.0)operator(;)
+comment(// OK -- explicit conversion:)
+predefined_type(ulong) ident(y) operator(=) operator(()predefined_type(ulong)operator(\))float(3.0)operator(;)  

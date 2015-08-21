@@ -1,0 +1,29 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/1ah5wsex.aspx)
+
+keyword(class) class(MyException) operator(:) ident(System)operator(.)ident(Exception) operator({})
+comment(// ...)
+keyword(throw) keyword(new) ident(MyException)operator((\);)
+
+directive(public) keyword(class) class(ThrowTest2)
+operator({)
+
+    directive(static) predefined_type(int) ident(GetNumber)operator(()predefined_type(int) ident(index)operator(\))
+    operator({)
+        predefined_type(int)operator([]) ident(nums) operator(=) operator({) integer(300)operator(,) integer(600)operator(,) integer(900) operator(};)
+        keyword(if) operator(()ident(index) operator(>) ident(nums)operator(.)ident(Length)operator(\))
+        operator({)
+            keyword(throw) keyword(new) ident(IndexOutOfRangeException)operator((\);)
+        operator(})
+        keyword(return) ident(nums)operator([)ident(index)operator(];)
+
+    operator(})
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        predefined_type(int) ident(result) operator(=) ident(GetNumber)operator(()integer(3)operator(\);)
+
+    operator(})
+operator(})
+comment(/*
+    Output:
+    The System.IndexOutOfRangeException exception occurs.
+*/)

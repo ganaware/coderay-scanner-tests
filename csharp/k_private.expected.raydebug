@@ -1,0 +1,42 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/st6sy9xe.aspx)
+
+keyword(class) class(Employee)
+operator({)
+    directive(private) predefined_type(int) ident(i)operator(;)
+    predefined_type(double) ident(d)operator(;)   comment(// private access by default)
+operator(})
+
+keyword(class) class(Employee2)
+operator({)
+    directive(private) predefined_type(string) ident(name) operator(=) string<delimiter(")content(FirstName, LastName)delimiter(")>operator(;)
+    directive(private) predefined_type(double) ident(salary) operator(=) float(100.0)operator(;)
+
+    directive(public) predefined_type(string) ident(GetName)operator((\))
+    operator({)
+        keyword(return) ident(name)operator(;)
+    operator(})
+
+    directive(public) predefined_type(double) ident(Salary)
+    operator({)
+        keyword(get) operator({) keyword(return) ident(salary)operator(;) operator(})
+    operator(})
+operator(})
+
+keyword(class) class(PrivateTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Employee2) ident(e) operator(=) keyword(new) ident(Employee2)operator((\);)
+
+        comment(// The data members are inaccessible (private\), so )
+        comment(// they can't be accessed like this: )
+        comment(//    string n = e.name; )
+        comment(//    double s = e.salary; )
+
+        comment(// 'name' is indirectly accessed via method: )
+        predefined_type(string) ident(n) operator(=) ident(e)operator(.)ident(GetName)operator((\);)
+
+        comment(// 'salary' is indirectly accessed via property )
+        predefined_type(double) ident(s) operator(=) ident(e)operator(.)ident(Salary)operator(;)
+    operator(})
+operator(})

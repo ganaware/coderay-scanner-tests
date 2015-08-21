@@ -1,0 +1,129 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/zhdeatwt.aspx)
+
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/sf0df423.aspx)
+
+keyword(using) ident(System)operator(.)ident(Text)operator(;)
+keyword(using) directive(static) ident(System)operator(.)ident(Math)operator(;)
+keyword(using) ident(Project) operator(=) ident(PC)operator(.)ident(MyCompany)operator(.)ident(Project)operator(;)
+
+keyword(using) directive(static) ident(System)operator(.)ident(Console)operator(;) 
+keyword(using) directive(static) ident(System)operator(.)ident(Math)operator(;)
+keyword(class) class(Program) 
+operator({) 
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({) 
+        ident(WriteLine)operator(()ident(Sqrt)operator(()integer(3)operator(*)integer(3) operator(+) integer(4)operator(*)integer(4)operator(\)\);) 
+    operator(}) 
+operator(})
+
+keyword(namespace) ident(PC)
+operator({)
+    comment(// Define an alias for the nested namespace. )
+    keyword(using) ident(Project) operator(=) ident(PC)operator(.)ident(MyCompany)operator(.)ident(Project)operator(;)
+    keyword(class) class(A)
+    operator({)
+        directive(void) ident(M)operator((\))
+        operator({)
+            comment(// Use the alias)
+            ident(Project)operator(.)ident(MyClass) ident(mc) operator(=) keyword(new) ident(Project)operator(.)ident(MyClass)operator((\);)
+        operator(})
+    operator(})
+    keyword(namespace) ident(MyCompany)
+    operator({)
+        keyword(namespace) ident(Project)
+        operator({)
+            directive(public) keyword(class) class(MyClass) operator({) operator(})
+        operator(})
+    operator(})
+operator(})
+
+keyword(using) ident(System)operator(;)
+
+comment(// Using alias directive for a class. )
+keyword(using) ident(AliasToMyClass) operator(=) ident(NameSpace1)operator(.)ident(MyClass)operator(;)
+
+comment(// Using alias directive for a generic class. )
+keyword(using) ident(UsingAlias) operator(=) ident(NameSpace2)operator(.)ident(MyClass)operator(<)predefined_type(int)operator(>;)
+
+keyword(namespace) ident(NameSpace1)
+operator({)
+    directive(public) keyword(class) class(MyClass)
+    operator({)
+        directive(public) directive(override) predefined_type(string) ident(ToString)operator((\))
+        operator({)
+            keyword(return) string<delimiter(")content(You are in NameSpace1.MyClass.)delimiter(")>operator(;)
+        operator(})
+    operator(})
+
+operator(})
+
+keyword(namespace) ident(NameSpace2)
+operator({)
+    keyword(class) class(MyClass)operator(<)ident(T)operator(>)
+    operator({)
+        directive(public) directive(override) predefined_type(string) ident(ToString)operator((\))
+        operator({)
+            keyword(return) string<delimiter(")content(You are in NameSpace2.MyClass.)delimiter(")>operator(;)
+        operator(})
+    operator(})
+operator(})
+
+keyword(namespace) ident(NameSpace3)
+operator({)
+    comment(// Using directive: )
+    keyword(using) ident(NameSpace1)operator(;)
+    comment(// Using directive: )
+    keyword(using) ident(NameSpace2)operator(;)
+
+    keyword(class) class(MainClass)
+    operator({)
+        directive(static) directive(void) ident(Main)operator((\))
+        operator({)
+            ident(AliasToMyClass) ident(instance1) operator(=) keyword(new) ident(AliasToMyClass)operator((\);)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(instance1)operator(\);)
+
+            ident(UsingAlias) ident(instance2) operator(=) keyword(new) ident(UsingAlias)operator((\);)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(instance2)operator(\);)
+
+        operator(})
+    operator(})
+operator(})
+comment(// Output:  )
+comment(//    You are in NameSpace1.MyClass. )
+comment(//    You are in NameSpace2.MyClass.)
+
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/yh598w02.aspx)
+
+keyword(using) operator(()ident(Font) ident(font1) operator(=) keyword(new) ident(Font)operator(()string<delimiter(")content(Arial)delimiter(")>operator(,) float(10.0f)operator(\)\)) 
+operator({)
+    predefined_type(byte) ident(charset) operator(=) ident(font1)operator(.)ident(GdiCharSet)operator(;)
+operator(})
+
+operator({)
+  ident(Font) ident(font1) operator(=) keyword(new) ident(Font)operator(()string<delimiter(")content(Arial)delimiter(")>operator(,) float(10.0f)operator(\);)
+  keyword(try)
+  operator({)
+    predefined_type(byte) ident(charset) operator(=) ident(font1)operator(.)ident(GdiCharSet)operator(;)
+  operator(})
+  keyword(finally)
+  operator({)
+    keyword(if) operator(()ident(font1) operator(!=) predefined_constant(null)operator(\))
+      operator((()ident(IDisposable)operator(\))ident(font1)operator(\))operator(.)ident(Dispose)operator((\);)
+  operator(})
+operator(})
+
+keyword(using) operator(()ident(Font) ident(font3) operator(=) keyword(new) ident(Font)operator(()string<delimiter(")content(Arial)delimiter(")>operator(,) float(10.0f)operator(\),)
+            ident(font4) operator(=) keyword(new) ident(Font)operator(()string<delimiter(")content(Arial)delimiter(")>operator(,) float(10.0f)operator(\)\))
+operator({)
+    comment(// Use font3 and font4.)
+operator(})
+
+            ident(Font) ident(font2) operator(=) keyword(new) ident(Font)operator(()string<delimiter(")content(Arial)delimiter(")>operator(,) float(10.0f)operator(\);)
+            keyword(using) operator(()ident(font2)operator(\)) comment(// not recommended)
+            operator({)
+                comment(// use font2)
+            operator(})
+            comment(// font2 is still in scope )
+            comment(// but the method call throws an exception )
+            predefined_type(float) ident(f) operator(=) ident(font2)operator(.)ident(GetHeight)operator((\);)
+

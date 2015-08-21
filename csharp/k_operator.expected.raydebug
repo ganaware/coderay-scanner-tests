@@ -1,0 +1,45 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/s53ehcz3.aspx)
+
+keyword(class) class(Fraction)
+operator({)
+    predefined_type(int) ident(num)operator(,) ident(den)operator(;)
+    directive(public) ident(Fraction)operator(()predefined_type(int) ident(num)operator(,) predefined_type(int) ident(den)operator(\))
+    operator({)
+        local_variable(this)operator(.)ident(num) operator(=) ident(num)operator(;)
+        local_variable(this)operator(.)ident(den) operator(=) ident(den)operator(;)
+    operator(})
+
+    comment(// overload operator + )
+    directive(public) directive(static) ident(Fraction) keyword(operator) operator(+()ident(Fraction) ident(a)operator(,) ident(Fraction) ident(b)operator(\))
+    operator({)
+        keyword(return) keyword(new) ident(Fraction)operator(()ident(a)operator(.)ident(num) operator(*) ident(b)operator(.)ident(den) operator(+) ident(b)operator(.)ident(num) operator(*) ident(a)operator(.)ident(den)operator(,)
+           ident(a)operator(.)ident(den) operator(*) ident(b)operator(.)ident(den)operator(\);)
+    operator(})
+
+    comment(// overload operator * )
+    directive(public) directive(static) ident(Fraction) keyword(operator) operator(*()ident(Fraction) ident(a)operator(,) ident(Fraction) ident(b)operator(\))
+    operator({)
+        keyword(return) keyword(new) ident(Fraction)operator(()ident(a)operator(.)ident(num) operator(*) ident(b)operator(.)ident(num)operator(,) ident(a)operator(.)ident(den) operator(*) ident(b)operator(.)ident(den)operator(\);)
+    operator(})
+
+    comment(// user-defined conversion from Fraction to double )
+    directive(public) directive(static) directive(implicit) keyword(operator) predefined_type(double)operator(()ident(Fraction) ident(f)operator(\))
+    operator({)
+        keyword(return) operator(()predefined_type(double)operator(\))ident(f)operator(.)ident(num) operator(/) ident(f)operator(.)ident(den)operator(;)
+    operator(})
+operator(})
+
+keyword(class) class(Test)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Fraction) ident(a) operator(=) keyword(new) ident(Fraction)operator(()integer(1)operator(,) integer(2)operator(\);)
+        ident(Fraction) ident(b) operator(=) keyword(new) ident(Fraction)operator(()integer(3)operator(,) integer(7)operator(\);)
+        ident(Fraction) ident(c) operator(=) keyword(new) ident(Fraction)operator(()integer(2)operator(,) integer(3)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator((()predefined_type(double)operator(\)()ident(a) operator(*) ident(b) operator(+) ident(c)operator(\)\);)
+    operator(})
+operator(})
+comment(/*
+Output
+0.880952380952381
+*/)

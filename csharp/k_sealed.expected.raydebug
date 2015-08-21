@@ -1,0 +1,41 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/88c54tsw.aspx)
+
+keyword(class) class(A) operator({})    
+directive(sealed) keyword(class) class(B) operator(:) ident(A) operator({})
+
+keyword(class) class(X)
+operator({)
+    directive(protected) directive(virtual) directive(void) ident(F)operator((\)) operator({) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(X.F)delimiter(")>operator(\);) operator(})
+    directive(protected) directive(virtual) directive(void) ident(F2)operator((\)) operator({) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(X.F2)delimiter(")>operator(\);) operator(})
+operator(})
+keyword(class) class(Y) operator(:) ident(X)
+operator({)
+    directive(sealed) directive(protected) directive(override) directive(void) ident(F)operator((\)) operator({) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Y.F)delimiter(")>operator(\);) operator(})
+    directive(protected) directive(override) directive(void) ident(F2)operator((\)) operator({) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Y.F2)delimiter(")>operator(\);) operator(})
+operator(})
+keyword(class) class(Z) operator(:) ident(Y)
+operator({)
+    comment(// Attempting to override F causes compiler error CS0239. )
+    comment(// protected override void F(\) { Console.WriteLine("C.F"\); })
+
+    comment(// Overriding F2 is allowed. )
+    directive(protected) directive(override) directive(void) ident(F2)operator((\)) operator({) ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Z.F2)delimiter(")>operator(\);) operator(})
+operator(})
+
+directive(sealed) keyword(class) class(SealedClass)
+operator({)
+    directive(public) predefined_type(int) ident(x)operator(;)
+    directive(public) predefined_type(int) ident(y)operator(;)
+operator(})
+
+keyword(class) class(SealedTest2)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(SealedClass) ident(sc) operator(=) keyword(new) ident(SealedClass)operator((\);)
+        ident(sc)operator(.)ident(x) operator(=) integer(110)operator(;)
+        ident(sc)operator(.)ident(y) operator(=) integer(150)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(x = {0}, y = {1})delimiter(")>operator(,) ident(sc)operator(.)ident(x)operator(,) ident(sc)operator(.)ident(y)operator(\);)
+    operator(})
+operator(})
+comment(// Output: x = 110, y = 150)

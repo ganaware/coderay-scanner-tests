@@ -1,0 +1,167 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/51y09td4.aspx)
+
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/fa0ab757.aspx)
+
+ident(Class1) ident(obj)  operator(=) keyword(new) ident(Class1)operator((\);)
+
+keyword(var) ident(query) operator(=) keyword(from) ident(cust) keyword(in) ident(customers)
+            keyword(select) keyword(new) operator({)ident(Name) operator(=) ident(cust)operator(.)ident(Name)operator(,) ident(Address) operator(=) ident(cust)operator(.)ident(PrimaryAddress)operator(};)
+
+predefined_type(int) ident(i) operator(=) keyword(new) predefined_type(int)operator((\);)
+
+keyword(struct) class(SampleStruct)
+operator({)
+   directive(public) predefined_type(int) ident(x)operator(;)
+   directive(public) predefined_type(int) ident(y)operator(;)
+
+   directive(public) ident(SampleStruct)operator(()predefined_type(int) ident(x)operator(,) predefined_type(int) ident(y)operator(\))
+   operator({)
+      local_variable(this)operator(.)ident(x) operator(=) ident(x)operator(;)
+      local_variable(this)operator(.)ident(y) operator(=) ident(y)operator(;)
+   operator(})
+operator(})
+
+keyword(class) class(SampleClass)
+operator({)
+   directive(public) predefined_type(string) ident(name)operator(;)
+   directive(public) predefined_type(int) ident(id)operator(;)
+
+   directive(public) ident(SampleClass)operator((\)) operator({})
+
+   directive(public) ident(SampleClass)operator(()predefined_type(int) ident(id)operator(,) predefined_type(string) ident(name)operator(\))
+   operator({)
+      local_variable(this)operator(.)ident(id) operator(=) ident(id)operator(;)
+      local_variable(this)operator(.)ident(name) operator(=) ident(name)operator(;)
+   operator(})
+operator(})
+
+keyword(class) class(ProgramClass)
+operator({)
+   directive(static) directive(void) ident(Main)operator((\))
+   operator({)
+      comment(// Create objects using default constructors:)
+      ident(SampleStruct) ident(Location1) operator(=) keyword(new) ident(SampleStruct)operator((\);)
+      ident(SampleClass) ident(Employee1) operator(=) keyword(new) ident(SampleClass)operator((\);)
+
+      comment(// Display values:)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Default values:)delimiter(")>operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   Struct members: {0}, {1})delimiter(")>operator(,)
+             ident(Location1)operator(.)ident(x)operator(,) ident(Location1)operator(.)ident(y)operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   Class members: {0}, {1})delimiter(")>operator(,)
+             ident(Employee1)operator(.)ident(name)operator(,) ident(Employee1)operator(.)ident(id)operator(\);)
+
+      comment(// Create objects using parameterized constructors:)
+      ident(SampleStruct) ident(Location2) operator(=) keyword(new) ident(SampleStruct)operator(()integer(10)operator(,) integer(20)operator(\);)
+      ident(SampleClass) ident(Employee2) operator(=) keyword(new) ident(SampleClass)operator(()integer(1234)operator(,) string<delimiter(")content(Cristina Potra)delimiter(")>operator(\);)
+
+      comment(// Display values:)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Assigned values:)delimiter(")>operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   Struct members: {0}, {1})delimiter(")>operator(,)
+             ident(Location2)operator(.)ident(x)operator(,) ident(Location2)operator(.)ident(y)operator(\);)
+      ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(   Class members: {0}, {1})delimiter(")>operator(,)
+             ident(Employee2)operator(.)ident(name)operator(,) ident(Employee2)operator(.)ident(id)operator(\);)
+   operator(})
+operator(})
+comment(/*
+Output:
+Default values:
+   Struct members: 0, 0
+   Class members: , 0
+Assigned values:
+   Struct members: 10, 20
+   Class members: Cristina Potra, 1234
+*/)
+
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/435f1dw2.aspx)
+
+directive(public) keyword(class) class(BaseC)
+operator({)
+    directive(public) predefined_type(int) ident(x)operator(;)
+    directive(public) directive(void) ident(Invoke)operator((\)) operator({) operator(})
+operator(})
+directive(public) keyword(class) class(DerivedC) operator(:) ident(BaseC)
+operator({)
+    keyword(new) directive(public) directive(void) ident(Invoke)operator((\)) operator({) operator(})
+operator(})
+
+directive(public) keyword(class) class(BaseC)
+operator({)
+    directive(public) directive(static) predefined_type(int) ident(x) operator(=) integer(55)operator(;)
+    directive(public) directive(static) predefined_type(int) ident(y) operator(=) integer(22)operator(;)
+operator(})
+
+directive(public) keyword(class) class(DerivedC) operator(:) ident(BaseC)
+operator({)
+    comment(// Hide field 'x'. )
+    keyword(new) directive(public) directive(static) predefined_type(int) ident(x) operator(=) integer(100)operator(;)
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Display the new value of x:)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(x)operator(\);)
+
+        comment(// Display the hidden value of x:)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(BaseC)operator(.)ident(x)operator(\);)
+
+        comment(// Display the unhidden member y:)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(y)operator(\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+100
+55
+22
+*/)
+
+directive(public) keyword(class) class(BaseC) 
+operator({)
+    directive(public) keyword(class) class(NestedC) 
+    operator({)
+        directive(public) predefined_type(int) ident(x) operator(=) integer(200)operator(;)
+        directive(public) predefined_type(int) ident(y)operator(;)
+    operator(})
+operator(})
+
+directive(public) keyword(class) class(DerivedC) operator(:) ident(BaseC) 
+operator({)
+    comment(// Nested type hiding the base type members. )
+    keyword(new) directive(public) keyword(class) class(NestedC)   
+    operator({)
+        directive(public) predefined_type(int) ident(x) operator(=) integer(100)operator(;)
+        directive(public) predefined_type(int) ident(y)operator(;) 
+        directive(public) predefined_type(int) ident(z)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        comment(// Creating an object from the overlapping class:)
+        ident(NestedC) ident(c1)  operator(=) keyword(new) ident(NestedC)operator((\);)
+
+        comment(// Creating an object from the hidden class:)
+        ident(BaseC)operator(.)ident(NestedC) ident(c2) operator(=) keyword(new) ident(BaseC)operator(.)ident(NestedC)operator((\);)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(c1)operator(.)ident(x)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(c2)operator(.)ident(x)operator(\);)   
+    operator(})
+operator(})
+comment(/*
+Output:
+100
+200
+*/)
+
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/sd2w2ew5.aspx)
+
+keyword(class) class(ItemFactory)operator(<)ident(T)operator(>) keyword(where) ident(T) operator(:) keyword(new)operator((\))
+operator({)
+    directive(public) ident(T) ident(GetNewItem)operator((\))
+    operator({)
+        keyword(return) keyword(new) ident(T)operator((\);)
+    operator(})
+operator(})
+
+directive(public) keyword(class) class(ItemFactory2)operator(<)ident(T)operator(>)
+    keyword(where) ident(T) operator(:) ident(IComparable)operator(,) keyword(new)operator((\))
+operator({)
+operator(})

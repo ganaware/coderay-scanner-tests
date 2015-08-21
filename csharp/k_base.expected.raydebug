@@ -1,0 +1,83 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/hfw7t1ce.aspx)
+
+directive(public) keyword(class) class(Person)
+operator({)
+    directive(protected) predefined_type(string) ident(ssn) operator(=) string<delimiter(")content(444-55-6666)delimiter(")>operator(;)
+    directive(protected) predefined_type(string) ident(name) operator(=) string<delimiter(")content(John L. Malgraine)delimiter(")>operator(;)
+
+    directive(public) directive(virtual) directive(void) ident(GetInfo)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Name: {0})delimiter(")>operator(,) ident(name)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(SSN: {0})delimiter(")>operator(,) ident(ssn)operator(\);)
+    operator(})
+operator(})
+keyword(class) class(Employee) operator(:) ident(Person)
+operator({)
+    directive(public) predefined_type(string) ident(id) operator(=) string<delimiter(")content(ABC567EFG)delimiter(")>operator(;)
+    directive(public) directive(override) directive(void) ident(GetInfo)operator((\))
+    operator({)
+        comment(// Calling the base class GetInfo method: )
+        local_variable(base)operator(.)ident(GetInfo)operator((\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Employee ID: {0})delimiter(")>operator(,) ident(id)operator(\);)
+    operator(})
+operator(})
+
+keyword(class) class(TestClass)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Employee) ident(E) operator(=) keyword(new) ident(Employee)operator((\);)
+        ident(E)operator(.)ident(GetInfo)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Output
+Name: John L. Malgraine
+SSN: 444-55-6666
+Employee ID: ABC567EFG
+*/)
+
+directive(public) keyword(class) class(BaseClass)
+operator({)
+    predefined_type(int) ident(num)operator(;)
+
+    directive(public) ident(BaseClass)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(in BaseClass(\))delimiter(")>operator(\);)
+    operator(})
+
+    directive(public) ident(BaseClass)operator(()predefined_type(int) ident(i)operator(\))
+    operator({)
+        ident(num) operator(=) ident(i)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(in BaseClass(int i\))delimiter(")>operator(\);)
+    operator(})
+
+    directive(public) predefined_type(int) ident(GetNum)operator((\))
+    operator({)
+        keyword(return) ident(num)operator(;)
+    operator(})
+operator(})
+
+directive(public) keyword(class) class(DerivedClass) operator(:) ident(BaseClass)
+operator({)
+    comment(// This constructor will call BaseClass.BaseClass(\) )
+    directive(public) ident(DerivedClass)operator((\)) operator(:) local_variable(base)operator((\))
+    operator({)
+    operator(})
+
+    comment(// This constructor will call BaseClass.BaseClass(int i\) )
+    directive(public) ident(DerivedClass)operator(()predefined_type(int) ident(i)operator(\)) operator(:) local_variable(base)operator(()ident(i)operator(\))
+    operator({)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(DerivedClass) ident(md) operator(=) keyword(new) ident(DerivedClass)operator((\);)
+        ident(DerivedClass) ident(md1) operator(=) keyword(new) ident(DerivedClass)operator(()integer(1)operator(\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+in BaseClass(\)
+in BaseClass(int i\)
+*/)

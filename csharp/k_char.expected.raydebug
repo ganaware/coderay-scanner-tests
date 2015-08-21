@@ -1,0 +1,14 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/x9h8tsay.aspx)
+
+predefined_type(char)operator([]) ident(chars) operator(=) keyword(new) predefined_type(char)operator([)integer(4)operator(];)
+
+ident(chars)operator([)integer(0)operator(]) operator(=) char('X')operator(;)        comment(// Character literal)
+ident(chars)operator([)integer(1)operator(]) operator(=) char('\\x0058')operator(;)   comment(// Hexadecimal)
+ident(chars)operator([)integer(2)operator(]) operator(=) operator(()predefined_type(char)operator(\))integer(88)operator(;)   comment(// Cast from integral type)
+ident(chars)operator([)integer(3)operator(]) operator(=) char('\\u0058')operator(;)   comment(// Unicode )
+
+keyword(foreach) operator(()predefined_type(char) ident(c) keyword(in) ident(chars)operator(\))
+operator({)
+    ident(Console)operator(.)ident(Write)operator(()ident(c) operator(+) string<delimiter(")content( )delimiter(")>operator(\);)
+operator(})
+comment(// Output: X X X X)

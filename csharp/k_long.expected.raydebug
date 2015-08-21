@@ -1,0 +1,17 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ctetwysk.aspx)
+
+predefined_type(long) ident(long1) operator(=) integer(4294967296)operator(;)
+
+predefined_type(long) ident(long2) operator(=) integer(4294967296L)operator(;)
+
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({})
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(long) ident(l)operator(\)) operator({})
+
+ident(SampleMethod)operator(()integer(5)operator(\);)    comment(// Calling the method with the int parameter)
+ident(SampleMethod)operator(()integer(5L)operator(\);)   comment(// Calling the method with the long parameter)
+
+predefined_type(int) ident(x) operator(=) integer(8L)operator(;)        comment(// Error: no implicit conversion from long to int)
+predefined_type(int) ident(x) operator(=) operator(()predefined_type(int)operator(\))integer(8L)operator(;)   comment(// OK: explicit conversion to int)
+
+predefined_type(long) ident(x) operator(=) float(3.0)operator(;)         comment(// Error: no implicit conversion from double)
+predefined_type(long) ident(y) operator(=) operator(()predefined_type(long)operator(\))float(3.0)operator(;)   comment(// OK: explicit conversion)

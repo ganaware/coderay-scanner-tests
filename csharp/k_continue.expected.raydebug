@@ -1,0 +1,25 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/923ahwt1.aspx)
+
+keyword(class) class(ContinueTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(1)operator(;) ident(i) operator(<=) integer(10)operator(;) ident(i)operator(++\))
+        operator({)
+            keyword(if) operator(()ident(i) operator(<) integer(9)operator(\))
+            operator({)
+                keyword(continue)operator(;)
+            operator(})
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(i)operator(\);)
+        operator(})
+
+        comment(// Keep the console open in debug mode.)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+9
+10
+*/)

@@ -1,0 +1,21 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/eahchzkf.aspx)
+
+comment(// Constant value 4:)
+predefined_type(int) ident(intSize) operator(=) keyword(sizeof)operator(()predefined_type(int)operator(\);)
+
+keyword(class) class(MainClass)
+operator({)
+    comment(// unsafe not required for primitive types )
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The size of short is {0}.)delimiter(")>operator(,) keyword(sizeof)operator(()predefined_type(short)operator(\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The size of int is {0}.)delimiter(")>operator(,) keyword(sizeof)operator(()predefined_type(int)operator(\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The size of long is {0}.)delimiter(")>operator(,) keyword(sizeof)operator(()predefined_type(long)operator(\)\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+    The size of short is 2.
+    The size of int is 4.
+    The size of long is 8.
+*/)

@@ -1,0 +1,53 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/scekt9xw.aspx)
+
+keyword(if) operator(()ident(obj) keyword(is) ident(MyObject)operator(\))
+operator({)
+operator(})
+
+keyword(class) class(Class1) operator({})
+keyword(class) class(Class2) operator({})
+keyword(class) class(Class3) operator(:) ident(Class2) operator({) operator(})
+
+keyword(class) class(IsTest)
+operator({)
+    directive(static) directive(void) ident(Test)operator(()predefined_type(object) ident(o)operator(\))
+    operator({)
+        ident(Class1) ident(a)operator(;)
+        ident(Class2) ident(b)operator(;)
+
+        keyword(if) operator(()ident(o) keyword(is) ident(Class1)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(o is Class1)delimiter(")>operator(\);)
+            ident(a) operator(=) operator(()ident(Class1)operator(\))ident(o)operator(;)
+            comment(// Do something with "a.")
+        operator(})
+        keyword(else) keyword(if) operator(()ident(o) keyword(is) ident(Class2)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(o is Class2)delimiter(")>operator(\);)
+            ident(b) operator(=) operator(()ident(Class2)operator(\))ident(o)operator(;)
+            comment(// Do something with "b.")
+        operator(})
+
+        keyword(else)
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(o is neither Class1 nor Class2.)delimiter(")>operator(\);)
+        operator(})
+    operator(})
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        ident(Class1) ident(c1) operator(=) keyword(new) ident(Class1)operator((\);)
+        ident(Class2) ident(c2) operator(=) keyword(new) ident(Class2)operator((\);)
+        ident(Class3) ident(c3) operator(=) keyword(new) ident(Class3)operator((\);)
+        ident(Test)operator(()ident(c1)operator(\);)
+        ident(Test)operator(()ident(c2)operator(\);)
+        ident(Test)operator(()ident(c3)operator(\);)
+        ident(Test)operator(()string<delimiter(")content(a string)delimiter(")>operator(\);)
+    operator(})
+operator(})
+comment(/*
+Output:
+o is Class1
+o is Class2
+o is Class2
+o is neither Class1 nor Class2.
+*/)

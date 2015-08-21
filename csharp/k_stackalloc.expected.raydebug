@@ -1,0 +1,57 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/cx9s2sy4.aspx)
+
+predefined_type(int)operator(*) ident(block) operator(=) keyword(stackalloc) predefined_type(int)operator([)integer(100)operator(];)
+
+predefined_type(int)operator(*) ident(block)operator(;)
+comment(// The following assignment statement causes compiler errors. You)
+comment(// can use stackalloc only when declaring and initializing a local )
+comment(// variable.)
+ident(block) operator(=) keyword(stackalloc) predefined_type(int)operator([)integer(100)operator(];)
+
+keyword(class) class(Test)
+operator({)
+    directive(static) directive(unsafe) directive(void) ident(Main)operator((\))
+    operator({)
+        keyword(const) predefined_type(int) ident(arraySize) operator(=) integer(20)operator(;)
+        predefined_type(int)operator(*) ident(fib) operator(=) keyword(stackalloc) predefined_type(int)operator([)ident(arraySize)operator(];)
+        predefined_type(int)operator(*) ident(p) operator(=) ident(fib)operator(;)
+        comment(// The sequence begins with 1, 1.)
+        operator(*)ident(p)operator(++) operator(=) operator(*)ident(p)operator(++) operator(=) integer(1)operator(;)
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(2)operator(;) ident(i) operator(<) ident(arraySize)operator(;) operator(++)ident(i)operator(,) operator(++)ident(p)operator(\))
+        operator({)
+            comment(// Sum the previous two numbers.)
+            operator(*)ident(p) operator(=) ident(p)operator([-)integer(1)operator(]) operator(+) ident(p)operator([-)integer(2)operator(];)
+        operator(})
+        keyword(for) operator(()predefined_type(int) ident(i) operator(=) integer(0)operator(;) ident(i) operator(<) ident(arraySize)operator(;) operator(++)ident(i)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(fib)operator([)ident(i)operator(]\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode.)
+        ident(System)operator(.)ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(System)operator(.)ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/*
+Output
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+987
+1597
+2584
+4181
+6765
+*/)

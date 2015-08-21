@@ -1,0 +1,47 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/dd469487.aspx)
+
+comment(// Covariant interface. )
+keyword(interface) class(ICovariant)operator(<)keyword(out) ident(R)operator(>) operator({) operator(})
+
+comment(// Extending covariant interface. )
+keyword(interface) class(IExtCovariant)operator(<)keyword(out) ident(R)operator(>) operator(:) ident(ICovariant)operator(<)ident(R)operator(>) operator({) operator(})
+
+comment(// Implementing covariant interface. )
+keyword(class) class(Sample)operator(<)ident(R)operator(>) operator(:) ident(ICovariant)operator(<)ident(R)operator(>) operator({) operator(})
+
+keyword(class) class(Program)
+operator({)
+    directive(static) directive(void) ident(Test)operator((\))
+    operator({)
+        ident(ICovariant)operator(<)ident(Object)operator(>) ident(iobj) operator(=) keyword(new) ident(Sample)operator(<)ident(Object)operator(>(\);)
+        ident(ICovariant)operator(<)ident(String)operator(>) ident(istr) operator(=) keyword(new) ident(Sample)operator(<)ident(String)operator(>(\);)
+
+        comment(// You can assign istr to iobj because )
+        comment(// the ICovariant interface is covariant.)
+        ident(iobj) operator(=) ident(istr)operator(;)
+    operator(})
+operator(})
+
+comment(// Covariant delegate. )
+directive(public) keyword(delegate) ident(R) ident(DCovariant)operator(<)keyword(out) ident(R)operator(>(\);)
+
+comment(// Methods that match the delegate signature. )
+directive(public) directive(static) ident(Control) ident(SampleControl)operator((\))
+operator({) keyword(return) keyword(new) ident(Control)operator((\);) operator(})
+
+directive(public) directive(static) ident(Button) ident(SampleButton)operator((\))
+operator({) keyword(return) keyword(new) ident(Button)operator((\);) operator(})
+
+directive(public) directive(void) ident(Test)operator((\))
+operator({)            
+    comment(// Instantiate the delegates with the methods.)
+    ident(DCovariant)operator(<)ident(Control)operator(>) ident(dControl) operator(=) ident(SampleControl)operator(;)
+    ident(DCovariant)operator(<)ident(Button)operator(>) ident(dButton) operator(=) ident(SampleButton)operator(;)
+
+    comment(// You can assign dButton to dControl )
+    comment(// because the DCovariant delegate is covariant.)
+    ident(dControl) operator(=) ident(dButton)operator(;)
+
+    comment(// Invoke the delegate.)
+    ident(dControl)operator((\);) 
+operator(})

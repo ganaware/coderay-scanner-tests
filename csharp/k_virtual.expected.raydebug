@@ -1,0 +1,125 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/9fkccyh4.aspx)
+
+directive(public) directive(virtual) predefined_type(double) ident(Area)operator((\)) 
+operator({)
+    keyword(return) ident(x) operator(*) ident(y)operator(;)
+operator(})
+
+keyword(class) class(MyBaseClass)
+operator({)
+    comment(// virtual auto-implemented property. Overrides can only )
+    comment(// provide specialized behavior if they implement get and set accessors. )
+    directive(public) directive(virtual) predefined_type(string) ident(Name) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+
+    comment(// ordinary virtual property with backing field )
+    directive(private) predefined_type(int) ident(num)operator(;)
+    directive(public) directive(virtual) predefined_type(int) ident(Number)
+    operator({)
+        keyword(get) operator({) keyword(return) ident(num)operator(;) operator(})
+        keyword(set) operator({) ident(num) operator(=) keyword(value)operator(;) operator(})
+    operator(})
+operator(})
+
+
+keyword(class) class(MyDerivedClass) operator(:) ident(MyBaseClass)
+operator({)
+    directive(private) predefined_type(string) ident(name)operator(;)
+
+   comment(// Override auto-implemented property with ordinary property )
+   comment(// to provide specialized accessor behavior. )
+    directive(public) directive(override) predefined_type(string) ident(Name)
+    operator({)
+        keyword(get)
+        operator({)
+            keyword(return) ident(name)operator(;)
+        operator(})
+        keyword(set)
+        operator({)
+            keyword(if) operator(()keyword(value) operator(!=) ident(String)operator(.)ident(Empty)operator(\))
+            operator({)
+                ident(name) operator(=) keyword(value)operator(;)
+            operator(})
+            keyword(else)
+            operator({)
+                ident(name) operator(=) string<delimiter(")content(Unknown)delimiter(")>operator(;)
+            operator(})
+        operator(})
+    operator(})
+
+operator(})
+
+keyword(class) class(TestClass)
+operator({)
+    directive(public) keyword(class) class(Shape)
+    operator({)
+        directive(public) keyword(const) predefined_type(double) ident(PI) operator(=) ident(Math)operator(.)ident(PI)operator(;)
+        directive(protected) predefined_type(double) ident(x)operator(,) ident(y)operator(;)
+        directive(public) ident(Shape)operator((\))
+        operator({)
+        operator(})
+        directive(public) ident(Shape)operator(()predefined_type(double) ident(x)operator(,) predefined_type(double) ident(y)operator(\))
+        operator({)
+            local_variable(this)operator(.)ident(x) operator(=) ident(x)operator(;)
+            local_variable(this)operator(.)ident(y) operator(=) ident(y)operator(;)
+        operator(})
+
+        directive(public) directive(virtual) predefined_type(double) ident(Area)operator((\))
+        operator({)
+            keyword(return) ident(x) operator(*) ident(y)operator(;)
+        operator(})
+    operator(})
+
+    directive(public) keyword(class) class(Circle) operator(:) ident(Shape)
+    operator({)
+        directive(public) ident(Circle)operator(()predefined_type(double) ident(r)operator(\)) operator(:) local_variable(base)operator(()ident(r)operator(,) integer(0)operator(\))
+        operator({)
+        operator(})
+
+        directive(public) directive(override) predefined_type(double) ident(Area)operator((\))
+        operator({)
+            keyword(return) ident(PI) operator(*) ident(x) operator(*) ident(x)operator(;)
+        operator(})
+    operator(})
+
+    keyword(class) class(Sphere) operator(:) ident(Shape)
+    operator({)
+        directive(public) ident(Sphere)operator(()predefined_type(double) ident(r)operator(\)) operator(:) local_variable(base)operator(()ident(r)operator(,) integer(0)operator(\))
+        operator({)
+        operator(})
+
+        directive(public) directive(override) predefined_type(double) ident(Area)operator((\))
+        operator({)
+            keyword(return) integer(4) operator(*) ident(PI) operator(*) ident(x) operator(*) ident(x)operator(;)
+        operator(})
+    operator(})
+
+    keyword(class) class(Cylinder) operator(:) ident(Shape)
+    operator({)
+        directive(public) ident(Cylinder)operator(()predefined_type(double) ident(r)operator(,) predefined_type(double) ident(h)operator(\)) operator(:) local_variable(base)operator(()ident(r)operator(,) ident(h)operator(\))
+        operator({)
+        operator(})
+
+        directive(public) directive(override) predefined_type(double) ident(Area)operator((\))
+        operator({)
+            keyword(return) integer(2) operator(*) ident(PI) operator(*) ident(x) operator(*) ident(x) operator(+) integer(2) operator(*) ident(PI) operator(*) ident(x) operator(*) ident(y)operator(;)
+        operator(})
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(double) ident(r) operator(=) float(3.0)operator(,) ident(h) operator(=) float(5.0)operator(;)
+        ident(Shape) ident(c) operator(=) keyword(new) ident(Circle)operator(()ident(r)operator(\);)
+        ident(Shape) ident(s) operator(=) keyword(new) ident(Sphere)operator(()ident(r)operator(\);)
+        ident(Shape) ident(l) operator(=) keyword(new) ident(Cylinder)operator(()ident(r)operator(,) ident(h)operator(\);)
+        comment(// Display results:)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Area of Circle   = {0:F2})delimiter(")>operator(,) ident(c)operator(.)ident(Area)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Area of Sphere   = {0:F2})delimiter(")>operator(,) ident(s)operator(.)ident(Area)operator((\)\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Area of Cylinder = {0:F2})delimiter(")>operator(,) ident(l)operator(.)ident(Area)operator((\)\);)
+    operator(})
+operator(})
+comment(/*
+    Output:
+    Area of Circle   = 28.27
+    Area of Sphere   = 113.10
+    Area of Cylinder = 150.80
+*/)

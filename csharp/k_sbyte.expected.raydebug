@@ -1,0 +1,24 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/d86he86x.aspx)
+
+predefined_type(sbyte) ident(sByte1) operator(=) integer(127)operator(;)
+
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({})
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(sbyte) ident(b)operator(\)) operator({})
+
+comment(// Calling the method with the int parameter:)
+ident(SampleMethod)operator(()integer(5)operator(\);)
+comment(// Calling the method with the sbyte parameter:)
+ident(SampleMethod)operator((()predefined_type(sbyte)operator(\))integer(5)operator(\);)
+
+predefined_type(sbyte) ident(x) operator(=) integer(10)operator(,) ident(y) operator(=) integer(20)operator(;)
+
+predefined_type(sbyte) ident(z) operator(=) ident(x) operator(+) ident(y)operator(;)   comment(// Error: conversion from int to sbyte)
+
+predefined_type(sbyte) ident(z) operator(=) operator(()predefined_type(sbyte)operator(\)()ident(x) operator(+) ident(y)operator(\);)   comment(// OK: explicit conversion)
+
+predefined_type(sbyte) ident(x) operator(=) integer(10)operator(,) ident(y) operator(=) integer(20)operator(;)
+predefined_type(int) ident(m) operator(=) ident(x) operator(+) ident(y)operator(;)
+predefined_type(long) ident(n) operator(=) ident(x) operator(+) ident(y)operator(;)
+
+predefined_type(sbyte) ident(x) operator(=) float(3.0)operator(;)         comment(// Error: no implicit conversion from double)
+predefined_type(sbyte) ident(y) operator(=) operator(()predefined_type(sbyte)operator(\))float(3.0)operator(;)  comment(// OK: explicit conversion)

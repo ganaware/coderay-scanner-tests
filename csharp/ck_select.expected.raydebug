@@ -1,0 +1,259 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/bb384087.aspx)
+
+keyword(class) class(SelectSample1)
+operator({)   
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)           
+        comment(//Create the data source)
+        ident(List)operator(<)predefined_type(int)operator(>) ident(Scores) operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>(\)) operator({) integer(97)operator(,) integer(92)operator(,) integer(81)operator(,) integer(60) operator(};)
+
+        comment(// Create the query.)
+        ident(IEnumerable)operator(<)predefined_type(int)operator(>) ident(queryHighScores) operator(=)
+            keyword(from) ident(score) keyword(in) ident(Scores)
+            keyword(where) ident(score) operator(>) integer(80)
+            keyword(select) ident(score)operator(;)
+
+        comment(// Execute the query. )
+        keyword(foreach) operator(()predefined_type(int) ident(i) keyword(in) ident(queryHighScores)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(Write)operator(()ident(i) operator(+) string<delimiter(")content( )delimiter(")>operator(\);)
+        operator(})            
+    operator(})
+operator(})
+comment(//Output: 97 92 81)
+
+keyword(class) class(SelectSample2)
+operator({)
+    comment(// Define some classes )
+    directive(public) keyword(class) class(Student)
+    operator({)
+        directive(public) predefined_type(string) ident(First) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(string) ident(Last) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) ident(List)operator(<)predefined_type(int)operator(>) ident(Scores)operator(;)
+        directive(public) ident(ContactInfo) ident(GetContactInfo)operator(()ident(SelectSample2) ident(app)operator(,) predefined_type(int) ident(id)operator(\))
+        operator({)
+            ident(ContactInfo) ident(cInfo) operator(=)
+                operator(()keyword(from) ident(ci) keyword(in) ident(app)operator(.)ident(contactList)
+                keyword(where) ident(ci)operator(.)ident(ID) operator(==) ident(id)
+                keyword(select) ident(ci)operator(\))
+                operator(.)ident(FirstOrDefault)operator((\);)
+
+            keyword(return) ident(cInfo)operator(;)
+        operator(})
+
+        directive(public) directive(override) predefined_type(string) ident(ToString)operator((\))
+        operator({)
+            keyword(return) ident(First) operator(+) string<delimiter(")content( )delimiter(")> operator(+) ident(Last) operator(+) string<delimiter(")content(:)delimiter(")> operator(+) ident(ID)operator(;)
+        operator(})
+    operator(})
+
+    directive(public) keyword(class) class(ContactInfo)
+    operator({)
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(string) ident(Email) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(string) ident(Phone) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) directive(override) predefined_type(string) ident(ToString)operator((\)) operator({) keyword(return) ident(Email) operator(+) string<delimiter(")content(,)delimiter(")> operator(+) ident(Phone)operator(;) operator(})
+    operator(})
+
+    directive(public) keyword(class) class(ScoreInfo)
+    operator({)
+        directive(public) predefined_type(double) ident(Average) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+        directive(public) predefined_type(int) ident(ID) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+    operator(})
+
+    comment(// The primary data source)
+    ident(List)operator(<)ident(Student)operator(>) ident(students) operator(=) keyword(new) ident(List)operator(<)ident(Student)operator(>(\))
+    operator({)
+         keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Svetlana)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Omelchenko)delimiter(")>operator(,) ident(ID)operator(=)integer(111)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>(\)) operator({)integer(97)operator(,) integer(92)operator(,) integer(81)operator(,) integer(60)operator(}},)
+         keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Claire)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(O'Donnell)delimiter(")>operator(,) ident(ID)operator(=)integer(112)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>(\)) operator({)integer(75)operator(,) integer(84)operator(,) integer(91)operator(,) integer(39)operator(}},)
+         keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Sven)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Mortensen)delimiter(")>operator(,) ident(ID)operator(=)integer(113)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>(\)) operator({)integer(88)operator(,) integer(94)operator(,) integer(65)operator(,) integer(91)operator(}},)
+         keyword(new) ident(Student) operator({)ident(First)operator(=)string<delimiter(")content(Cesar)delimiter(")>operator(,) ident(Last)operator(=)string<delimiter(")content(Garcia)delimiter(")>operator(,) ident(ID)operator(=)integer(114)operator(,) ident(Scores)operator(=) keyword(new) ident(List)operator(<)predefined_type(int)operator(>(\)) operator({)integer(97)operator(,) integer(89)operator(,) integer(85)operator(,) integer(82)operator(}},)
+    operator(};)
+
+    comment(// Separate data source for contact info.)
+    ident(List)operator(<)ident(ContactInfo)operator(>) ident(contactList) operator(=) keyword(new) ident(List)operator(<)ident(ContactInfo)operator(>(\))
+    operator({)
+        keyword(new) ident(ContactInfo) operator({)ident(ID)operator(=)integer(111)operator(,) ident(Email)operator(=)string<delimiter(")content(SvetlanO@Contoso.com)delimiter(")>operator(,) ident(Phone)operator(=)string<delimiter(")content(206-555-0108)delimiter(")>operator(},)
+        keyword(new) ident(ContactInfo) operator({)ident(ID)operator(=)integer(112)operator(,) ident(Email)operator(=)string<delimiter(")content(ClaireO@Contoso.com)delimiter(")>operator(,) ident(Phone)operator(=)string<delimiter(")content(206-555-0298)delimiter(")>operator(},)
+        keyword(new) ident(ContactInfo) operator({)ident(ID)operator(=)integer(113)operator(,) ident(Email)operator(=)string<delimiter(")content(SvenMort@Contoso.com)delimiter(")>operator(,) ident(Phone)operator(=)string<delimiter(")content(206-555-1130)delimiter(")>operator(},)
+        keyword(new) ident(ContactInfo) operator({)ident(ID)operator(=)integer(114)operator(,) ident(Email)operator(=)string<delimiter(")content(CesarGar@Contoso.com)delimiter(")>operator(,) ident(Phone)operator(=)string<delimiter(")content(206-555-0521)delimiter(")>operator(})
+    operator(};)
+
+
+    directive(static) directive(void) ident(Main)operator(()predefined_type(string)operator([]) ident(args)operator(\))
+    operator({)
+        ident(SelectSample2) ident(app) operator(=) keyword(new) ident(SelectSample2)operator((\);)
+
+        comment(// Produce a filtered sequence of unmodified Students.)
+        ident(IEnumerable)operator(<)ident(Student)operator(>) ident(studentQuery1) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) ident(student)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Query1: select range_variable)delimiter(")>operator(\);)
+        keyword(foreach) operator(()ident(Student) ident(s) keyword(in) ident(studentQuery1)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(s)operator(.)ident(ToString)operator((\)\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of elements that contain )
+        comment(// only one property of each Student.)
+        ident(IEnumerable)operator(<)ident(String)operator(>) ident(studentQuery2) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) ident(student)operator(.)ident(Last)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery2: select range_variable.Property)delimiter(")>operator(\);)
+        keyword(foreach) operator(()predefined_type(string) ident(s) keyword(in) ident(studentQuery2)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(s)operator(\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of objects created by )
+        comment(// a method call on each Student.)
+        ident(IEnumerable)operator(<)ident(ContactInfo)operator(>) ident(studentQuery3) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) ident(student)operator(.)ident(GetContactInfo)operator(()ident(app)operator(,) ident(student)operator(.)ident(ID)operator(\);)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery3: select range_variable.Method)delimiter(")>operator(\);)
+        keyword(foreach) operator(()ident(ContactInfo) ident(ci) keyword(in) ident(studentQuery3)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(ci)operator(.)ident(ToString)operator((\)\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of ints from )
+        comment(// the internal array inside each Student.)
+        ident(IEnumerable)operator(<)predefined_type(int)operator(>) ident(studentQuery4) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) ident(student)operator(.)ident(Scores)operator([)integer(0)operator(];)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery4: select range_variable[index])delimiter(")>operator(\);)
+        keyword(foreach) operator(()predefined_type(int) ident(i) keyword(in) ident(studentQuery4)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(First score = {0})delimiter(")>operator(,) ident(i)operator(\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of doubles  )
+        comment(// that are the result of an expression.)
+        ident(IEnumerable)operator(<)predefined_type(double)operator(>) ident(studentQuery5) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) ident(student)operator(.)ident(Scores)operator([)integer(0)operator(]) operator(*) float(1.1)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery5: select expression)delimiter(")>operator(\);)
+        keyword(foreach) operator(()predefined_type(double) ident(d) keyword(in) ident(studentQuery5)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Adjusted first score = {0})delimiter(")>operator(,) ident(d)operator(\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of doubles that are )
+        comment(// the result of a method call.)
+        ident(IEnumerable)operator(<)predefined_type(double)operator(>) ident(studentQuery6) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\);)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery6: select expression2)delimiter(")>operator(\);)
+        keyword(foreach) operator(()predefined_type(double) ident(d) keyword(in) ident(studentQuery6)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Average = {0})delimiter(")>operator(,) ident(d)operator(\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of anonymous types )
+        comment(// that contain only two properties from each Student. )
+        keyword(var) ident(studentQuery7) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) keyword(new) operator({) ident(student)operator(.)ident(First)operator(,) ident(student)operator(.)ident(Last) operator(};)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery7: select new anonymous type)delimiter(")>operator(\);)
+        keyword(foreach) operator(()keyword(var) ident(item) keyword(in) ident(studentQuery7)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content({0}, {1})delimiter(")>operator(,) ident(item)operator(.)ident(Last)operator(,) ident(item)operator(.)ident(First)operator(\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of named objects that contain )
+        comment(// a method return value and a property from each Student. )
+        comment(// Use named types if you need to pass the query variable  )
+        comment(// across a method boundary.)
+        ident(IEnumerable)operator(<)ident(ScoreInfo)operator(>) ident(studentQuery8) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(ID) operator(>) integer(111)
+            keyword(select) keyword(new) ident(ScoreInfo)
+            operator({)
+                ident(Average) operator(=) ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\),)
+                ident(ID) operator(=) ident(student)operator(.)ident(ID)
+            operator(};)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery8: select new named type)delimiter(")>operator(\);)
+        keyword(foreach) operator(()ident(ScoreInfo) ident(si) keyword(in) ident(studentQuery8)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(ID = {0}, Average = {1})delimiter(")>operator(,) ident(si)operator(.)ident(ID)operator(,) ident(si)operator(.)ident(Average)operator(\);)
+        operator(})
+
+        comment(// Produce a filtered sequence of students who appear on a contact list )
+        comment(// and whose average is greater than 85.)
+        ident(IEnumerable)operator(<)ident(ContactInfo)operator(>) ident(studentQuery9) operator(=)
+            keyword(from) ident(student) keyword(in) ident(app)operator(.)ident(students)
+            keyword(where) ident(student)operator(.)ident(Scores)operator(.)ident(Average)operator((\)) operator(>) integer(85)
+            keyword(join) ident(ci) keyword(in) ident(app)operator(.)ident(contactList) ident(on) ident(student)operator(.)ident(ID) ident(equals) ident(ci)operator(.)ident(ID)
+            keyword(select) ident(ci)operator(;)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")char(\\r)char(\\n)content( studentQuery9: select result of join clause)delimiter(")>operator(\);)
+        keyword(foreach) operator(()ident(ContactInfo) ident(ci) keyword(in) ident(studentQuery9)operator(\))
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(ID = {0}, Email = {1})delimiter(")>operator(,) ident(ci)operator(.)ident(ID)operator(,) ident(ci)operator(.)ident(Email)operator(\);)
+        operator(})
+
+        comment(// Keep the console window open in debug mode)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Press any key to exit.)delimiter(")>operator(\);)
+        ident(Console)operator(.)ident(ReadKey)operator((\);)
+    operator(})
+operator(})
+comment(/* Output
+    Query1: select range_variable
+    Claire O'Donnell:112
+    Sven Mortensen:113
+    Cesar Garcia:114
+
+    studentQuery2: select range_variable.Property
+    O'Donnell
+    Mortensen
+    Garcia
+
+    studentQuery3: select range_variable.Method
+    ClaireO@Contoso.com,206-555-0298
+    SvenMort@Contoso.com,206-555-1130
+    CesarGar@Contoso.com,206-555-0521
+
+    studentQuery4: select range_variable[index]
+    First score = 75
+    First score = 88
+    First score = 97
+
+    studentQuery5: select expression
+    Adjusted first score = 82.5
+    Adjusted first score = 96.8
+    Adjusted first score = 106.7
+
+    studentQuery6: select expression2
+    Average = 72.25
+    Average = 84.5
+    Average = 88.25
+
+    studentQuery7: select new anonymous type
+    O'Donnell, Claire
+    Mortensen, Sven
+    Garcia, Cesar
+
+    studentQuery8: select new named type
+    ID = 112, Average = 72.25
+    ID = 113, Average = 84.5
+    ID = 114, Average = 88.25
+
+    studentQuery9: select result of join clause
+    ID = 114, Email = CesarGar@Contoso.com
+*/)

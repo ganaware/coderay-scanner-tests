@@ -1,0 +1,23 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/x0sksh43.aspx)
+
+predefined_type(uint) ident(myUint) operator(=) integer(4294967290)operator(;)
+
+predefined_type(uint) ident(uInt1) operator(=) integer(123)operator(;)
+
+predefined_type(uint) ident(uInt2) operator(=) integer(123U)operator(;)
+
+ident(Console)operator(.)ident(WriteLine)operator(()integer(44U)operator(.)ident(GetType)operator((\)\);)
+ident(Console)operator(.)ident(WriteLine)operator(()integer(323442434344U)operator(.)ident(GetType)operator((\)\);)
+
+predefined_type(float) ident(myFloat) operator(=) integer(4294967290)operator(;)   comment(// OK: implicit conversion to float)
+
+predefined_type(long) ident(aLong) operator(=) integer(22)operator(;)
+comment(// Error -- no implicit conversion from long:)
+predefined_type(uint) ident(uInt1) operator(=) ident(aLong)operator(;) 
+comment(// OK -- explicit conversion:)
+predefined_type(uint) ident(uInt2) operator(=) operator(()predefined_type(uint)operator(\))ident(aLong)operator(;)
+
+comment(// Error -- no implicit conversion from double:)
+predefined_type(uint) ident(x) operator(=) float(3.0)operator(;)
+comment(// OK -- explicit conversion:)
+predefined_type(uint) ident(y) operator(=) operator(()predefined_type(uint)operator(\))float(3.0)operator(;) 

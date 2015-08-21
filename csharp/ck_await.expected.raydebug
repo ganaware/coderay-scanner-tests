@@ -1,0 +1,52 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/hh156528.aspx)
+
+directive(private) keyword(async) ident(Task) ident(SumPageSizesAsync)operator((\))
+operator({)
+    comment(// To use the HttpClient type in desktop apps, you must include a using directive and add a )
+    comment(// reference for the System.Net.Http namespace.)
+    ident(HttpClient) ident(client) operator(=) keyword(new) ident(HttpClient)operator((\);)
+    comment(// . . .)
+    ident(Task)operator(<)predefined_type(byte)operator([]>) ident(getContentsTask) operator(=) ident(client)operator(.)ident(GetByteArrayAsync)operator(()ident(url)operator(\);)
+    predefined_type(byte)operator([]) ident(urlContents) operator(=) keyword(await) ident(getContentsTask)operator(;)
+
+    comment(// Equivalently, now that you see how it works, you can write the same thing in a single line.)
+    comment(//byte[] urlContents = await client.GetByteArrayAsync(url\);)
+    comment(// . . .)
+operator(})
+
+comment(// Keyword await used with a method that returns a Task<TResult>.)
+ident(TResult) ident(result) operator(=) keyword(await) ident(AsyncMethodThatReturnsTaskTResult)operator((\);)
+
+comment(// Keyword await used with a method that returns a Task.)
+keyword(await) ident(AsyncMethodThatReturnsTask)operator((\);)
+
+directive(private) keyword(async) directive(void) ident(button1_Click)operator(()predefined_type(object) ident(sender)operator(,) ident(EventArgs) ident(e)operator(\))
+operator({)
+    comment(// Call the method that runs asynchronously.)
+    predefined_type(string) ident(result) operator(=) keyword(await) ident(WaitAsynchronouslyAsync)operator((\);)
+
+    comment(// Call the method that runs synchronously.)
+    comment(//string result = await WaitSynchronously (\);)
+
+    comment(// Display the result.)
+    ident(textBox1)operator(.)ident(Text) operator(+=) ident(result)operator(;)
+operator(})
+
+comment(// The following method runs asynchronously. The UI thread is not)
+comment(// blocked during the delay. You can move or resize the Form1 window )
+comment(// while Task.Delay is running.)
+directive(public) keyword(async) ident(Task)operator(<)predefined_type(string)operator(>) ident(WaitAsynchronouslyAsync)operator((\))
+operator({)
+    keyword(await) ident(Task)operator(.)ident(Delay)operator(()integer(10000)operator(\);)
+    keyword(return) string<delimiter(")content(Finished)delimiter(")>operator(;)
+operator(})
+
+comment(// The following method runs synchronously, despite the use of async.)
+comment(// You cannot move or resize the Form1 window while Thread.Sleep)
+comment(// is running because the UI thread is blocked.)
+directive(public) keyword(async) ident(Task)operator(<)predefined_type(string)operator(>) ident(WaitSynchronously)operator((\))
+operator({)
+    comment(// Add a using directive for System.Threading.)
+    ident(Thread)operator(.)ident(Sleep)operator(()integer(10000)operator(\);)
+    keyword(return) string<delimiter(")content(Finished)delimiter(")>operator(;)
+operator(})

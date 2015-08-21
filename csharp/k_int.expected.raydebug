@@ -1,0 +1,10 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/5kzh1b5w.aspx)
+
+predefined_type(int) ident(i) operator(=) integer(123)operator(;)
+
+predefined_type(long) ident(aLong) operator(=) integer(22)operator(;)
+predefined_type(int) ident(i1) operator(=) ident(aLong)operator(;)       comment(// Error: no implicit conversion from long.)
+predefined_type(int) ident(i2) operator(=) operator(()predefined_type(int)operator(\))ident(aLong)operator(;)  comment(// OK: explicit conversion.)
+
+predefined_type(int) ident(x) operator(=) float(3.0)operator(;)         comment(// Error: no implicit conversion from double.)
+predefined_type(int) ident(y) operator(=) operator(()predefined_type(int)operator(\))float(3.0)operator(;)    comment(// OK: explicit conversion.)

@@ -1,0 +1,5 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ms173212.aspx)
+
+directive(extern) keyword(alias) ident(GridV1)operator(;)
+
+directive(extern) keyword(alias) ident(GridV2)operator(;)

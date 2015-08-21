@@ -1,0 +1,74 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/sbbt4032.aspx)
+
+keyword(enum) ident(Days) operator({)ident(Sat)operator(,) ident(Sun)operator(,) ident(Mon)operator(,) ident(Tue)operator(,) ident(Wed)operator(,) ident(Thu)operator(,) ident(Fri)operator(};)
+
+keyword(enum) ident(Days) operator({)ident(Sat)operator(=)integer(1)operator(,) ident(Sun)operator(,) ident(Mon)operator(,) ident(Tue)operator(,) ident(Wed)operator(,) ident(Thu)operator(,) ident(Fri)operator(};)
+
+keyword(enum) ident(Days) operator(:) predefined_type(byte) operator({)ident(Sat)operator(=)integer(1)operator(,) ident(Sun)operator(,) ident(Mon)operator(,) ident(Tue)operator(,) ident(Wed)operator(,) ident(Thu)operator(,) ident(Fri)operator(};)
+
+directive(public) keyword(class) class(EnumTest)
+operator({)
+    keyword(enum) ident(Days) operator({) ident(Sun)operator(,) ident(Mon)operator(,) ident(Tue)operator(,) ident(Wed)operator(,) ident(Thu)operator(,) ident(Fri)operator(,) ident(Sat) operator(};)
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(int) ident(x) operator(=) operator(()predefined_type(int)operator(\))ident(Days)operator(.)ident(Sun)operator(;)
+        predefined_type(int) ident(y) operator(=) operator(()predefined_type(int)operator(\))ident(Days)operator(.)ident(Fri)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Sun = {0})delimiter(")>operator(,) ident(x)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Fri = {0})delimiter(")>operator(,) ident(y)operator(\);)
+    operator(})
+operator(})
+comment(/* Output:
+   Sun = 0
+   Fri = 5
+*/)
+
+directive(public) keyword(class) class(EnumTest2)
+operator({)
+    keyword(enum) ident(Range) operator(:) predefined_type(long) operator({) ident(Max) operator(=) integer(2147483648L)operator(,) ident(Min) operator(=) integer(255L) operator(};)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(long) ident(x) operator(=) operator(()predefined_type(long)operator(\))ident(Range)operator(.)ident(Max)operator(;)
+        predefined_type(long) ident(y) operator(=) operator(()predefined_type(long)operator(\))ident(Range)operator(.)ident(Min)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Max = {0})delimiter(")>operator(,) ident(x)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Min = {0})delimiter(")>operator(,) ident(y)operator(\);)
+    operator(})
+operator(})
+comment(/* Output:
+   Max = 2147483648
+   Min = 255
+*/)
+
+comment(// Add the attribute Flags or FlagsAttribute.)
+operator([)ident(Flags)operator(])
+directive(public) keyword(enum) ident(CarOptions)
+operator({)
+    comment(// The flag for SunRoof is 0001.)
+    ident(SunRoof) operator(=) hex(0x01)operator(,)
+    comment(// The flag for Spoiler is 0010.)
+    ident(Spoiler) operator(=) hex(0x02)operator(,)
+    comment(// The flag for FogLights is 0100.)
+    ident(FogLights) operator(=) hex(0x04)operator(,)
+    comment(// The flag for TintedWindows is 1000.)
+    ident(TintedWindows) operator(=) hex(0x08)operator(,)
+operator(})
+
+keyword(class) class(FlagTest)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// The bitwise OR of 0001 and 0100 is 0101.)
+        ident(CarOptions) ident(options) operator(=) ident(CarOptions)operator(.)ident(SunRoof) operator(|) ident(CarOptions)operator(.)ident(FogLights)operator(;)
+
+        comment(// Because the Flags attribute is specified, Console.WriteLine displays )
+        comment(// the name of each enum element that corresponds to a flag that has )
+        comment(// the value 1 in variable options.)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(options)operator(\);)
+        comment(// The integer value of 0101 is 5.)
+        ident(Console)operator(.)ident(WriteLine)operator((()predefined_type(int)operator(\))ident(options)operator(\);)
+    operator(})
+operator(})
+comment(/* Output:
+   SunRoof, FogLights
+   5
+*/)

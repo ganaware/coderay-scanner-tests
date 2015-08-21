@@ -1,0 +1,20 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/wbx7zzdd.aspx)
+
+keyword(namespace) ident(PC)
+operator({)
+    keyword(partial) keyword(class) class(A)
+    operator({)
+        predefined_type(int) ident(num) operator(=) integer(0)operator(;)
+        directive(void) ident(MethodA)operator((\)) operator({) operator(})
+        keyword(partial) directive(void) ident(MethodC)operator((\);)
+    operator(})
+operator(})
+
+keyword(namespace) ident(PC)
+operator({)
+    keyword(partial) keyword(class) class(A)
+    operator({)
+        directive(void) ident(MethodB)operator((\)) operator({) operator(})
+        keyword(partial) directive(void) ident(MethodC)operator((\)) operator({) operator(})
+    operator(})
+operator(})

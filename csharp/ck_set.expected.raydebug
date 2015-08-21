@@ -1,0 +1,18 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ms228368.aspx)
+
+keyword(class) class(TimePeriod)
+operator({)
+    directive(private) predefined_type(double) ident(_seconds)operator(;)
+    directive(public) predefined_type(double) ident(Seconds)
+    operator({)
+        keyword(get) operator({) keyword(return) ident(_seconds)operator(;) operator(})
+        keyword(set) operator({) ident(_seconds) operator(=) keyword(value)operator(;) operator(})
+    operator(})
+
+
+operator(})
+
+keyword(class) class(TimePeriod2)
+operator({)
+    directive(public) predefined_type(double) ident(Hours) operator({) keyword(get)operator(;) keyword(set)operator(;) operator(})
+operator(})

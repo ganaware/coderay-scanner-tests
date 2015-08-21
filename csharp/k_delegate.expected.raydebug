@@ -1,0 +1,45 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/900fyy8e.aspx)
+
+directive(public) keyword(delegate) directive(void) ident(TestDelegate)operator(()predefined_type(string) ident(message)operator(\);)
+directive(public) keyword(delegate) predefined_type(int) ident(TestDelegate)operator(()ident(MyType) ident(m)operator(,) predefined_type(long) ident(num)operator(\);)
+
+comment(// Declare delegate -- defines required signature: )
+keyword(delegate) predefined_type(double) ident(MathAction)operator(()predefined_type(double) ident(num)operator(\);)
+
+keyword(class) class(DelegateTest)
+operator({)
+    comment(// Regular method that matches signature: )
+    directive(static) predefined_type(double) ident(Double)operator(()predefined_type(double) ident(input)operator(\))
+    operator({)
+        keyword(return) ident(input) operator(*) integer(2)operator(;)
+    operator(})
+
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        comment(// Instantiate delegate with named method:)
+        ident(MathAction) ident(ma) operator(=) ident(Double)operator(;)
+
+        comment(// Invoke delegate ma: )
+        predefined_type(double) ident(multByTwo) operator(=) ident(ma)operator(()float(4.5)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(multByTwo: {0})delimiter(")>operator(,) ident(multByTwo)operator(\);)
+
+        comment(// Instantiate delegate with anonymous method:)
+        ident(MathAction) ident(ma2) operator(=) keyword(delegate)operator(()predefined_type(double) ident(input)operator(\))
+        operator({)
+            keyword(return) ident(input) operator(*) ident(input)operator(;)
+        operator(};)
+
+        predefined_type(double) ident(square) operator(=) ident(ma2)operator(()integer(5)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(square: {0})delimiter(")>operator(,) ident(square)operator(\);)
+
+        comment(// Instantiate delegate with lambda expression)
+        ident(MathAction) ident(ma3) operator(=) ident(s) operator(=>) ident(s) operator(*) ident(s) operator(*) ident(s)operator(;)
+        predefined_type(double) ident(cube) operator(=) ident(ma3)operator(()float(4.375)operator(\);)
+
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(cube: {0})delimiter(")>operator(,) ident(cube)operator(\);)
+    operator(})
+    comment(// Output: )
+    comment(// multByTwo: 9 )
+    comment(// square: 25 )
+    comment(// cube: 83.740234375)
+operator(})

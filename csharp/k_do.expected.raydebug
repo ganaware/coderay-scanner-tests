@@ -1,0 +1,22 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/370s1zax.aspx)
+
+directive(public) keyword(class) class(TestDoWhile) 
+operator({)
+    directive(public) directive(static) directive(void) ident(Main) operator((\)) 
+    operator({)
+        predefined_type(int) ident(x) operator(=) integer(0)operator(;)
+        keyword(do) 
+        operator({)
+            ident(Console)operator(.)ident(WriteLine)operator(()ident(x)operator(\);)
+            ident(x)operator(++;)
+        operator(}) keyword(while) operator(()ident(x) operator(<) integer(5)operator(\);)
+    operator(})
+operator(})
+comment(/*
+    Output:
+    0
+    1
+    2
+    3
+    4
+*/)

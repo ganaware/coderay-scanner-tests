@@ -1,0 +1,21 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/b1e65aza.aspx)
+
+predefined_type(float) ident(x) operator(=) float(3.5F)operator(;)
+
+keyword(class) class(FloatTest) 
+operator({)
+    directive(static) directive(void) ident(Main)operator((\)) 
+    operator({)
+        predefined_type(int) ident(x) operator(=) integer(3)operator(;)
+        predefined_type(float) ident(y) operator(=) float(4.5f)operator(;)
+        predefined_type(short) ident(z) operator(=) integer(5)operator(;)
+        keyword(var) ident(result) operator(=) ident(x) operator(*) ident(y) operator(/) ident(z)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(The result is {0})delimiter(")>operator(,) ident(result)operator(\);)
+        ident(Type) ident(type) operator(=) ident(result)operator(.)ident(GetType)operator((\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(result is of type {0})delimiter(")>operator(,) ident(type)operator(.)ident(ToString)operator((\)\);)
+    operator(})
+operator(})
+comment(/* Output: 
+  The result is 2.7
+  result is of type System.Single //'float' is alias for 'Single'
+ */)

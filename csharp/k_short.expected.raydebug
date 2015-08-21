@@ -1,0 +1,21 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/ybs77ex4.aspx)
+
+predefined_type(short) ident(x) operator(=) integer(32767)operator(;)
+
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(int) ident(i)operator(\)) operator({})
+directive(public) directive(static) directive(void) ident(SampleMethod)operator(()predefined_type(short) ident(s)operator(\)) operator({})
+
+ident(SampleMethod)operator(()integer(5)operator(\);)         comment(// Calling the method with the int parameter)
+ident(SampleMethod)operator((()predefined_type(short)operator(\))integer(5)operator(\);)  comment(// Calling the method with the short parameter)
+
+predefined_type(short) ident(x) operator(=) integer(5)operator(,) ident(y) operator(=) integer(12)operator(;)
+
+predefined_type(short) ident(z) operator(=) ident(x) operator(+) ident(y)operator(;) comment(// Error: no conversion from int to short)
+
+predefined_type(short) ident(z) operator(=) operator(()predefined_type(short)operator(\)()ident(x) operator(+) ident(y)operator(\);) comment(// OK: explicit conversion)
+
+predefined_type(int) ident(m) operator(=) ident(x) operator(+) ident(y)operator(;)
+predefined_type(long) ident(n) operator(=) ident(x) operator(+) ident(y)operator(;)
+
+predefined_type(short) ident(x) operator(=) float(3.0)operator(;)          comment(// Error: no implicit conversion from double)
+predefined_type(short) ident(y) operator(=) operator(()predefined_type(short)operator(\))float(3.0)operator(;)   comment(// OK: explicit conversion)

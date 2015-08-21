@@ -1,0 +1,44 @@
+comment(// https://msdn.microsoft.com/en-us/library/vstudio/364x0z75.aspx)
+
+predefined_type(decimal) ident(myMoney) operator(=) float(300.5m)operator(;)
+
+predefined_type(decimal) ident(myMoney) operator(=) integer(300)operator(;)
+
+predefined_type(decimal) ident(myMoney) operator(=) float(99.9m)operator(;)
+predefined_type(double) ident(x) operator(=) operator(()predefined_type(double)operator(\))ident(myMoney)operator(;)
+ident(myMoney) operator(=) operator(()predefined_type(decimal)operator(\))ident(x)operator(;)
+
+predefined_type(double) ident(dub) operator(=) integer(9)operator(;)
+comment(// The following line causes an error that reads "Operator '+' cannot be applied to )
+comment(// operands of type 'double' and 'decimal'")
+ident(Console)operator(.)ident(WriteLine)operator(()ident(dec) operator(+) ident(dub)operator(\);) 
+
+comment(// You can fix the error by using explicit casting of either operand.)
+ident(Console)operator(.)ident(WriteLine)operator(()ident(dec) operator(+) operator(()predefined_type(decimal)operator(\))ident(dub)operator(\);)
+ident(Console)operator(.)ident(WriteLine)operator((()predefined_type(double)operator(\))ident(dec) operator(+) ident(dub)operator(\);)
+
+directive(public) keyword(class) class(TestDecimal)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(decimal) ident(d) operator(=) float(9.1m)operator(;)
+        predefined_type(int) ident(y) operator(=) integer(3)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()ident(d) operator(+) ident(y)operator(\);)   comment(// Result converted to decimal)
+    operator(})
+operator(})
+comment(// Output: 12.1)
+
+directive(public) keyword(class) class(TestDecimalFormat)
+operator({)
+    directive(static) directive(void) ident(Main)operator((\))
+    operator({)
+        predefined_type(decimal) ident(x) operator(=) float(0.999m)operator(;)
+        predefined_type(decimal) ident(y) operator(=) float(9999999999999999999999999999m)operator(;)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(My amount = {0:C})delimiter(")>operator(,) ident(x)operator(\);)
+        ident(Console)operator(.)ident(WriteLine)operator(()string<delimiter(")content(Your amount = {0:C})delimiter(")>operator(,) ident(y)operator(\);)
+    operator(})
+operator(})
+comment(/* Output:
+    My amount = $1.00
+    Your amount = $9,999,999,999,999,999,999,999,999,999.00
+*/)
