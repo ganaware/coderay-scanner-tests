@@ -4,8 +4,8 @@ directive(public) keyword(class) class(MyGenericClass)operator(<)ident(T)operato
 
 keyword(class) class(MyClass)operator(<)ident(T)operator(,) ident(U)operator(>)
     keyword(where) ident(T) operator(:) keyword(class) 
-    class(where) ident(U) operator(:) keyword(struct)
-error({) operator(})
+    keyword(where) ident(U) operator(:) keyword(struct)
+operator({) operator(})
 
 directive(public) keyword(class) class(MyGenericClass)operator(<)ident(T)operator(>) keyword(where) ident(T) operator(:) ident(IComparable)operator(,) keyword(new)operator((\))
 operator({)
