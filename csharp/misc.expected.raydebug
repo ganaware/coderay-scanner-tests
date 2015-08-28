@@ -5,13 +5,18 @@ comment(/*
 multi line comment
 */)
 
-comment(// preprocessor comment)
+comment(// preprocessors)
 comment(#if false
 ...
 #endif)
+preprocessor(#region OKあいうえお漢字OK)
+
+preprocessor(#endregion)
+preprocessor(#pragma) ident(warning) ident(disable) integer(0123)
 
 comment(// $)
 error($)operator(;)
+
 
 comment(// keywords)
 directive(abstract)operator(;)

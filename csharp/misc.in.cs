@@ -5,13 +5,18 @@
 multi line comment
 */
 
-// preprocessor comment
+// preprocessors
 #if false
 ...
 #endif
+#region OKあいうえお漢字OK
+
+#endregion
+#pragma warning disable 0123
 
 // $
 $;
+
 
 // keywords
 abstract;

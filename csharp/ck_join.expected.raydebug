@@ -25,7 +25,7 @@ keyword(var) ident(leftOuterJoinQuery) operator(=)
 
 keyword(class) class(JoinDemonstration)
 operator({)
-    preprocessor(#region) ident(Data)
+    preprocessor(#region Data)
 
     keyword(class) class(Product)
     operator({)
